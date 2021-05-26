@@ -1,16 +1,17 @@
 import * as firebase from "firebase";
 import "firebase/database";
 
-let config = {
-  apiKey: "xxx",
-  authDomain: "bezkoder-firebase.firebaseapp.com",
-  databaseURL: "https://bezkoder-firebase.firebaseio.com",
-  projectId: "bezkoder-firebase",
-  storageBucket: "bezkoder-firebase.appspot.com",
-  messagingSenderId: "xxx",
-  appId: "xxx",
+const firebaseConfig = {
+  apiKey: "AIzaSyD9Y1A5dwPx1BFBveee1NoRuCzQRTJFpGw",
+  authDomain: "foodleh-da2e9.firebaseapp.com",
+  databaseURL: "https://foodleh-da2e9-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "foodleh-da2e9",
+  storageBucket: "foodleh-da2e9.appspot.com",
+  messagingSenderId: "698154543422",
+  appId: "1:698154543422:web:133dce1f44f4945aeb646f",
+  measurementId: "G-CJ6BP0MS5Z"
 };
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 
 export default firebase.database();
