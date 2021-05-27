@@ -28,16 +28,6 @@ const routes = [
             authRequired: true,
         },
     },
-    {
-        path: '/orders',
-        name: 'orders',
-        component: () => import("../views/OrderList.vue"),
-    },
-    {
-        path: '/add',
-        name: 'add',
-        component: () => import("../views/AddOrder.vue"),
-    },
 ];
 
 const router = new VueRouter({

@@ -4,8 +4,6 @@
             <router-link to="/">Login</router-link> |
             <router-link to="/register">Register</router-link> |
             <router-link to="/dashboard">Dashboard</router-link> |
-            <router-link to="/orders">Orders</router-link> |
-            <router-link to="/add">AddOrders</router-link> |
             <button @click="logout">Logout</button>
         </div>
         <router-view />
@@ -30,6 +28,7 @@ export default {
                 });
         },
     },
+    name: "app"
 };
 </script>
 

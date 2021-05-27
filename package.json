@@ -12,6 +12,7 @@
     "firebase": "^8.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuefire": "^2.2.5",
     "watch": "^0.13.0"
   },
   "devDependencies": {
