@@ -3,7 +3,7 @@
         <div id="nav">
             <router-link to="/">Login</router-link> |
             <router-link to="/register">Register</router-link> |
-            <router-link to="/dashboard">Dashboard</router-link> |
+            <router-link to="/dashboard">Dashboard</router-link> | 
             <button @click="logout">Logout</button>
         </div>
         <router-view />
@@ -12,6 +12,7 @@
 
 <script>
 import firebase from 'firebase';
+
 export default {
     methods: {
         logout() {
@@ -28,7 +29,6 @@ export default {
                 });
         },
     },
-    name: "app"
 };
 </script>
 
