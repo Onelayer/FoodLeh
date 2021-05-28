@@ -18,7 +18,7 @@
         </form>
         
         <br>
-        <img src="../assets/logo.jpg" alt="FoodLeh logo">
+        <!-- <img src="../assets/logo.jpg" alt="FoodLeh logo"> -->
     </div>
 </template>
 
