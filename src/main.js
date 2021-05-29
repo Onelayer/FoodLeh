@@ -1,9 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
-import firebase from "firebase";
+import router from "./router/index.js";
+//import firebase from "firebase";
 import './assets/css/styles.css';
 
+/*
 var firebaseConfig = {
   apiKey: "AIzaSyD9Y1A5dwPx1BFBveee1NoRuCzQRTJFpGw",
   authDomain: "foodleh-da2e9.firebaseapp.com",
@@ -15,6 +16,8 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+*/
+
 
 Vue.config.productionTip = false;
 
