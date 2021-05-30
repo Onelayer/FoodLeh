@@ -206,11 +206,11 @@ export default {
                 .signOut()
                 .then(() => {
                     alert('Successfully logged out');
-                    this.$router.push('/');
+                    this.$router.push('/login');
                 })
                 .catch(error => {
                     alert(error.message);
-                    this.$router.push('/');
+                    this.$router.push('/login');
                 });
         },
     },
