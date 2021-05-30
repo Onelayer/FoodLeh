@@ -35,6 +35,7 @@ Our aim is to create an interactive website that food and beverage companies can
     - Firebase
 
 3. Timeline
+
     a) Features to be completed by end June:
         - Dashboard for store-owners.
         - Menu system for an individual store.
