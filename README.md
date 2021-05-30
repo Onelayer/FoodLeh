@@ -37,12 +37,12 @@ Our aim is to create an interactive website that food and beverage companies can
 3. Timeline
 
     a) Features to be completed by end June:
-        - Dashboard for store-owners.
-        - Menu system for an individual store.
-        - Integrate an ordering system.
+         - Dashboard for store-owners.
+         - Menu system for an individual store.
+         - Integrate an ordering system.
     
     b) Features to be completed by end July:
-        - Expand to multiple stores per hawker centre and multiple hawker centres.
+         - Expand to multiple stores per hawker centre and multiple hawker centres.
 
 
 **How are we different from similar platforms?**
