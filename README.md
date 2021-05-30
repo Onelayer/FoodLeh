@@ -13,19 +13,18 @@ Our aim is to create an interactive website that food and beverage companies can
 
 **User stories:**
 
-    1. Users will be able to see the details of the company, like its location, contact number, menu and pictures of different food, put together in a cohesive design and is        intuitive to use.
+   1. Users will be able to see the details of the company, like its location, contact number, menu and pictures of different food, put together in a cohesive design and is        intuitive to use.
 
 
-    2. Users will be able to use the website to pay and order food for self-collection and delivery.
+   2. Users will be able to use the website to pay and order food for self-collection and delivery.
 
 
-    3. Users will be able to log in and have their own account (membership system). They will then have access to special promotions and receive credit when they buy food.
+   3. Users will be able to log in and have their own account (membership system). They will then have access to special promotions and receive credit when they buy food.
 
 
 **Scope of Project:**
 
 1. Our website consists of two components, the interface for the customer side and the interface for the hawker side.
-
     a) For the customer side, there will be user interface with a front page which will contain buttons to access different hawker centres. Each hawker centre will have its          own page, where it will contain hawker stores. Customers can then choose the store they want, and enter the page. Here, they can order using the menu and make choices        such as the size of the food and add these food to the cart. When they are ready to checkout, they can go over the the checkout page and checkout. A receipt will be          generated and give them an estimated time for them to collect their food from the store. The order data will be written in firebase realtime database.
 
     b) For the hawker side, there will be a login page where they can register for an account using the register page before login in. After login in, they will be able to          access the dashboard. Here, orders from the realtime database is read here for the hawker to see their customer's orders. The hawker can then get the food ready for          the customer. There will be a tick box for the customer to tick after they have collected the payment and passed over the food. Orders are cleared daily.
@@ -34,4 +33,18 @@ Our aim is to create an interactive website that food and beverage companies can
     - HTML, CSS, Javascript
     - Vue.js
     - Firebase
+
+3. Timeline
+    a) Features to be completed by end June:
+        - Dashboard for store-owners.
+        - Menu system for an individual store.
+        - Integrate an ordering system.
+    
+    b) Features to be completed by end July:
+        - Expand to multiple stores per hawker centre and multiple hawker centres.
+
+
+**How are we different from similar platforms?**
+
+   - While we are unable to compete with big names like grabfood and foodpanda, we plan for our code to be open-sourced for hawker centre owners to used to help out the            hawkers. This will greatly reduce hawkers reliance on grabfood and foodpanda and able to improve their profit margins.
 
