@@ -33,6 +33,7 @@ Our aim is to create an interactive website that food and beverage companies can
     - HTML, CSS, Javascript
     - Vue.js
     - Firebase
+    - Bootstrap
 
 3. Timeline
 
