@@ -20,10 +20,15 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         component: () =>
-            import('../views/Dashboard.vue'),
+            import('../components/TutorialsList.vue'),
         meta: {
             authRequired: true,
         },
+    },
+    {
+        path: '/addorder',
+        name: 'AddOrder',
+        component: () => import('../components/AddTutorial.vue'),
     },
 ];
 
