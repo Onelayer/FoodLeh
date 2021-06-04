@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router/index.js";
 //import firebase from "firebase";
 import './assets/css/styles.css';
+import VueSmoothScroll from 'vue2-smooth-scroll';
 
 /*
 var firebaseConfig = {
@@ -20,6 +21,11 @@ firebase.initializeApp(firebaseConfig);
 
 
 Vue.config.productionTip = false;
+Vue.use(VueSmoothScroll, {
+  offset: -90,
+  duration: 400,
+  updateHistory: false,
+});
 
 new Vue({
   router,
