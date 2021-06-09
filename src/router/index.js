@@ -1,5 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Login from '../views/Login.vue';
+import Register from '../views/Register.vue';
+import Dashboard from '../views/Dashboard.vue';
+import AddOrder from '../components/AddTutorial.vue';
+import StallMenu from '../views/StallMenu.vue';
 import Home from '../views/Home.vue';
 import firebase from 'firebase';
 
@@ -7,20 +12,24 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: '/login',
+        path: '/',
         name: 'Home',
         component: Home,
     },
     {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+    },
+    {
         path: '/register',
         name: 'Register',
-        component: () => import('../views/About.vue'),
+        component: Register,
     },
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: () =>
-            import('../components/TutorialsList.vue'),
+        component: Dashboard,
         meta: {
             authRequired: true,
         },
@@ -28,7 +37,12 @@ const routes = [
     {
         path: '/addorder',
         name: 'AddOrder',
-        component: () => import('../components/AddTutorial.vue'),
+        component: AddOrder,
+    },
+    {
+        path: '/ordering', //temporary, next time add in :id for routing
+        name: 'Stall_1',
+        component: StallMenu,
     },
 ];
 

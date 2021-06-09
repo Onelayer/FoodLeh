@@ -1,50 +1,82 @@
 <template>
     <div>
-        <form @submit.prevent="login">
-            <h2>Login</h2>
-                <label> Email: </label>
-                <input
-                    type="email"
-                    placeholder="Email address..."
-                    v-model="email"
-                />
-                <label> Password: </label>
-                <input
-                    type="password"
-                    placeholder="password..."
-                    v-model="password"
-                />
-            <button type="submit">Login</button>
-        </form>
-        
-        <br>
-        <!-- <img src="../assets/logo.jpg" alt="FoodLeh logo"> -->
+    <!-- Navigation-->
+    <section id="navigation_bar">
+        <Navigation></Navigation>
+    </section>
+    <!-- Masthead-->
+    <section id="page-top">
+        <Pagetop></Pagetop>
+    </section>
+    <!-- List of Stalls Section-->
+    <section id="stalls">
+        <Stalls></Stalls>
+    </section>
+    <!-- About Section-->
+    <section id="about">
+        <Mission></Mission>
+    </section>
+    <!-- Contact Section-->
+    <section id="contact">
+        <Contact></Contact>
+    </section>
+    <!-- Footer-->
+    <Footer></Footer>
     </div>
 </template>
 
+
 <script>
-    import firebase from 'firebase';
-    export default {
-        name: 'Home',
-        data() {
-            return {
-                email: '',
-                password: '',
-            };
+import firebase from 'firebase';
+import Stalls from '../components/Stalls.vue';
+import Navigation from '../components/Navigation.vue';
+import Pagetop from '../components/Pagetop.vue';
+import Mission from '../components/Mission.vue';
+import Contact from '../components/Contact.vue';
+import Footer from '../components/Footer.vue';
+
+
+
+export default {
+    name: 'App',
+    data: () => {
+        return {
+            links: [
+                {
+                    id: 0,
+                    text: 'Login',
+                    page: '/login',
+                },
+                            {
+                    id: 1,
+                    text: 'Register',
+                    page: '/register',
+                },
+            ]
+        }
+    },
+    components:{
+        Stalls,
+        Navigation,
+        Pagetop,
+        Mission,
+        Contact,
+        Footer
+    },
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                    alert('Successfully logged out');
+                    this.$router.push('/login');
+                })
+                .catch(error => {
+                    alert(error.message);
+                    this.$router.push('/login');
+                });
         },
-        methods: {
-            login() {
-                firebase
-                    .auth()
-                    .signInWithEmailAndPassword(this.email, this.password)
-                    .then(() => {
-                        alert('Successfully logged in');
-                        this.$router.push('/dashboard');
-                    })
-                    .catch(error => {
-                        alert(error.message);
-                    });
-            },
-        },
-    };
+    },
+};
 </script>
