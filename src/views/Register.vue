@@ -16,6 +16,8 @@
             />
             <button type="submit">Register</button>
         </form>
+        <hr>
+        <button class="btn btn-primary" @click="navigateToHome">Back to home</button>
 
         <br>
         <!-- <img src="../assets/logo.jpg" alt="FoodLeh logo"> -->
@@ -38,11 +40,14 @@ export default {
                 .createUserWithEmailAndPassword(this.email, this.password)
                 .then(() => {
                     alert('Successfully registered! Please login.');
-                    this.$router.push('/');
+                    this.$router.push('/login');
                 })
                 .catch(error => {
                     alert(error.message);
                 });
+        },
+        navigateToHome() {
+            this.$router.push('/'); //for button presses, similar to the router-link to= thingy
         },
     },
 };
