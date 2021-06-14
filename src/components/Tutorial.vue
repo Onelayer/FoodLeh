@@ -1,6 +1,6 @@
 <template>
   <div v-if="currentTutorial" class="edit-form">
-    <h4>Tutorial</h4>
+    <h4>Food Item</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
@@ -19,6 +19,16 @@
           class="form-control"
           id="description"
           v-model="currentTutorial.description"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="cost">Cost</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cost"
+          v-model="currentTutorial.cost"
         />
       </div>
 
@@ -95,6 +105,7 @@ export default {
       const data = {
         title: this.currentTutorial.title,
         description: this.currentTutorial.description,
+        cost: this.currentTutorial.cost,
       };
 
       TutorialDataService.update(this.currentTutorial.key, data)

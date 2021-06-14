@@ -1,7 +1,7 @@
 <template>
   <div class="list row">
     <div class="col-md-6">
-      <h4>Food List</h4>
+      <h4>Menu</h4>
       <ul class="list-group">
         <li
           class="list-group-item"
@@ -58,6 +58,7 @@ export default {
           key: key,
           title: data.title,
           description: data.description,
+          cost: data.cost,
           published: data.published,
         });
       });

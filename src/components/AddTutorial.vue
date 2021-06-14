@@ -24,6 +24,17 @@
         />
       </div>
 
+      <div class="form-group">
+        <label for="cost">Cost</label>
+        <input
+          class="form-control"
+          id="cost"
+          required
+          v-model="tutorial.cost"
+          name="cost"
+        />
+      </div>
+
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
 
@@ -44,6 +55,7 @@ export default {
       tutorial: {
         title: "",
         description: "",
+        cost: "",
         published: false
       },
       submitted: false
@@ -54,6 +66,7 @@ export default {
       var data = {
         title: this.tutorial.title,
         description: this.tutorial.description,
+        cost: this.tutorial.cost,
         published: false
       };
 
@@ -72,6 +85,7 @@ export default {
       this.tutorial = {
         title: "",
         description: "",
+        cost: "",
         published: false
       };
     }
