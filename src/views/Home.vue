@@ -63,20 +63,5 @@ export default {
         Contact,
         Footer
     },
-    methods: {
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(() => {
-                    alert('Successfully logged out');
-                    this.$router.push('/login');
-                })
-                .catch(error => {
-                    alert(error.message);
-                    this.$router.push('/login');
-                });
-        },
-    },
 };
 </script>

@@ -18,7 +18,7 @@
         </form>
         <hr>
         <button class="btn btn-primary" @click="navigateToHome">Back to home</button>
-
+        <button class="btn btn-primary" @click="navigateToLogin">Back to login</button>
         <br>
         <!-- <img src="../assets/logo.jpg" alt="FoodLeh logo"> -->
     </div>
@@ -44,11 +44,15 @@ export default {
                 })
                 .catch(error => {
                     alert(error.message);
+                    this.$router.push('/login');
                 });
         },
         navigateToHome() {
             this.$router.push('/'); //for button presses, similar to the router-link to= thingy
         },
+        navigateToLogin() {
+            this.$router.push('/login');
+        }
     },
 };
 </script>
