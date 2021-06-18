@@ -12,12 +12,13 @@
         </form>
         <div>
           <p>
-            You don't have an account ? You can <router-link to="/Register">create one</router-link>
+            You don't have an account ? You can
+            <router-link to="/Register">create one</router-link>
           </p>
           <p>or Sign In with Google</p>
-            <button @click="socialLogin" class="social-button">
-            <img alt="Google Logo" src="../assets/google-logo.png">
-            </button>
+          <button @click="socialLogin" class="social-button">
+            <img alt="Google Logo" src="../assets/google-logo.png" />
+          </button>
           <!-- <button class="btn" @click="navigateToRegister">Register Now</button> -->
           <!-- <button class="btn btn-secondary">Login with Google</button> -->
           <!-- Future Implementation of Google login API -->
@@ -35,52 +36,52 @@
 </template>
 
 <script>
-    import firebase from "firebase";
+import firebase from "firebase";
 
-    export default {
-        data() {
-            return {
-            email: "",
-            password: "",
-            };
-        },
-        methods: {
-            login() {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                alert("Successfully logged in");
-                this.$router.push("/dashboard");
-                })
-                .catch((error) => {
-                alert(error.message);
-                });
-            },
-
-            navigateToHome() {
-            this.$router.push("/"); //for button presses, similar to the router-link to= thingy
-            },
-
-            navigateToRegister() {
-            this.$router.push("/register"); //for button presses, similar to the router-link to= thingy
-            },
-
-            socialLogin() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase
-                .auth()
-                .signInWithPopup(provider)
-                .then((result) => {
-                    this.$router.push("/dashboard");
-                    alert("Successfully logged in");
-                })
-                .catch((error) => {
-                alert(error.message);
-                });
-            },
-        },
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
     };
+  },
+  methods: {
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert("Successfully logged in");
+          this.$router.push("/dashboard");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+
+    navigateToHome() {
+      this.$router.push("/"); //for button presses, similar to the router-link to= thingy
+    },
+
+    navigateToRegister() {
+      this.$router.push("/register"); //for button presses, similar to the router-link to= thingy
+    },
+
+    socialLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(() => {
+          this.$router.push("/dashboard");
+          alert("Successfully logged in");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>

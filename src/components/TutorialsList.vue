@@ -27,7 +27,7 @@
       </div>
       <div v-else>
         <br />
-        <p>Please click on a food order...</p>
+        <p>Please click on a food item...</p>
       </div>
     </div>
   </div>

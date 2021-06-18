@@ -82,7 +82,7 @@ export default {
     };
   },
   watch: {
-    tutorial: function(tutorial) {
+    tutorial: function (tutorial) {
       this.currentTutorial = { ...tutorial };
       this.message = "";
     },
@@ -129,7 +129,7 @@ export default {
   },
   mounted() {
     this.message = "";
-    this.currentTutorial = { ...this.tutorial }
+    this.currentTutorial = { ...this.tutorial };
   },
 };
 </script>
