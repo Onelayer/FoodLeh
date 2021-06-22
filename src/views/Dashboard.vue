@@ -2,14 +2,13 @@
   <div>
     <dashboard-navigation></dashboard-navigation>
     <router-view></router-view>
-    <button type="submit" class="btn btn-primary" @click="logout()">
+    <!--<button type="submit" class="btn btn-primary" @click="logout()">
       Log out
-    </button>
+    </button>-->
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
 import DashboardNavigation from "../components/DashboardNavigation.vue";
 
 export default {
@@ -17,20 +16,20 @@ export default {
   components: {
     DashboardNavigation,
   },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          alert("Successfully logged out");
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          alert(error.message);
-          this.$router.push("/login");
-        });
-    },
-  },
 };
+//methods: {
+//logout() {
+//firebase
+//.auth()
+//.signOut()
+//.then(() => {
+//alert("Successfully logged out");
+//this.$router.push("/login");
+//})
+//.catch((error) => {
+//alert(error.message);
+//this.$router.push("/login");
+//});
+//},
+//},
 </script>
