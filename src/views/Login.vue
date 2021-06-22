@@ -67,6 +67,8 @@
           <div class="mt-4">
             <div class="d-flex justify-content-center links">
               Don't have an account?
+            </div>
+            <div class="d-flex justify-content-center links">
               <router-link to="/Register">create one</router-link>
             </div>
             <div class="d-flex justify-content-center links">
@@ -165,7 +167,7 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 550px;
+  height: 700px;
   width: 400px;
   margin-top: 80px;
   margin-bottom: auto;
@@ -192,9 +194,8 @@ html {
   position: absolute;
   height: 170px;
   width: 170px;
-  top: -75px;
+  top: 0px;
   border-radius: 50%;
-  background: black;
   padding: 10px;
   text-align: center;
 }
@@ -202,7 +203,6 @@ html {
   height: 150px;
   width: 150px;
   border-radius: 50%;
-  border: 2px solid white;
 }
 .form_container {
   margin-top: 100px;

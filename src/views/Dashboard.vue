@@ -1,11 +1,8 @@
 <template>
   <div>
-    <h2>Dashboard</h2>
-    <p>Add menu:</p>
-    <add-tutorial></add-tutorial>
+    <dashboard-navigation></dashboard-navigation>
+    <router-view></router-view>
     <upload></upload>
-    <tutorials-list></tutorials-list>
-    <order-list></order-list>
     <button type="submit" class="btn btn-primary" @click="logout()">
       Log out
     </button>
@@ -13,19 +10,15 @@
 </template>
 
 <script>
-import AddTutorial from "../components/AddTutorial.vue";
-import TutorialsList from "../components/TutorialsList.vue";
 import firebase from "firebase";
 import Upload from "../components/Upload.vue";
-import OrderList from "../components/OrderList.vue";
+import DashboardNavigation from "../components/DashboardNavigation.vue";
 
 export default {
   name: "Dashboard",
   components: {
-    AddTutorial,
-    TutorialsList,
     Upload,
-    OrderList,
+    DashboardNavigation,
   },
   methods: {
     logout() {
@@ -44,5 +37,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
