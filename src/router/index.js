@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
-import Cart from "../views/Cart.vue";
 import AddOrder from "../components/AddOrder.vue";
 import Order from "../components/Order.vue";
 import OrderList from "../components/OrderList.vue";
@@ -11,6 +10,8 @@ import AddTutorial from "../components/AddTutorial.vue";
 import Tutorial from "../components/Tutorial.vue";
 import TutorialsList from "../components/TutorialsList.vue";
 import StallMenu from "../views/StallMenu.vue";
+import Menu from "../components/Menu.vue";
+import Cart from "../components/Cart.vue";
 import Home from "../views/Home.vue";
 import firebase from "firebase";
 
@@ -76,12 +77,19 @@ const routes = [
     path: "/ordering", //temporary, next time add in :id for routing
     name: "Stall_1",
     component: StallMenu,
+    children: [
+      {
+        path: "/ordering/menu",
+        name: "Menu",
+        component: Menu,
+      },
+      {
+        path: "/ordering/cart",
+        name: "Cart",
+        component: Cart,
+      },
+    ]
   },
-  {
-    path: "/cart",
-    name: "Cart",
-    component: Cart,
-  }
 ];
 
 const router = new VueRouter({
