@@ -13,6 +13,7 @@ import TutorialsList from "../components/TutorialsList.vue";
 import StallMenu from "../views/StallMenu.vue";
 import Home from "../views/Home.vue";
 import firebase from "firebase";
+import ForgotPassword from "../components/ForgotPassword.vue";
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,19 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/login/forgot-password",
+    name: "forgotPassword",
+    component: ForgotPassword,
+    beforeEnter(to, from, next) {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        next({ name: "Dashboard" });
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/dashboard",
@@ -81,7 +95,7 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
-  }
+  },
 ];
 
 const router = new VueRouter({

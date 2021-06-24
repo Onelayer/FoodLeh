@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center form_container">
-            <form @submit.prevent="register">
+            <form @submit.prevent>
               <div class="input-group mb-3">
                 <div class="input-group-append">
                   <span class="input-group-text"
@@ -29,24 +29,14 @@
                   v-model="email"
                 />
               </div>
-              <div class="input-group mb-2">
-                <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-key"></i
-                  ></span>
-                </div>
-                <input
-                  type="password"
-                  name=""
-                  class="form-control input_pass"
-                  value=""
-                  placeholder="password"
-                  v-model="password"
-                />
-              </div>
               <div class="d-flex justify-content-center mt-3 login_container">
-                <button type="submit" name="button" class="btn login_btn">
-                  Register
+                <button
+                  type="submit"
+                  @click="sendEmail"
+                  name="button"
+                  class="btn login_btn"
+                >
+                  Reset password
                 </button>
               </div>
             </form>
@@ -69,49 +59,88 @@
 </template>
 
 <!-- <template>
-  <div>
-    <form @submit.prevent="register">
-      <h2>Register</h2>
-      <label> Email: </label>
-      <input type="email" placeholder="Email address..." v-model="email" />
-      <label> Password: </label>
-      <input type="password" placeholder="password..." v-model="password" />
-      <button type="submit">Register</button>
-    </form>
-    <hr />
-    <button class="btn btn-primary" @click="navigateToHome">
-      Back to home
-    </button>
-    <button class="btn btn-primary" @click="navigateToLogin">
-      Back to login
-    </button>
-    <br />
-     <img src="../assets/logo.jpg" alt="FoodLeh logo"> 
-  </div>
+  <section>
+    <h1 class="text-center mb-4 font-bold text-lg">Forgot Password</h1>
+    <article class="md:w-1/3 p-5 border rounded bg-gray-100 mx-auto">
+      <transition name="fade">
+        <p
+          class="bg-red-100 p-5 my-5 border border-red-200 rounded text-red-500"
+          v-if="error"
+        >
+          {{ error }}
+        </p>
+      </transition>
+      <form @submit.prevent>
+        <div class="mb-4">
+          <label for="email" class="font-bold text-gray-700">Email</label>
+          <input
+            type="email"
+            placeholder="joe@bloggs.com"
+            v-model="email"
+            id="email"
+            class="bg-white px-4 py-2 border rounded w-full"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <button
+            type="submit"
+            @click="sendEmail"
+            class="
+              bg-green-500
+              px-4
+              py-2
+              rounded
+              text-white
+              border border-green-600
+              transition
+              duration-500
+              ease-in-out
+              hover:bg-green-600
+            "
+          >
+            <transition name="fade" mode="out-in">
+              <span v-if="!emailSending">Send</span>
+              <span v-else>Sending...</span>
+            </transition>
+          </button>
+        </div>
+      </form>
+    </article>
+  </section>
 </template> -->
 
 <script>
 import firebase from "firebase";
 export default {
-  name: "Register",
   data() {
     return {
       email: "",
-      password: "",
+      error: null,
+      emailSending: false,
     };
   },
   methods: {
-    register() {
+    sendEmail() {
+      if (!this.email) {
+        this.error = "Please type in a valid email address.";
+        return;
+      }
+      this.error = null;
+      this.emailSending = true;
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+        .sendPasswordResetEmail(this.email)
         .then(() => {
-          alert("Successfully registered! Please login.");
+          this.emailSending = false;
+          alert(
+            "Instructions on how to change your password has been sent to your email."
+          );
           this.$router.push("/login");
         })
         .catch((error) => {
-          alert(error.message);
-          this.$router.push("/login");
+          this.emailSending = false;
+          this.error = error.message;
         });
     },
     navigateToHome() {
