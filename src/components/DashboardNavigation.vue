@@ -27,14 +27,22 @@
         <router-link to="/dashboard/orderlist">Order List</router-link>
       </vs-sidebar-item>
       <vs-sidebar-item id="market">
-        <template #icon>
-          <i class="bx bx-grid-alt"></i>
+        <template #logo>
+          <img
+            src="../assets/foodlehlogo.png"
+            class="brand_logo"
+            alt="FoodLeh logo"
+          />
         </template>
         <router-link to="/dashboard/addmenu">Add Menu</router-link>
       </vs-sidebar-item>
       <vs-sidebar-item id="Music">
-        <template #icon>
-          <i class="bx bxs-music"></i>
+        <template #logo>
+          <img
+            src="../assets/foodlehlogo.png"
+            class="brand_logo"
+            alt="FoodLeh logo"
+          />
         </template>
         <router-link to="/dashboard/menulist">Menu List</router-link>
       </vs-sidebar-item>

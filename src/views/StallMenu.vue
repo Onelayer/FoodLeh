@@ -22,7 +22,7 @@
         <div class="card" v-for="post in filteredList" :key="post.title">
           <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a @click="addItemToCart(post)" target="blank">
-            <img v-bind:src="post.img" alt="" /><small>{{ post.author }}</small>
+            <img v-bind:src="post.img" alt="" /><small>{{ post.price }}</small>
             {{ post.title }}
           </a>
 
