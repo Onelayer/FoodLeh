@@ -3,8 +3,13 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
-import AddOrder from "../components/AddTutorial.vue";
 import Cart from "../views/Cart.vue";
+import AddOrder from "../components/AddOrder.vue";
+import Order from "../components/Order.vue";
+import OrderList from "../components/OrderList.vue";
+import AddTutorial from "../components/AddTutorial.vue";
+import Tutorial from "../components/Tutorial.vue";
+import TutorialsList from "../components/TutorialsList.vue";
 import StallMenu from "../views/StallMenu.vue";
 import Home from "../views/Home.vue";
 import firebase from "firebase";
@@ -34,11 +39,38 @@ const routes = [
     meta: {
       authRequired: true,
     },
-  },
-  {
-    path: "/addorder",
-    name: "AddOrder",
-    component: AddOrder,
+    children: [
+      {
+        path: "/dashboard/addorder",
+        name: "AddOrder",
+        component: AddOrder,
+      },
+      {
+        path: "/dashboard/order",
+        name: "Order",
+        component: Order,
+      },
+      {
+        path: "/dashboard/orderlist",
+        name: "OrderList",
+        component: OrderList,
+      },
+      {
+        path: "/dashboard/addmenu",
+        name: "AddMenu",
+        component: AddTutorial,
+      },
+      {
+        path: "/dashboard/menu",
+        name: "Menu",
+        component: Tutorial,
+      },
+      {
+        path: "/dashboard/menulist",
+        name: "MenuList",
+        component: TutorialsList,
+      },
+    ],
   },
   {
     path: "/ordering", //temporary, next time add in :id for routing

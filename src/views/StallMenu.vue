@@ -39,8 +39,6 @@
 import NavigationStalls from "../components/NavigationStalls";
 import TutorialDataService from "../services/TutorialDataService";
 
-
-
 // class Post {
 //   constructor(title, link, price, img, description) {
 //     this.title = title;
@@ -84,7 +82,7 @@ export default {
 
       items.forEach((item) => {
         let data = item.val();
-        
+
         _card_list.push({
           title: data.title,
           link: "https://vuejs.org/",
@@ -113,5 +111,3 @@ export default {
   },
 };
 </script>
-
-

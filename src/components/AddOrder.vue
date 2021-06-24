@@ -56,9 +56,9 @@ export default {
         title: "",
         description: "",
         cost: "",
-        published: false
+        published: false,
       },
-      submitted: false
+      submitted: false,
     };
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
         title: this.tutorial.title,
         description: this.tutorial.description,
         cost: this.tutorial.cost,
-        published: false
+        published: false,
       };
 
       TutorialDataService.create(data)
@@ -75,20 +75,20 @@ export default {
           console.log("Created new item successfully!");
           this.submitted = true;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     newTutorial() {
       this.submitted = false;
       this.tutorial = {
         title: "",
         description: "",
         cost: "",
-        published: false
+        published: false,
       };
-    }
-  }
+    },
+  },
 };
 </script>

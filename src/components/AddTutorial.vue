@@ -1,54 +1,64 @@
 <template>
-  <div class="submit-form">
-    <div v-if="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          v-model="tutorial.title"
-          name="title"
-        />
+  <div class="coms">
+    <H1>Add Food to Menu</H1>
+    <div class="submit-form">
+      <div v-if="!submitted">
+        <div class="form-group">
+          <label for="title"><H5>Title</H5></label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            required
+            v-model="tutorial.title"
+            name="title"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description"><H5>Description</H5></label>
+          <input
+            class="form-control"
+            id="description"
+            required
+            v-model="tutorial.description"
+            name="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cost"><H5>Cost</H5></label>
+          <input
+            class="form-control"
+            id="cost"
+            required
+            v-model="tutorial.cost"
+            name="cost"
+          />
+        </div>
+        <upload :myUrl="tutorial.url" @getUrl="tutorial.url = $event"></upload>
+        <div>
+          <h5>Image Url:</h5>
+          {{ tutorial.url }}
+        </div>
+        <br />
+        <button @click="saveTutorial" class="btn btn-success">Submit</button>
       </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          v-model="tutorial.description"
-          name="description"
-        />
+      <div v-else>
+        <h4>You submitted successfully!</h4>
+        <button class="btn btn-success" @click="newTutorial">Add</button>
       </div>
-
-      <div class="form-group">
-        <label for="cost">Cost</label>
-        <input
-          class="form-control"
-          id="cost"
-          required
-          v-model="tutorial.cost"
-          name="cost"
-        />
-      </div>
-
-      <button @click="saveTutorial" class="btn btn-success">Submit</button>
-    </div>
-
-    <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newTutorial">Add</button>
     </div>
   </div>
 </template>
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
+import Upload from "./Upload.vue";
 
 export default {
+  components: { Upload },
   name: "add-tutorial",
   data() {
     return {
@@ -56,9 +66,10 @@ export default {
         title: "",
         description: "",
         cost: "",
-        published: false
+        url: "",
+        published: false,
       },
-      submitted: false
+      submitted: false,
     };
   },
   methods: {
@@ -67,7 +78,8 @@ export default {
         title: this.tutorial.title,
         description: this.tutorial.description,
         cost: this.tutorial.cost,
-        published: false
+        url: this.tutorial.url,
+        published: false,
       };
 
       TutorialDataService.create(data)
@@ -75,20 +87,31 @@ export default {
           console.log("Created new item successfully!");
           this.submitted = true;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     newTutorial() {
       this.submitted = false;
       this.tutorial = {
         title: "",
         description: "",
         cost: "",
-        published: false
+        url: "",
+        published: false,
       };
-    }
-  }
+    },
+    getUrl() {
+      this.url = "fornow";
+    },
+  },
 };
 </script>
+
+<style scoped>
+.coms {
+  padding-top: 50px;
+  padding-left: 70px;
+}
+</style>

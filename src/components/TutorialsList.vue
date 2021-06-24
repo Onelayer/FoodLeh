@@ -1,33 +1,35 @@
 <template>
-  <div class="list row">
-    <div class="col-md-6">
-      <h4>Menu</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(tutorial, index) in tutorials"
-          :key="index"
-          @click="setActiveTutorial(tutorial, index)"
-        >
-          {{ tutorial.title }}
-        </li>
-      </ul>
+  <div class="coms">
+    <div class="list row">
+      <div class="col-md-6">
+        <h1>Menu</h1>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            :class="{ active: index == currentIndex }"
+            v-for="(tutorial, index) in tutorials"
+            :key="index"
+            @click="setActiveTutorial(tutorial, index)"
+          >
+            {{ tutorial.title }}
+          </li>
+        </ul>
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
-        Remove All
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentTutorial">
-        <tutorial-details
-          :tutorial="currentTutorial"
-          @refreshList="refreshList"
-        />
+        <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
+          Remove All
+        </button>
       </div>
-      <div v-else>
-        <br />
-        <p>Please click on a food item...</p>
+      <div class="col-md-6">
+        <div v-if="currentTutorial">
+          <tutorial-details
+            :tutorial="currentTutorial"
+            @refreshList="refreshList"
+          />
+        </div>
+        <div v-else>
+          <br />
+          <p>Please click on a food item...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -44,7 +46,7 @@ export default {
     return {
       tutorials: [],
       currentTutorial: null,
-      currentIndex: -1
+      currentIndex: -1,
     };
   },
   methods: {
@@ -59,6 +61,7 @@ export default {
           title: data.title,
           description: data.description,
           cost: data.cost,
+          url: data.url,
           published: data.published,
         });
       });
@@ -91,6 +94,13 @@ export default {
   },
   beforeDestroy() {
     TutorialDataService.getAll().off("value", this.onDataChange);
-  }
+  },
 };
 </script>
+
+<style scoped>
+.coms {
+  padding-top: 50px;
+  padding-left: 70px;
+}
+</style>
