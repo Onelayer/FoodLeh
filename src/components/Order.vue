@@ -43,14 +43,14 @@
       v-if="currentTutorial.published"
       @click="updatePublished(false)"
     >
-      complete
+      Uncomplete
     </button>
     <button
       v-else
       class="badge badge-primary mr-2"
       @click="updatePublished(true)"
     >
-      Uncomplete
+      Complete
     </button>
 
     <button class="badge badge-danger mr-2" @click="deleteTutorial">

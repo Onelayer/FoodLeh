@@ -47,7 +47,7 @@
         <router-link to="/dashboard/menulist">Menu List</router-link>
       </vs-sidebar-item>
       <template #footer>
-        <vs-row justify="space-between">
+        <vs-row>
           <vs-sidebar-item id="Facebook">
             <vs-button
               type="submit"

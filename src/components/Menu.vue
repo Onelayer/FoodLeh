@@ -21,7 +21,7 @@
         <div class="card" v-for="post in filteredList" :key="post.title">
           <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a href="" @click.prevent="addItemToCart(post)" target="blank">
-            <img v-bind:src="post.img" alt="" /><small>{{ post.price }}</small>
+            <img v-bind:src="post.img" alt="" /><small>{{ post.cost }}</small>
             {{ post.title }}
           </a>
 
@@ -46,14 +46,15 @@ export default {
     };
   },
   methods: {
-    addItemToCart(product) { //it is called post in the template
+    addItemToCart(product) {
+      //it is called post in the template
       this.cart.push(product);
       this.saveCart();
       // eventBus.$emit('addItemToCart', product);
     },
-    saveCart(){
+    saveCart() {
       let parsedArray = JSON.stringify(this.cart);
-      localStorage.setItem('cart', parsedArray);
+      localStorage.setItem("cart", parsedArray);
     },
     onDataChange(items) {
       let _card_list = [];
@@ -64,7 +65,7 @@ export default {
         _card_list.push({
           title: data.title,
           link: "", //if we want to expand to modals
-          price: data.cost,
+          cost: data.cost,
           img: data.url,
           description: data.description,
         });
@@ -75,11 +76,11 @@ export default {
   },
   mounted() {
     TutorialDataService.getAll().on("value", this.onDataChange);
-      if(localStorage.getItem('cart')) {
-        try {
-          this.cart = JSON.parse(localStorage.getItem('cart'));
-        } catch(e) {
-          localStorage.removeItem('cart');
+    if (localStorage.getItem("cart")) {
+      try {
+        this.cart = JSON.parse(localStorage.getItem("cart"));
+      } catch (e) {
+        localStorage.removeItem("cart");
       }
     }
   },

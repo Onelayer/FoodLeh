@@ -43,7 +43,7 @@
               <div
                 class="portfolio-item-caption-content text-center text-white"
               >
-                <router-link to="/ordering"
+                <router-link to="/ordering/menu"
                   ><strong>SELECT</strong></router-link
                 >
               </div>

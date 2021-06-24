@@ -12,7 +12,7 @@ class TutorialDataService {
   }
 
   update(value) {
-    return db.child('Customer').update(value);
+    return db.update(value);
   }
 
   delete(key) {
