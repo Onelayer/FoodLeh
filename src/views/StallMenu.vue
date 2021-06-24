@@ -41,6 +41,7 @@ import TutorialDataService from "../services/TutorialDataService";
 
 
 
+
 // class Post {
 //   constructor(title, link, price, img, description) {
 //     this.title = title;
@@ -50,6 +51,7 @@ import TutorialDataService from "../services/TutorialDataService";
 //     this.description = description;
 //   }
 // }
+
 
 export default {
   components: {
@@ -72,25 +74,26 @@ export default {
     };
   },
   methods: {
-    // retrieveCardList(){
-    //   console.log(this.cardList);
-    // },
     onDataChange(items) {
       let _card_list = [];
 
       items.forEach((item) => {
+        // let key = item.key;
         let data = item.val();
+        let card_data = new Post(
+          data.title,
+          "",
+          data.cost,
+          "",
+          data.description
+          );
         
         _card_list.push({
-          title: data.title,
-          link: "https://vuejs.org/",
-          price: data.cost,
-          img: data.url,
-          description: data.description,
+          card_data,
         });
       });
 
-      this.cardList = _card_list;
+      this.card_list = _card_list;
     },
   },
   mounted() {
@@ -98,6 +101,7 @@ export default {
   },
   beforeDestroy() {
     TutorialDataService.getAll().off("value", this.onDataChange);
+
   },
   computed: {
     filteredList() {
