@@ -2,8 +2,11 @@
   <div>
     <h2>Dashboard</h2>
     <p>Add menu:</p>
+    <img :src="pictureUrl"/>
     <add-tutorial></add-tutorial>
-    <upload></upload>
+    <upload
+      :pictureUrl="url"
+      @urlRecieved="pictureUrl = $event" ></upload>
     <tutorials-list></tutorials-list>
     <order-list></order-list>
     <button type="submit" class="btn btn-primary" @click="logout()">
@@ -21,6 +24,11 @@ import OrderList from "../components/OrderList.vue";
 
 export default {
   name: "Dashboard",
+  data: function() {
+    return {
+      pictureUrl:'',
+    }
+  },
   components: {
     AddTutorial,
     TutorialsList,

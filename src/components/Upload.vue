@@ -21,9 +21,11 @@
 
 <script>
 import firebase from "firebase";
+import { eventBus } from '../main';
 
 export default {
   name: "Upload",
+  props: ['pictureUrl'],
   data() {
     return {
       imageData: null,
@@ -56,7 +58,9 @@ export default {
         () => {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            console.log(url);
             this.picture = url;
+            eventBus.$emit('urlRecevied', this.picture)
           });
         }
       );

@@ -19,14 +19,15 @@
         />
       </div>
       <div class="wrapper d-flex justify-content-center">
-        <div class="card" v-for="post in filteredList" :key="post">
+        <div class="card" v-for="post in filteredList" :key="post.title">
+          <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a v-bind:href="post.link" target="blank">
             <img v-bind:src="post.img" alt="" /><small>{{ post.author }}</small>
             {{ post.title }}
           </a>
 
           <small id="description"
-            >{{ post.description.substring(0, 90) }}<small>...</small></small
+            >{{ post.description }}<small>...</small></small
           >
         </div>
       </div>
@@ -36,16 +37,19 @@
 
 <script>
 import NavigationStalls from "../components/NavigationStalls";
+import TutorialDataService from "../services/TutorialDataService";
 
-class Post {
-  constructor(title, link, author, img, description) {
-    this.title = title;
-    this.link = link;
-    this.author = author;
-    this.img = img;
-    this.description = description;
-  }
-}
+
+
+// class Post {
+//   constructor(title, link, price, img, description) {
+//     this.title = title;
+//     this.link = link;
+//     this.price = price;
+//     this.img = img;
+//     this.description = description;
+//   }
+// }
 
 export default {
   components: {
@@ -53,55 +57,57 @@ export default {
   },
   data: () => {
     return {
-      email: "",
-      zip: "",
-      city: "",
+      cart: [],
+      cardList: [],
       keyword: "",
-      postList: [
-        new Post(
-          "Roasted Chicken Rice",
-          "https://vuejs.org/", //link to modal
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "White Chicken Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Roasted Pork Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Char Siew Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Roasted Pork and Char Siew Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-      ],
+      // postList: [
+      //   new Post(
+      //     "Roasted Chicken Rice",
+      //     "https://vuejs.org/", //link to modal
+      //     "",
+      //     "https://vuejs.org//images/logo.png",
+      //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
+      //   ),
+      // ],
     };
+  },
+  methods: {
+    // retrieveCardList(){
+    //   console.log(this.cardList);
+    // },
+    onDataChange(items) {
+      let _card_list = [];
+
+      items.forEach((item) => {
+        let data = item.val();
+        
+        _card_list.push({
+          title: data.title,
+          link: "https://vuejs.org/",
+          price: data.cost,
+          img: data.url,
+          description: data.description,
+        });
+      });
+
+      this.cardList = _card_list;
+    },
+  },
+  mounted() {
+    TutorialDataService.getAll().on("value", this.onDataChange);
+  },
+  beforeDestroy() {
+    TutorialDataService.getAll().off("value", this.onDataChange);
   },
   computed: {
     filteredList() {
-      return this.postList.filter((post) =>
+      return this.cardList.filter((post) =>
         post.title.toLowerCase().includes(this.keyword.toLowerCase())
       );
+      // console.log(this.cardList);
     },
   },
 };
 </script>
+
+

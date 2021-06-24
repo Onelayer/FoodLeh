@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
 import AddOrder from "../components/AddTutorial.vue";
+import Cart from "../views/Cart.vue";
 import StallMenu from "../views/StallMenu.vue";
 import Home from "../views/Home.vue";
 import firebase from "firebase";
@@ -44,6 +45,11 @@ const routes = [
     name: "Stall_1",
     component: StallMenu,
   },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
+  }
 ];
 
 const router = new VueRouter({
