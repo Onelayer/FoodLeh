@@ -19,14 +19,15 @@
         />
       </div>
       <div class="wrapper d-flex justify-content-center">
-        <div class="card" v-for="post in filteredList" :key="post">
+        <div class="card" v-for="post in filteredList" :key="post.title">
+          <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a v-bind:href="post.link" target="blank">
             <img v-bind:src="post.img" alt="" /><small>{{ post.author }}</small>
             {{ post.title }}
           </a>
 
           <small id="description"
-            >{{ post.description.substring(0, 90) }}<small>...</small></small
+            >{{ post.description }}<small>...</small></small
           >
         </div>
       </div>
@@ -38,15 +39,19 @@
 import NavigationStalls from "../components/NavigationStalls";
 import TutorialDataService from "../services/TutorialDataService";
 
-class Post {
-  constructor(title, link, price, img, description) {
-    this.title = title;
-    this.link = link;
-    this.price = price;
-    this.img = img;
-    this.description = description;
-  }
-}
+
+
+
+// class Post {
+//   constructor(title, link, price, img, description) {
+//     this.title = title;
+//     this.link = link;
+//     this.price = price;
+//     this.img = img;
+//     this.description = description;
+//   }
+// }
+
 
 export default {
   components: {
@@ -54,7 +59,9 @@ export default {
   },
   data: () => {
     return {
-      card_list: [],
+      cart: [],
+      cardList: [],
+      keyword: "",
       // postList: [
       //   new Post(
       //     "Roasted Chicken Rice",
@@ -94,13 +101,17 @@ export default {
   },
   beforeDestroy() {
     TutorialDataService.getAll().off("value", this.onDataChange);
+
   },
   computed: {
     filteredList() {
-      return this.postList.filter((post) =>
+      return this.cardList.filter((post) =>
         post.title.toLowerCase().includes(this.keyword.toLowerCase())
       );
+      // console.log(this.cardList);
     },
   },
 };
 </script>
+
+

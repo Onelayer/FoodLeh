@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
+import Cart from "../views/Cart.vue";
 import AddOrder from "../components/AddOrder.vue";
 import Order from "../components/Order.vue";
 import OrderList from "../components/OrderList.vue";
@@ -76,6 +77,11 @@ const routes = [
     name: "Stall_1",
     component: StallMenu,
   },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
+  }
 ];
 
 const router = new VueRouter({

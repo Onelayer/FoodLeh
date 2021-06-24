@@ -13,6 +13,11 @@ import DashboardNavigation from "../components/DashboardNavigation.vue";
 
 export default {
   name: "Dashboard",
+  data: function() {
+    return {
+      pictureUrl:'',
+    }
+  },
   components: {
     DashboardNavigation,
   },

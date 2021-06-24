@@ -1,10 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router/index.js";
-//import firebase from "firebase";
 import './assets/css/styles.css';
 import Vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css';
+
 
 /*
 var firebaseConfig = {
@@ -25,7 +25,6 @@ Vue.use(Vuesax, {
 
 
 Vue.config.productionTip = false;
-
 
 new Vue({
   router,
