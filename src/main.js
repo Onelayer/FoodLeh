@@ -23,8 +23,9 @@ Vue.use(Vuesax, {
   // options here
 })
 
-
 Vue.config.productionTip = false;
+
+export const eventBus = new Vue();
 
 new Vue({
   router,

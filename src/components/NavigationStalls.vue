@@ -46,14 +46,14 @@
                 <!-- </div>
                             <router-view/> -->
               </li>
-              <router-link to="/" tag="li"
+              <router-link to="menu" tag="li"
                 ><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                  >Home</a
+                  >Menu</a
                 ></router-link
               >
 
               <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" @click="navigateToLogin">Stall Owners</a></li> -->
-              <router-link to="/cart" tag="li"
+              <router-link to="cart" tag="li"
                 ><a class="nav-link py-3 px-0 px-lg-3 rounded"
                   >Cart</a
                 ></router-link
@@ -63,7 +63,6 @@
         </div>
       </nav>
     </div>
-    <router-view></router-view>
   </section>
 </template>
 
