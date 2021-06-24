@@ -38,9 +38,10 @@
         </div>
         <upload :myUrl="tutorial.url" @getUrl="tutorial.url = $event"></upload>
         <div>
-          <h5>Image Url:</H5> {{ tutorial.url }} 
-        </div> 
-        <br>
+          <h5>Image Url:</h5>
+          {{ tutorial.url }}
+        </div>
+        <br />
         <button @click="saveTutorial" class="btn btn-success">Submit</button>
       </div>
 

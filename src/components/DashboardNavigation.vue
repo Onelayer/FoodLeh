@@ -17,8 +17,12 @@
         />
       </template>
       <vs-sidebar-item id="Instagram">
-        <template #icon>
-          <i class="bx bxl-instagram"></i>
+        <template #logo>
+          <img
+            src="../assets/foodlehlogo.png"
+            class="brand_logo"
+            alt="FoodLeh logo"
+          />
         </template>
         <router-link to="/dashboard/orderlist">Order List</router-link>
       </vs-sidebar-item>
@@ -42,7 +46,7 @@
               @click="logout()"
               badge-position="top-right"
             >
-              Log out
+              Logout
             </vs-button>
           </vs-sidebar-item>
         </vs-row>
@@ -101,44 +105,4 @@ a {
   text-decoration: none;
   color: #fff;
 }
-/* header {
-  width: 100%;
-  height: 5rem;
-  background-color: #11005c;
-}
-
-nav {
-  height: 100%;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  margin: 0 2rem;
-}
-
-a {
-  text-decoration: none;
-  background: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  color: white;
-  padding: 0.5rem 1.5rem;
-  display: inline-block;
-}
-
-a:hover,
-a:active {
-  color: #f1a80a;
-  border-color: #f1a80a;
-  background-color: #1a037e;
-} */
 </style>

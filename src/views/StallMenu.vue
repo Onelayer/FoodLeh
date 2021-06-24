@@ -21,7 +21,7 @@
       <div class="wrapper d-flex justify-content-center">
         <div class="card" v-for="post in filteredList" :key="post.title">
           <!-- <button @click="addItemToCart">Add to Cart</button> -->
-          <a v-bind:href="post.link" target="blank">
+          <a @click="addItemToCart(post)" target="blank">
             <img v-bind:src="post.img" alt="" /><small>{{ post.author }}</small>
             {{ post.title }}
           </a>
@@ -39,9 +39,6 @@
 import NavigationStalls from "../components/NavigationStalls";
 import TutorialDataService from "../services/TutorialDataService";
 
-
-
-
 // class Post {
 //   constructor(title, link, price, img, description) {
 //     this.title = title;
@@ -51,7 +48,6 @@ import TutorialDataService from "../services/TutorialDataService";
 //     this.description = description;
 //   }
 // }
-
 
 export default {
   components: {
@@ -74,26 +70,30 @@ export default {
     };
   },
   methods: {
+    // retrieveCardList(){
+    //   console.log(this.cardList);
+    // },
+    addItemToCart(product) {
+      //it is called post in the template
+      this.cart.push(product);
+      console.log(this.cart);
+    },
     onDataChange(items) {
       let _card_list = [];
 
       items.forEach((item) => {
-        // let key = item.key;
         let data = item.val();
-        let card_data = new Post(
-          data.title,
-          "",
-          data.cost,
-          "",
-          data.description
-          );
-        
+
         _card_list.push({
-          card_data,
+          title: data.title,
+          link: "https://vuejs.org/",
+          price: data.cost,
+          img: data.url,
+          description: data.description,
         });
       });
 
-      this.card_list = _card_list;
+      this.cardList = _card_list;
     },
   },
   mounted() {
@@ -101,7 +101,6 @@ export default {
   },
   beforeDestroy() {
     TutorialDataService.getAll().off("value", this.onDataChange);
-
   },
   computed: {
     filteredList() {
@@ -113,5 +112,3 @@ export default {
   },
 };
 </script>
-
-

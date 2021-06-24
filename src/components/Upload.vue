@@ -21,7 +21,6 @@
 
 <script>
 import firebase from "firebase";
-import { eventBus } from '../main';
 
 export default {
   props: {
@@ -30,7 +29,6 @@ export default {
     },
   },
   name: "Upload",
-  props: ['pictureUrl'],
   data() {
     return {
       imageData: null,
