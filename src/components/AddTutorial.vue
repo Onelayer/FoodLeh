@@ -4,7 +4,6 @@
     <div class="submit-form">
       <div v-if="!submitted">
         <div class="form-group">
-          <label for="title"><H5>Title</H5></label>
           <input
             type="text"
             class="form-control"
@@ -12,28 +11,29 @@
             required
             v-model="tutorial.title"
             name="title"
+            placeholder="Title"
           />
         </div>
 
         <div class="form-group">
-          <label for="description"><H5>Description</H5></label>
           <input
             class="form-control"
             id="description"
             required
             v-model="tutorial.description"
             name="description"
+            placeholder="Description"
           />
         </div>
 
         <div class="form-group">
-          <label for="cost"><H5>Cost</H5></label>
           <input
             class="form-control"
             id="cost"
             required
             v-model="tutorial.cost"
             name="cost"
+            placeholder="Cost"
           />
         </div>
         <upload :myUrl="tutorial.url" @getUrl="tutorial.url = $event"></upload>
