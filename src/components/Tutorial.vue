@@ -32,6 +32,10 @@
         />
       </div>
 
+      <div class="image">
+        <img v-bind:src="currentTutorial.url" width = '320' height = '180' alt = 'Food Image'/>
+      </div>
+
       <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentTutorial.published ? "Published" : "Pending" }}
