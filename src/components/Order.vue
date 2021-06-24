@@ -34,7 +34,7 @@
 
       <div class="form-group">
         <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
+        {{ currentTutorial.published ? "Handed over" : "Not handed over" }}
       </div>
     </form>
 
@@ -43,14 +43,14 @@
       v-if="currentTutorial.published"
       @click="updatePublished(false)"
     >
-      UnPublish
+      complete
     </button>
     <button
       v-else
       class="badge badge-primary mr-2"
       @click="updatePublished(true)"
     >
-      Publish
+      Uncomplete
     </button>
 
     <button class="badge badge-danger mr-2" @click="deleteTutorial">

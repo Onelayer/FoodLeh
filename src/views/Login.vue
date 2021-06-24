@@ -72,7 +72,9 @@
               <router-link to="/Register">create one</router-link>
             </div>
             <div class="d-flex justify-content-center links">
-              <a href="#">Forgot your password?</a>
+              <router-link to="/login/forgot-password"
+                >Forget password?</router-link
+              >
             </div>
             <div class="google_container">
               <p>Or sign in with Google</p>

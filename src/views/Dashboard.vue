@@ -13,10 +13,10 @@ import DashboardNavigation from "../components/DashboardNavigation.vue";
 
 export default {
   name: "Dashboard",
-  data: function() {
+  data: function () {
     return {
-      pictureUrl:'',
-    }
+      pictureUrl: "",
+    };
   },
   components: {
     DashboardNavigation,
@@ -38,4 +38,3 @@ export default {
 //},
 //},
 </script>
-
