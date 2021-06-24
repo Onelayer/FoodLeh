@@ -21,7 +21,7 @@
       <div class="wrapper d-flex justify-content-center">
         <div class="card" v-for="post in filteredList" :key="post.title">
           <!-- <button @click="addItemToCart">Add to Cart</button> -->
-          <a v-bind:href="post.link" target="blank">
+          <a @click="addItemToCart(post)" target="blank">
             <img v-bind:src="post.img" alt="" /><small>{{ post.author }}</small>
             {{ post.title }}
           </a>
@@ -75,6 +75,10 @@ export default {
     // retrieveCardList(){
     //   console.log(this.cardList);
     // },
+    addItemToCart(product) { //it is called post in the template
+      this.cart.push(product);
+      console.log(this.cart);
+    },
     onDataChange(items) {
       let _card_list = [];
 

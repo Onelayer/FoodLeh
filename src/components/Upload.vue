@@ -58,9 +58,7 @@ export default {
         () => {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
-            console.log(url);
             this.picture = url;
-            eventBus.$emit('urlRecevied', this.picture)
           });
         }
       );
