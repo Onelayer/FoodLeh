@@ -109,7 +109,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
           alert("Successfully logged in");
-          this.$router.push("/dashboard");
+          this.$router.push("/dashboard/orderlist");
         })
         .catch((error) => {
           alert(error.message);
@@ -130,7 +130,7 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(() => {
-          this.$router.push("/dashboard");
+          this.$router.push("/dashboard/orderlist");
           alert("Successfully logged in");
         })
         .catch((error) => {

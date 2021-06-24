@@ -1,10 +1,10 @@
 <template>
   <div class="coms">
-    <H2>Add Food to Menu</H2>
+    <H1>Add Food to Menu</H1>
     <div class="submit-form">
       <div v-if="!submitted">
         <div class="form-group">
-          <label for="title">Title</label>
+          <label for="title"><H5>Title</H5></label>
           <input
             type="text"
             class="form-control"
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-          <label for="description">Description</label>
+          <label for="description"><H5>Description</H5></label>
           <input
             class="form-control"
             id="description"
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-          <label for="cost">Cost</label>
+          <label for="cost"><H5>Cost</H5></label>
           <input
             class="form-control"
             id="cost"
@@ -36,7 +36,11 @@
             name="cost"
           />
         </div>
-
+        <upload :myUrl="tutorial.url" @getUrl="tutorial.url = $event"></upload>
+        <div>
+          <h5>Image Url:</H5> {{ tutorial.url }} 
+        </div> 
+        <br>
         <button @click="saveTutorial" class="btn btn-success">Submit</button>
       </div>
 
@@ -50,8 +54,10 @@
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
+import Upload from "./Upload.vue";
 
 export default {
+  components: { Upload },
   name: "add-tutorial",
   data() {
     return {
@@ -59,6 +65,7 @@ export default {
         title: "",
         description: "",
         cost: "",
+        url: "",
         published: false,
       },
       submitted: false,
@@ -70,6 +77,7 @@ export default {
         title: this.tutorial.title,
         description: this.tutorial.description,
         cost: this.tutorial.cost,
+        url: this.tutorial.url,
         published: false,
       };
 
@@ -89,8 +97,12 @@ export default {
         title: "",
         description: "",
         cost: "",
+        url: "",
         published: false,
       };
+    },
+    getUrl() {
+      this.url = "fornow";
     },
   },
 };
@@ -98,9 +110,7 @@ export default {
 
 <style scoped>
 .coms {
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding-top: 50px;
+  padding-left: 70px;
 }
 </style>

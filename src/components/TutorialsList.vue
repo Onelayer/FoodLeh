@@ -2,7 +2,7 @@
   <div class="coms">
     <div class="list row">
       <div class="col-md-6">
-        <h2>Menu</h2>
+        <h1>Menu</h1>
         <ul class="list-group">
           <li
             class="list-group-item"
@@ -61,6 +61,7 @@ export default {
           title: data.title,
           description: data.description,
           cost: data.cost,
+          url: data.url,
           published: data.published,
         });
       });
@@ -99,9 +100,7 @@ export default {
 
 <style scoped>
 .coms {
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding-top: 50px;
+  padding-left: 70px;
 }
 </style>

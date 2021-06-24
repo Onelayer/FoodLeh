@@ -2,7 +2,7 @@
 <template>
   <div>
     <div>
-      <p>Upload an image of food to the Storage(Please name it accordingly):</p>
+      <H5>Upload an image:</H5>
       <input type="file" @change="previewImage" accept="image/*" />
     </div>
     <div>
@@ -23,6 +23,11 @@
 import firebase from "firebase";
 
 export default {
+  props: {
+    myUrl: {
+      type: String,
+    },
+  },
   name: "Upload",
   data() {
     return {
@@ -57,6 +62,8 @@ export default {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.picture = url;
+            this.myUrl = url;
+            this.$emit("getUrl", this.myUrl);
           });
         }
       );

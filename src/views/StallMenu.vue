@@ -36,12 +36,13 @@
 
 <script>
 import NavigationStalls from "../components/NavigationStalls";
+import TutorialDataService from "../services/TutorialDataService";
 
 class Post {
-  constructor(title, link, author, img, description) {
+  constructor(title, link, price, img, description) {
     this.title = title;
     this.link = link;
-    this.author = author;
+    this.price = price;
     this.img = img;
     this.description = description;
   }
@@ -53,48 +54,46 @@ export default {
   },
   data: () => {
     return {
-      email: "",
-      zip: "",
-      city: "",
-      keyword: "",
-      postList: [
-        new Post(
-          "Roasted Chicken Rice",
-          "https://vuejs.org/", //link to modal
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "White Chicken Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Roasted Pork Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Char Siew Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-        new Post(
-          "Roasted Pork and Char Siew Rice",
-          "https://vuejs.org/",
-          "",
-          "https://vuejs.org//images/logo.png",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
-        ),
-      ],
+      card_list: [],
+      // postList: [
+      //   new Post(
+      //     "Roasted Chicken Rice",
+      //     "https://vuejs.org/", //link to modal
+      //     "",
+      //     "https://vuejs.org//images/logo.png",
+      //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis malesuada tincidunt dui, non congue odio feugiat volutpat. Ut fermentum vitae nunc vitae pulvinar. Aenean sapien dui, viverra at sapien ut, scelerisque tempus eros. Nullam est ex, dictum non feugiat at, semper a purus."
+      //   ),
+      // ],
     };
+  },
+  methods: {
+    onDataChange(items) {
+      let _card_list = [];
+
+      items.forEach((item) => {
+        // let key = item.key;
+        let data = item.val();
+        let card_data = new Post(
+          data.title,
+          "",
+          data.cost,
+          "",
+          data.description
+          );
+        
+        _card_list.push({
+          card_data,
+        });
+      });
+
+      this.card_list = _card_list;
+    },
+  },
+  mounted() {
+    TutorialDataService.getAll().on("value", this.onDataChange);
+  },
+  beforeDestroy() {
+    TutorialDataService.getAll().off("value", this.onDataChange);
   },
   computed: {
     filteredList() {

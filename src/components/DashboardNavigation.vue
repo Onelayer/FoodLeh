@@ -10,14 +10,17 @@
       open
     >
       <template #logo>
-        <img src="../assets/logo.jpg" class="brand_logo" alt="FoodLeh logo" />
+        <img
+          src="../assets/foodlehlogo.png"
+          class="brand_logo"
+          alt="FoodLeh logo"
+        />
       </template>
-      <vs-sidebar-item id="home">
+      <vs-sidebar-item id="Instagram">
         <template #icon>
-          <i class="bx bx-home"></i>
-          <!-- <img src="../assets/home-icon.jpg" class="brand_logo" alt="home logo"/> -->
+          <i class="bx bxl-instagram"></i>
         </template>
-        Home
+        <router-link to="/dashboard/orderlist">Order List</router-link>
       </vs-sidebar-item>
       <vs-sidebar-item id="market">
         <template #icon>
@@ -31,12 +34,6 @@
         </template>
         <router-link to="/dashboard/menulist">Menu List</router-link>
       </vs-sidebar-item>
-      <vs-sidebar-item id="Instagram">
-        <template #icon>
-          <i class="bx bxl-instagram"></i>
-        </template>
-        <router-link to="/dashboard/orderlist">Order List</router-link>
-      </vs-sidebar-item>
       <template #footer>
         <vs-row justify="space-between">
           <vs-sidebar-item id="Facebook">
@@ -44,7 +41,8 @@
               type="submit"
               @click="logout()"
               badge-position="top-right"
-            > Log out
+            >
+              Log out
             </vs-button>
           </vs-sidebar-item>
         </vs-row>
@@ -55,7 +53,7 @@
 
 <!--<template>
   <div>
-    <header>
+    <header> 
       <nav>
         <ul>
           <li>
@@ -98,7 +96,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+a {
+  text-decoration: none;
+  color: #fff;
+}
 /* header {
   width: 100%;
   height: 5rem;

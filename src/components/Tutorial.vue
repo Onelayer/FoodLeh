@@ -106,6 +106,7 @@ export default {
         title: this.currentTutorial.title,
         description: this.currentTutorial.description,
         cost: this.currentTutorial.cost,
+        url: this.currentTutorial.url,
       };
 
       TutorialDataService.update(this.currentTutorial.key, data)
