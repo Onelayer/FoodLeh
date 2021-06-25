@@ -12,14 +12,12 @@ Our aim is to create an interactive website that food and beverage companies can
 
 
 **User stories:**
-
-   1. Users will be able to see the details of the company, like its location, contact number, menu and pictures of different food, put together in a cohesive design and is        intuitive to use.
-
-
-   2. Users will be able to use the website to pay and order food for self-collection and delivery.
-
-
-   3. Users will be able to log in and have their own account (membership system). They will then have access to special promotions and receive credit when they buy food.
+   1. As a customer, I want to have a website which is easy to navigate to be able to order food I like from the store of my choice.
+   2. As a customer, I want to be able to view the menu and see each food item with its picture and its description.
+   3. As a customer, I want to have the ability to either pay online or pay on site without having to fill up a lot of personal details.
+   4. As a hawker, I want to have my own dashboard. The dashboard should allow me to add/update/remove items in my menu with its accompanying images with ease.
+   5. As a hawker, I want to be able to view my menu and make changes as I see fit.
+   6. As a hawker, I want to be able to be able to view my orders in real-time and able to toggle whether the food is done and handed over to the customer.
 
 
 **Scope of Project:**
@@ -49,4 +47,10 @@ Our aim is to create an interactive website that food and beverage companies can
 **How are we different from similar platforms?**
 
    - While we are unable to compete with big names like grabfood and foodpanda, we plan for our code to be open-sourced for hawker centre owners to used to help out the            hawkers. This will greatly reduce hawkers reliance on grabfood and foodpanda and able to improve their profit margins.
+
+
+4. Feature design and implementation
+   a) Customer side interface
+   b) Hawker side interface
+      1. Login and register system was set up with vue and authenticated with firebase. Google login was also added with firebase api. 
 
