@@ -35,8 +35,8 @@
       <div class="image">
         <img
           v-bind:src="currentTutorial.url"
-          width="320"
-          height="180"
+          width="240"
+          height="240"
           alt="Food Image"
         />
       </div>

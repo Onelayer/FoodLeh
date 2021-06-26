@@ -151,9 +151,9 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 650px;
+  height: 640px;
   width: 500px;
-  margin-top: 40px;
+  margin-top: 10px;
   background: white;
   justify-content: center;
   flex-direction: column;
