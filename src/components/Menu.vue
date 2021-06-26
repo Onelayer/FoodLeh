@@ -38,7 +38,7 @@
 import TutorialDataService from "../services/TutorialDataService";
 
 export default {
-  data: () => {
+  data() {
     return {
       cart: [],
       cardList: [],
@@ -54,7 +54,7 @@ export default {
         text: "Item has been added to cart!",
         type: "success",
         timer: 3000
-      }).then(r => {
+      }).then(function(r) {
         console.log(r.value);
       });
       this.saveCart();

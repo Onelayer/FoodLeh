@@ -1,5 +1,47 @@
 <template>
-  <div>
+  <div class="cart navspacing">
+    <h1 class="title">Your Cart</h1>
+    <p v-show="!cart.length">
+      <i>Your cart is empty!</i>
+      <router-link to="/ordering/menu">Go shopping</router-link>
+    </p>
+    <p>
+      {{ message }}
+    </p>
+    <table class="table is-striped" v-show="cart.length">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Price</td>
+          <td>Quantity</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(p, index) in cart" :key="index">
+          <td>{{ p.title }}</td>
+          <td>${{ p.cost }}</td>
+          <td>{{ p.quantity }}</td>
+        </tr>
+        <tr>
+          <td><b>Total:</b></td>
+          <td></td>
+          <td>
+            <b>${{ total }}</b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <button
+        v-show="cart.length"
+        class="button is-primary"
+        @click.prevent="checkOut"
+      >
+        Checkout
+      </button>
+    </p>
+  </div>
+  <!-- <div>
     <br />
     <br />
     <br />
@@ -13,7 +55,7 @@
     </header>
     <div>
       <h1>Your Cart</h1>
-      <div class="products" v-for="(post, index) in cart" :key="index">
+      <div class="cart" v-for="(post, index) in cart" :key="index">
         {{ post.title }}
         {{ post.description }}
         <img :src="post.img" />
@@ -22,7 +64,7 @@
       </div>
     </div>
     <h2>{{ message }}</h2>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -73,12 +115,6 @@ export default {
       this.saveCart();
     },
   },
-  created() {
-    // eventBus.$on("addItemToCart", (product) => {
-    //     this.cart.push(product);
-    //     console.log(this.cart);
-    // })
-  },
   mounted() {
     if (localStorage.getItem("cart")) {
       try {
@@ -87,9 +123,16 @@ export default {
         localStorage.removeItem("cart");
       }
     }
-    // if(localStorage.getItem('cart')) {
-    //     this.cart = localStorage.getItem('cart');
-    // }
+  },
+  computed: {
+    // ...mapGetters({
+    //     products: 'cartProducts'
+    // }),
+    total() {
+      return this.cart.reduce((total, p) => {
+        return total + p.cost * p.quantity;
+      }, 0);
+    },
   },
 };
 </script>
