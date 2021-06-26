@@ -22,7 +22,7 @@
           <td>{{ p.title }}</td>
           <td>${{ p.cost }}</td>
           <td>{{ p.quantity }}</td>
-          <td><button v-on:click="removeItemFromCart(post)">Remove Item</button></td>
+          <td><button v-on:click="removeItemFromCart(p)">Remove Item</button></td>
         </tr>
         <tr>
           <td><b>Total:</b></td>
@@ -116,6 +116,7 @@ export default {
       this.$confirm("Are you sure you want to remove this item?")
         .then(() => {
           const index = this.cart.indexOf(product);
+          console.log(index);
           this.cart.splice(index, 1); //2nd param is the number of elements to remove
           this.saveCart();
       });

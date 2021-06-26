@@ -25,7 +25,7 @@
       <div class="form-group">
         <label for="cost">Cost</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="cost"
           v-model="currentTutorial.cost"
