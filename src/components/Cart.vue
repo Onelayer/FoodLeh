@@ -14,6 +14,7 @@
           <td>Name</td>
           <td>Price</td>
           <td>Quantity</td>
+          <td></td>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{ p.title }}</td>
           <td>${{ p.cost }}</td>
           <td>{{ p.quantity }}</td>
+          <td><button v-on:click="removeItemFromCart(post)">Remove Item</button></td>
         </tr>
         <tr>
           <td><b>Total:</b></td>
@@ -28,6 +30,7 @@
           <td>
             <b>${{ total }}</b>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -110,9 +113,12 @@ export default {
       console.log(this.cart);
     },
     removeItemFromCart(product) {
-      const index = this.cart.indexOf(product);
-      this.cart.splice(index, 1); //2nd param is the number of elements to remove
-      this.saveCart();
+      this.$confirm("Are you sure you want to remove this item?")
+        .then(() => {
+          const index = this.cart.indexOf(product);
+          this.cart.splice(index, 1); //2nd param is the number of elements to remove
+          this.saveCart();
+      });
     },
   },
   mounted() {

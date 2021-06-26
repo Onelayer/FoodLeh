@@ -76,6 +76,7 @@ export default {
           cost: data.cost,
           img: data.url,
           description: data.description,
+          quantity: 1,
         });
       });
 
