@@ -116,7 +116,6 @@ export default {
       this.$confirm("Are you sure you want to remove this item?")
         .then(() => {
           const index = this.cart.indexOf(product);
-          console.log(index);
           this.cart.splice(index, 1); //2nd param is the number of elements to remove
           this.saveCart();
       });
