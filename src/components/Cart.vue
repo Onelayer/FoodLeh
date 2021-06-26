@@ -13,7 +13,7 @@
     </header>
     <div>
       <h1>Your Cart</h1>
-      <div v-for="(post, index) in cart" :key="index">
+      <div class="products" v-for="(post, index) in cart" :key="index">
         {{ post.title }}
         {{ post.description }}
         <img :src="post.img" />

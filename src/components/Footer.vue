@@ -30,12 +30,10 @@
           </div>
           <!-- Footer About Text-->
           <div class="col-lg-4">
-            <h4 class="text-uppercase mb-4">About Freelancer</h4>
+            <h4 class="text-uppercase mb-4">About FoodLeh</h4>
             <p class="lead mb-0">
-              Freelance is a free to use, MIT licensed Bootstrap theme created
-              by
-              <a href="http://startbootstrap.com">Start Bootstrap</a>
-              .
+              FoodLeh aims to be free to use and open source; many local small F&B industries can adopt our technology.
+              <router-link to="/register">Register Here</router-link>
             </p>
           </div>
         </div>
@@ -44,7 +42,7 @@
     <!-- Copyright Section-->
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; Your Website 2021</small>
+        <small>Copyright &copy; FoodLeh</small>
       </div>
     </div>
   </div>

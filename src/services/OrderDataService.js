@@ -11,8 +11,8 @@ class TutorialDataService {
     return db.push(tutorial);
   }
 
-  update(key, value) {
-    return db.child(key).update(value);
+  update(value) {
+    return db.update(value);
   }
 
   delete(key) {
@@ -20,7 +20,7 @@ class TutorialDataService {
   }
 
   deleteAll() {
-    return db.remove();
+    return db.remove(); 
   }
 }
 

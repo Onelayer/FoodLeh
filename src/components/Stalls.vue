@@ -25,6 +25,7 @@
           v-for="(obj, key) in stallsJSON"
           :key="key"
         >
+          <router-link to="/ordering/menu">
           <div
             class="portfolio-item mx-auto"
             data-bs-toggle="modal"
@@ -43,14 +44,13 @@
               <div
                 class="portfolio-item-caption-content text-center text-white"
               >
-                <router-link to="/ordering/menu"
-                  ><strong>SELECT</strong></router-link
-                >
+                <strong>{{ obj.caption }}</strong>
               </div>
             </div>
             <img class="img-fluid" :src="`${obj.img}`" alt="..." />
-            <h6 style="margin: 1rem">{{ obj.title }}</h6>
+            <h6 style="margin: 1rem; color: black">{{ obj.title }}</h6>
           </div>
+          </router-link>
         </div>
       </div>
     </div>

@@ -9,36 +9,34 @@
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
           <div class="divider-custom-line"></div>
-          <!-- <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div> -->
         </div>
         <!-- About Section Content-->
         <div class="row">
           <div class="col-lg-4 ms-auto">
             <p class="lead">
-              Freelancer is a free bootstrap theme created by FoodLeh. The
-              download includes the complete source files including HTML, CSS,
-              and JavaScript as well as optional SASS stylesheets for easy
-              customization.
+              The COVID-19 pandemic has brought about more takeaways and working from 
+              home, affecting the food industry greatly.
+              FoodLeh aims to provide a centralized platform for smaller local F&B
+              businesses to consolidate and provide a web-based ordering system. 
             </p>
           </div>
           <div class="col-lg-4 me-auto">
             <p class="lead">
-              You can create your own custom avatar for the masthead, change the
-              icon in the dividers, and add your email address to the contact
-              form to make it fully functional!
+              Owners will be able to manage the menu items, description and cost 
+              of their individual menu items they put on their stallfront through a 
+              personalised dashboard. What are you waiting for? Sign up today with us!
             </p>
           </div>
         </div>
         <!-- About Section Button-->
         <div class="text-center mt-4">
-          <a
-            class="btn btn-xl btn-outline-light"
-            href="https://startbootstrap.com/theme/freelancer/"
-          >
-            <i class="fas fa-download me-2"></i>
-            Free Download!
-          </a>
+          <router-link to="/register">
+            <a
+              class="btn-light btn-xl btn-outline-light"
+              >
+                Register Your Store Now!
+            </a>
+          </router-link>
         </div>
       </div>
     </section>

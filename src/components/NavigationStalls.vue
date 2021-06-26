@@ -8,6 +8,8 @@
       >
         <div class="container">
           <router-link to="/" class="navbar-brand">FoodLeh</router-link>
+          <div class="dropdown              
+              navbar-toggler">
           <button
             class="
               navbar-toggler
@@ -25,8 +27,13 @@
             aria-label="Toggle navigation"
           >
             Menu
-            <i class="fas fa-bars"></i>
+          <i class="fas fa-bars"></i>
           </button>
+            <div class="dropdown-content">
+              <router-link to="menu">Menu</router-link>  
+              <router-link to="Cart">Cart</router-link>  
+            </div>
+          </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item mx-0 mx-lg-1">

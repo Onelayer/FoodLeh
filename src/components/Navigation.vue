@@ -8,6 +8,8 @@
       >
         <div class="container">
           <a class="navbar-brand" href="#page-top">FoodLeh</a>
+          <div class="dropdown              
+              navbar-toggler">
           <button
             class="
               navbar-toggler
@@ -25,27 +27,24 @@
             aria-label="Toggle navigation"
           >
             Menu
-            <i class="fas fa-bars"></i>
+          <i class="fas fa-bars"></i>
           </button>
+            <div class="dropdown-content">
+              <a href="#stalls">Order Now</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+              <router-link to="/login">Stall Owners</router-link>  
+            </div>
+          </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item mx-0 mx-lg-1">
-                <!-- <div class="dropdown">
-                                <button class="dropbtn"><a href="">Stall Owners</a></button> -->
-                <!-- <div class="dropdown-content">
-                                        <router-link to="/login">Login</router-link> |
-                                        <router-link to="/register">Register</router-link> |
-                                        <router-link to="/dashboard">Dashboard</router-link> |
-                                        <router-link to="/addorder">AddOrder</router-link>
-                                        <button @click="logout">Logout</button>
-                                    </div> -->
 
                 <!-- <div class="dropdown-content" v-for="link in links" :key="link.id">
                                         <router-link :key="link.id" :to="`${link.page}`">{{ link.text }}</router-link>
-                                    </div> -->
-                <!-- </div>
+                                    </div>
+                </div>
                             <router-view/> -->
-              </li>
+
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#stalls"
                   >Order Now</a
@@ -61,8 +60,6 @@
                   >Contact</a
                 >
               </li>
-
-              <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" @click="navigateToLogin">Stall Owners</a></li> -->
               <router-link to="/login" tag="li"
                 ><a class="nav-link py-3 px-0 px-lg-3 rounded"
                   >Stall Owners</a
@@ -78,11 +75,8 @@
 </template>
 
 <script>
+
 export default {
-  methods: {
-    navigateToLogin() {
-      this.$router.push({ name: Login });
-    },
-  },
+
 };
 </script>

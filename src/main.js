@@ -4,7 +4,7 @@ import router from "./router/index.js";
 import './assets/css/styles.css';
 import Vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css';
-
+import VueSimpleAlert from 'vue-simple-alert';
 
 /*
 var firebaseConfig = {
@@ -22,6 +22,8 @@ firebase.initializeApp(firebaseConfig);
 Vue.use(Vuesax, {
   // options here
 })
+
+Vue.use(VueSimpleAlert);
 
 Vue.config.productionTip = false;
 

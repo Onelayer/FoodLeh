@@ -49,6 +49,14 @@ export default {
     addItemToCart(product) {
       //it is called post in the template
       this.cart.push(product);
+      this.$fire({
+        title: "Success!",
+        text: "Item has been added to cart!",
+        type: "success",
+        timer: 3000
+      }).then(r => {
+        console.log(r.value);
+      });
       this.saveCart();
       // eventBus.$emit('addItemToCart', product);
     },
