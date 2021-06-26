@@ -21,6 +21,7 @@
 
                 <div class="form-group">
                   <input
+                    type="text"
                     class="form-control"
                     id="description"
                     required
@@ -32,6 +33,7 @@
 
                 <div class="form-group">
                   <input
+                    type="number"
                     class="form-control"
                     id="cost"
                     required
@@ -151,7 +153,7 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 640px;
+  height: 750px;
   width: 500px;
   margin-top: 10px;
   background: white;
