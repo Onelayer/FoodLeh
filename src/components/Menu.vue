@@ -21,13 +21,25 @@
         <div class="card" v-for="post in filteredList" :key="post.title">
           <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a href="" @click.prevent="addItemToCart(post)" target="blank">
-            <img v-bind:src="post.img" alt="" /><small>{{ post.cost }}</small>
-            {{ post.title }}
-          </a>
+            <img v-bind:src="post.img" alt="" />
+            <table class="product-font">
+              <tbody>
+              <tr>
+                <td>{{ post.title }}</td>
 
-          <small id="description"
-            >{{ post.description }}<small>...</small></small
-          >
+              </tr>
+              <tr>
+                <td>{{ post.description }}</td>
+              </tr>
+              <tr>
+                <td class="product-price">${{ post.cost }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </a>
+          <!-- <small id="description">
+            {{ post.description }}
+          </small> -->
         </div>
       </div>
     </div>
@@ -105,3 +117,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.product-font {
+  color: black;
+  justify-self: 'left';
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+  flex: row;
+}
+
+.product-price {
+  color: black;
+  justify-content: right;
+  font-size: 0.9rem;
+  margin-left: 10rem;
+}
+
+.product-addtocart {
+  color: black;
+  font-size: 0.9rem;
+}
+</style>

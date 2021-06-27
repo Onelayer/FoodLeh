@@ -22,7 +22,7 @@
           <td>{{ p.title }}</td>
           <td>${{ p.cost }}</td>
           <td>{{ p.quantity }}</td>
-          <td><button v-on:click="removeItemFromCart(post)">Remove Item</button></td>
+          <td><button v-on:click="removeItemFromCart(p)">Remove Item</button></td>
         </tr>
         <tr>
           <td><b>Total:</b></td>

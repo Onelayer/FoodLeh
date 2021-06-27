@@ -4292,7 +4292,7 @@ textarea.form-control-lg {
   color: #fff;
 }
 
-.card {
+/* .card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -4450,7 +4450,7 @@ textarea.form-control-lg {
 .card-group > .card:not(:first-child) .card-footer {
     border-bottom-left-radius: 0;
   }
-}
+} */
 
 .accordion-button {
   position: relative;
@@ -11138,7 +11138,7 @@ html {
 }
 
 .card:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   z-index: 100;
   background-color: #fff;
 }
@@ -11151,7 +11151,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
 }
 
 .card a img {
@@ -11171,7 +11171,7 @@ small#description {
   display: flex;
   flex-direction: row;
   visibility: hidden;
-  font-size: 8px;
+  font-size: 0.6rem;
   background: #dcffff;
   color: #35495e;
   height: 23px;
