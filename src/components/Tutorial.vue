@@ -74,7 +74,7 @@
 
   <div v-else>
     <br />
-    <p>Please click on a Tutorial...</p>
+    <p>Please click on a food item...</p>
   </div>
 </template>
 
@@ -120,7 +120,7 @@ export default {
 
       TutorialDataService.update(this.currentTutorial.key, data)
         .then(() => {
-          this.message = "The tutorial was updated successfully!";
+          this.message = "The food item was updated successfully!";
         })
         .catch((e) => {
           console.log(e);

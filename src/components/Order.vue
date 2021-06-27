@@ -25,7 +25,7 @@
       <div class="form-group">
         <label for="cost">Cost</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="cost"
           v-model="currentTutorial.cost"
@@ -65,7 +65,7 @@
 
   <div v-else>
     <br />
-    <p>Please click on a Tutorial...</p>
+    <p>Please click on a order...</p>
   </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     updatePublished(status) {
-      TutorialDataService.update(this.currentTutorial.key, {
+      TutorialDataService.change(this.currentTutorial.key, {
         published: status,
       })
         .then(() => {
@@ -108,9 +108,9 @@ export default {
         cost: this.currentTutorial.cost,
       };
 
-      TutorialDataService.update(this.currentTutorial.key, data)
+      TutorialDataService.change(this.currentTutorial.key, data)
         .then(() => {
-          this.message = "The tutorial was updated successfully!";
+          this.message = "The order was updated successfully!";
         })
         .catch((e) => {
           console.log(e);
