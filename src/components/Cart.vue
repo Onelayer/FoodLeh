@@ -34,28 +34,46 @@
         </tr>
       </tbody>
     </table>
-    <p>
-      <button
-        v-show="cart.length"
-        class="button is-primary"
-        @click.prevent="checkOut"
-      >
-        Checkout
-      </button>
-    </p>
+    <div v-show="cart.length">
+      <div>
+        <select v-model="options">
+          <option value="pickUp">Self Pick-Up</option>
+          <option value="delivery">Delivery</option>
+        </select>
+      </div>
+      <div class="inputFields">
+        <input type="text" required v-model="name" placeholder="Name">
+        <input type="number" required v-model="hpNumber" placeholder="Phone Number">     
+      </div>
+      
+      <p>
+        <button
+          class="button is-primary"
+          @click.prevent="checkOut"
+        >
+          Checkout
+        </button>
+      </p>
+      <p>Name is {{ name }}, HP Number is {{ hpNumber }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 import OrderDataService from "../services/OrderDataService";
+import BasicInput from './BasicInput.vue';
 
 export default {
+  components: { BasicInput },
   data: () => {
     return {
       cart: [],
       message: "",
       date: 1,
       counter: `100`,
+      name: '',
+      hpNumber: '',
+      options: 'pickUp', //set pickup by default
     };
   },
   methods: {
@@ -86,6 +104,9 @@ export default {
         this.message = "Please add an item before checking out";
       } else {
         let data = this.cart;
+        data.push(this.name);
+        data.push(this.hpNumber);
+        console.log(data);
         OrderDataService.update(this.generateCode(4), data)
           .then(() => {
             this.message = "Checkout successful.";
