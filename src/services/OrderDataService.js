@@ -11,8 +11,8 @@ class TutorialDataService {
     return db.push(tutorial);
   }
 
-  update(value) {
-    return db.update(value);
+  update(key, value) {
+    return db.child(key).update(value);
   }
 
   change(key, value) {

@@ -22,7 +22,7 @@
           <td>{{ p.title }}</td>
           <td>${{ p.cost }}</td>
           <td>{{ p.quantity }}</td>
-          <td><button v-on:click="removeItemFromCart(p)">Remove Item</button></td>
+          <td><button @click="removeItemFromCart(p)">Remove Item</button></td>
         </tr>
         <tr>
           <td><b>Total:</b></td>
@@ -44,30 +44,6 @@
       </button>
     </p>
   </div>
-  <!-- <div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <header>
-      {{ cart.length }} in cart
-      <button @click="retrieveCart">Retrieve cart info</button>
-      <button @click="checkOut">Check Out</button>
-      <button @click="emptyCart">Remove All</button>
-    </header>
-    <div>
-      <h1>Your Cart</h1>
-      <div class="cart" v-for="(post, index) in cart" :key="index">
-        {{ post.title }}
-        {{ post.description }}
-        <img :src="post.img" />
-        <div>{{ post.cost }}</div>
-        <button v-on:click="removeItemFromCart(post)">Remove Item</button>
-      </div>
-    </div>
-    <h2>{{ message }}</h2>
-  </div> -->
 </template>
 
 <script>
@@ -78,20 +54,31 @@ export default {
     return {
       cart: [],
       message: "",
+      date: 1,
+      counter: `100`,
     };
   },
   methods: {
-    // addItemToCart(product) {
-    //     this.cart.push(product);
-    //     console.log(this.cart);
-
-    // },
+    generateCode(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    },
+    currentDate() { //do i need date?
+      const current = new Date();
+      const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+      return date;
+    },
     emptyCart() {
       this.cart.splice(0, this.cart.length);
       this.saveCart();
     },
     saveCart() {
-      let parsedArray = JSON.stringify(this.cart);
+      let parsedArray = JSON.stringify(this.cart); //saves the array locally after parsing
       localStorage.setItem("cart", parsedArray);
     },
     checkOut() {
@@ -99,7 +86,7 @@ export default {
         this.message = "Please add an item before checking out";
       } else {
         let data = this.cart;
-        OrderDataService.update(data)
+        OrderDataService.update(this.generateCode(4), data)
           .then(() => {
             this.message = "Checkout successful.";
           })
@@ -131,9 +118,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({
-    //     products: 'cartProducts'
-    // }),
     total() {
       return this.cart.reduce((total, p) => {
         return total + p.cost * p.quantity;
