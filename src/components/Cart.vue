@@ -61,10 +61,8 @@
 
 <script>
 import OrderDataService from "../services/OrderDataService";
-import BasicInput from './BasicInput.vue';
 
 export default {
-  components: { BasicInput },
   data: () => {
     return {
       cart: [],
