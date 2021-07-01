@@ -54,7 +54,7 @@
           Checkout
         </button>
       </p>
-      <p>Name is {{ name }}, HP Number is {{ hpNumber }}</p>
+      <!-- <p>Name is {{ name }}, HP Number is {{ hpNumber }}</p> -->
     </div>
   </div>
 </template>
