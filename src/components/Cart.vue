@@ -34,18 +34,27 @@
         </tr>
       </tbody>
     </table>
-    <div v-show="cart.length">
+    <div class="d-flex justify-content-center" v-show="cart.length">
+      <div>
       <div>
         <select v-model="options">
           <option value="pickUp">Self Pick-Up</option>
           <option value="delivery">Delivery</option>
         </select>
+        <select v-model="timing" v-if="options === 'pickUp'">
+          <option 
+            v-for="(time,idx) in listTimings" 
+            :value="listTimings" 
+            :key="idx"
+          >{{ time }}</option>
+        </select>
       </div>
+      <br/>
       <div class="inputFields">
         <input type="text" required v-model="name" placeholder="Name">
         <input type="number" required v-model="hpNumber" placeholder="Phone Number">     
       </div>
-      
+      <br/>
       <p>
         <button
           class="button is-primary"
@@ -55,6 +64,8 @@
         </button>
       </p>
       <!-- <p>Name is {{ name }}, HP Number is {{ hpNumber }}</p> -->
+      <button @click="generateTimings">Generate List</button>
+      </div>
     </div>
   </div>
 </template>
@@ -72,12 +83,34 @@ export default {
       name: '',
       hpNumber: '',
       options: 'pickUp', //set pickup by default
+      listTimings: [],
+      timing: 1200,
+      stallOpeningHours: 9, //hardcoded to 9am for receiving of self-pickup, but stalls could modify this from backend if wanted
+      stallClosingHours: 22,
     };
   },
   methods: {
+    generateTimings() {
+      const todaysTime = new Date();
+      let _timings = [];
+      for (var i = (todaysTime.getHours() > this.stallOpeningHours) ? todaysTime.getHours() : this.stallOpeningHours; i < this.stallClosingHours; i++) {
+        let time = i*100;
+        // var isCurrentHour = new Boolean(todaysTime.getHours() === i);
+        // console.log(todaysTime.getHours());
+        // console.log(i);
+        // console.log(isCurrentHour);
+        // console.log(Math.ceil((todaysTime.getMinutes())/15));
+        for (var j = ((todaysTime.getHours() > this.stallOpeningHours) && (todaysTime.getHours() === i)) ? Math.ceil((todaysTime.getMinutes())/15) : 0; j <= 3; j++) {
+          time += j*15;
+          _timings.push(time);
+          time -= j*15;
+        }
+      }
+      this.listTimings = _timings;
+    },
     generateCode(length) {
-      var result           = '';
-      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       var charactersLength = characters.length;
       for ( var i = 0; i < length; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -101,11 +134,16 @@ export default {
       if (this.cart.length === 0) {
         this.message = "Please add an item before checking out";
       } else {
-        let data = this.cart;
-        data.push(this.name);
-        data.push(this.hpNumber);
+        const orderID = this.generateCode(4);
+        let data = {
+          orderNumber: orderID,
+          name: this.name,
+          hpNumber: this.hpNumber,
+          option: this.options,
+          cart: this.cart,
+        };
         console.log(data);
-        OrderDataService.update(this.generateCode(4), data)
+        OrderDataService.update(orderID, data)
           .then(() => {
             this.message = "Checkout successful.";
           })
