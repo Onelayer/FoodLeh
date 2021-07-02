@@ -34,37 +34,40 @@
         </tr>
       </tbody>
     </table>
-    <div class="d-flex justify-content-center" v-show="cart.length">
-      <div>
-      <div>
-        <select v-model="options">
-          <option value="pickUp">Self Pick-Up</option>
-          <option value="delivery">Delivery</option>
-        </select>
-        <select v-model="timing" v-if="options === 'pickUp'">
-          <option 
-            v-for="(time,idx) in listTimings" 
-            :value="listTimings" 
-            :key="idx"
-          >{{ time }}</option>
-        </select>
-      </div>
-      <br/>
-      <div class="inputFields">
-        <input type="text" required v-model="name" placeholder="Name">
-        <input type="number" required v-model="hpNumber" placeholder="Phone Number">     
-      </div>
-      <br/>
-      <p>
-        <button
-          class="button is-primary"
-          @click.prevent="checkOut"
-        >
-          Checkout
-        </button>
-      </p>
-      <!-- <p>Name is {{ name }}, HP Number is {{ hpNumber }}</p> -->
-      <button @click="generateTimings">Generate List</button>
+    <div v-show="cart.length">
+      <div class="d-flex justify-content-center" >
+        <div>
+        <div>
+          <select v-model="options">
+            <option value="pickUp">Self Pick-Up</option>
+            <option value="delivery">Delivery</option>
+          </select>
+          <select v-model="timing" v-if="options === 'pickUp'">
+            <option 
+              v-for="(time,idx) in listTimings" 
+              :value="listTimings" 
+              :key="idx"
+            >{{ time }}</option>
+          </select>
+        </div>
+        <br/>
+        <div class="inputFields">
+          <input type="text" v-model="name" placeholder="Name">
+          <input type="number" v-model="hpNumber" placeholder="Phone Number">     
+        </div>
+        <br/>
+        <p>
+          <button
+            class="button is-primary"
+            @click.prevent="checkOut"
+          >
+            Checkout
+          </button>
+        </p>
+        <i>{{ error }}</i>
+        <button><a :href="generateOrderUrl" >Checkout Via Whatsapp</a></button>
+
+        </div>
       </div>
     </div>
   </div>
@@ -83,10 +86,12 @@ export default {
       name: '',
       hpNumber: '',
       options: 'pickUp', //set pickup by default
+      error: '',
       listTimings: [],
-      timing: 1200,
-      stallOpeningHours: 9, //hardcoded to 9am for receiving of self-pickup, but stalls could modify this from backend if wanted
-      stallClosingHours: 22,
+      timing: '',
+      stallOpeningHours: 9, //hardcoded to 9am and 10pm for receiving of self-pickup, 
+      stallClosingHours: 22, //but stalls should be able to modify this from backend if wanted
+      url: "",
     };
   },
   methods: {
@@ -95,11 +100,6 @@ export default {
       let _timings = [];
       for (var i = (todaysTime.getHours() > this.stallOpeningHours) ? todaysTime.getHours() : this.stallOpeningHours; i < this.stallClosingHours; i++) {
         let time = i*100;
-        // var isCurrentHour = new Boolean(todaysTime.getHours() === i);
-        // console.log(todaysTime.getHours());
-        // console.log(i);
-        // console.log(isCurrentHour);
-        // console.log(Math.ceil((todaysTime.getMinutes())/15));
         for (var j = ((todaysTime.getHours() > this.stallOpeningHours) && (todaysTime.getHours() === i)) ? Math.ceil((todaysTime.getMinutes())/15) : 0; j <= 3; j++) {
           time += j*15;
           _timings.push(time);
@@ -133,6 +133,12 @@ export default {
     checkOut() {
       if (this.cart.length === 0) {
         this.message = "Please add an item before checking out";
+      } else  if (!this.name) {
+        this.error = "Please fill in your name before checking out";
+      } else  if (!this.hpNumber) {
+        this.error = "Please fill in your mobile number before checking out";
+      } else  if ((!this.timing) && (this.options === 'pickUp')) {
+        this.error = "Please fill in your pick-up time before checking out";
       } else {
         const orderID = this.generateCode(4);
         let data = {
@@ -173,6 +179,7 @@ export default {
         localStorage.removeItem("cart");
       }
     }
+    this.generateTimings();
   },
   computed: {
     total() {
@@ -180,7 +187,12 @@ export default {
         return total + p.cost * p.quantity;
       }, 0);
     },
+    generateOrderUrl() {
+      let urlStart = "https://wa.me/6590604838?text=I'm%20testing%20whatsapp%20checkout."
+      return urlStart;
+    },
   },
+
 };
 </script>
 
