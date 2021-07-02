@@ -136,7 +136,7 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 700px;
+  height: 900px;
   width: 700px;
   margin-top: 10px;
   background: white;
