@@ -10,6 +10,7 @@
 
 <script>
 import DashboardNavigation from "../components/DashboardNavigation.vue";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "Dashboard",
@@ -17,6 +18,11 @@ export default {
     return {
       pictureUrl: "",
     };
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
   components: {
     DashboardNavigation,

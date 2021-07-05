@@ -49,6 +49,7 @@
 <script>
 import TutorialDataService from "../services/OrderDataService";
 import TutorialDetails from "./Order";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "tutorials-list",
@@ -104,6 +105,11 @@ export default {
   },
   beforeDestroy() {
     TutorialDataService.getAll().off("value", this.onDataChange);
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
 };
 </script>
