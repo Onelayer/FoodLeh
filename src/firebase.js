@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/database";
+import store from './store';
 
 let config = {
   apiKey: "AIzaSyD9Y1A5dwPx1BFBveee1NoRuCzQRTJFpGw",
@@ -13,5 +14,10 @@ let config = {
 };
 
 firebase.initializeApp(config);
+
+firebase.auth().onAuthStateChanged(user => {
+  store.dispatch("fetchUser", user);
+  console.log(user);
+});
 
 export default firebase.database();

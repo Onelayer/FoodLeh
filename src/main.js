@@ -5,6 +5,9 @@ import './assets/css/styles.css';
 import Vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css';
 import VueSimpleAlert from 'vue-simple-alert';
+import firebase from './firebase';
+import store from "./store";
+
 
 /*
 var firebaseConfig = {
@@ -27,9 +30,9 @@ Vue.use(VueSimpleAlert);
 
 Vue.config.productionTip = false;
 
-export const eventBus = new Vue();
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
