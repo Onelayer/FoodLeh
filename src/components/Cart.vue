@@ -39,17 +39,19 @@
         <div>
         <div>
           <select v-model="options">
-            <option value="pickUp">Self Pick-Up</option>
-            <option value="delivery">Delivery</option>
+            <option value="Pick Up">Self Pick-Up</option>
+            <option value="Delivery">Delivery</option>
           </select>
-          <select v-model="timing" v-if="options === 'pickUp'">
+          <select v-model="timing" v-if="options === 'Pick Up'">
             <option 
               v-for="(time,idx) in listTimings" 
-              :value="listTimings" 
+              :value="time" 
               :key="idx"
             >{{ time }}</option>
           </select>
         </div>
+        <br/>
+        <i v-show="options === 'Delivery'">{{ deliveryMessage }}</i>
         <br/>
         <div class="inputFields">
           <input type="text" v-model="name" placeholder="Name">
@@ -65,7 +67,7 @@
           </button>
         </p>
         <i>{{ error }}</i>
-        <button><a :href="generateOrderUrl" >Checkout Via Whatsapp</a></button>
+        <button @click="generateOrderUrl">Checkout Via Whatsapp</button>
 
         </div>
       </div>
@@ -85,13 +87,14 @@ export default {
       counter: `100`,
       name: '',
       hpNumber: '',
-      options: 'pickUp', //set pickup by default
+      options: 'Pick Up', //set pickup by default
       error: '',
       listTimings: [],
-      timing: '',
+      timing: '1230',
       stallOpeningHours: 9, //hardcoded to 9am and 10pm for receiving of self-pickup, 
-      stallClosingHours: 22, //but stalls should be able to modify this from backend if wanted
-      url: "",
+      stallClosingHours: 24, //but stalls should be able to modify this from backend if wanted
+      hawkerHpNumber: 6590604838,
+      deliveryMessage: 'Delivery will be liased with the vendor through text.',
     };
   },
   methods: {
@@ -147,6 +150,7 @@ export default {
           hpNumber: this.hpNumber,
           option: this.options,
           cart: this.cart,
+          time: this.timing,
         };
         console.log(data);
         OrderDataService.update(orderID, data)
@@ -170,6 +174,39 @@ export default {
           this.saveCart();
       });
     },
+    encodeOrder() {
+      const orderID = this.generateCode(4);
+      let cartMessage = [];
+      for (var i = 0; i < this.cart.length; i++) {
+        cartMessage.push(
+          this.cart[i].title + ' ' + this.cart[i].quantity
+        );
+      }
+        let data = {
+          orderNumber: orderID,
+          name: this.name,
+          hpNumber: this.hpNumber,
+          option: this.options,
+          cart: cartMessage,
+          time: this.timing,
+          //need to include total too
+        };
+      console.log(data.time);
+      const message = encodeURI(
+        '*Order number: * ' + data.orderNumber + '\n' +
+        data.name + ' ' + data.hpNumber + '\n' +
+        data.option + ' ' + data.timing + '\n' +
+        data.cart + ' ' + '\n'
+        );
+      return message;
+    },
+    generateOrderUrl() {
+    //"https://wa.me/6590604838?text=I'm%20testing%20whatsapp%20checkout."
+      let urlStart = "https://wa.me/";
+      let text = "?text=";
+      let urlEncodedMsg = this.encodeOrder();
+      return window.open(urlStart + this.hawkerHpNumber + text + urlEncodedMsg, "_blank");
+    },
   },
   mounted() {
     if (localStorage.getItem("cart")) {
@@ -187,10 +224,7 @@ export default {
         return total + p.cost * p.quantity;
       }, 0);
     },
-    generateOrderUrl() {
-      let urlStart = "https://wa.me/6590604838?text=I'm%20testing%20whatsapp%20checkout."
-      return urlStart;
-    },
+
   },
 
 };
