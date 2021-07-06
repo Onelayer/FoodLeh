@@ -63,6 +63,7 @@ export default {
   methods: {
     onDataChange(items) {
       let _tutorials = [];
+      console.log(items);
 
       items.forEach((item) => {
         let key = item.key;
@@ -101,10 +102,10 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$root.uid).on("value", this.onDataChange);
   },
   beforeDestroy() {
-    TutorialDataService.getAll().off("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$root.uid).off("value", this.onDataChange);
   },
 };
 </script>

@@ -110,6 +110,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
+          this.$root.uid = firebase.auth().currentUser.uid;
           alert("Successfully logged in");
           this.$router.push("/dashboard/orderlist");
         })
@@ -132,6 +133,7 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(() => {
+          this.$root.uid = firebase.auth().currentUser.uid;
           this.$router.push("/dashboard/orderlist");
           alert("Successfully logged in");
         })

@@ -99,7 +99,7 @@ export default {
         published: false,
       };
 
-      TutorialDataService.create(data)
+      TutorialDataService.new(this.$root.uid, data)
         .then(() => {
           console.log("Created new item successfully!");
           this.submitted = true;
