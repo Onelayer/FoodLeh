@@ -96,6 +96,7 @@
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -103,6 +104,11 @@ export default {
       email: "",
       password: "",
     };
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
   methods: {
     login() {

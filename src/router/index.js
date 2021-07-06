@@ -14,6 +14,7 @@ import Menu from "../components/Menu.vue";
 import Cart from "../components/Cart.vue";
 import Home from "../views/Home.vue";
 import firebase from "firebase";
+import store from "../store";
 import ForgotPassword from "../components/ForgotPassword.vue";
 
 Vue.use(VueRouter);
@@ -114,7 +115,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.authRequired)) {
-    if (firebase.auth().currentUser) {
+    if (store.getters.user.loggedIn) {
       next();
     } else {
       alert("You must be logged in to see this page");

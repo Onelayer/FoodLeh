@@ -85,6 +85,7 @@
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from 'vuex';
 
 export default {
   data: () => ({
@@ -104,6 +105,11 @@ export default {
           this.$router.push("/login");
         });
     },
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
 };
 </script>

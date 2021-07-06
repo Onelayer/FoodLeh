@@ -22,7 +22,7 @@
           <td>{{ p.title }}</td>
           <td>${{ p.cost }}</td>
           <td>{{ p.quantity }}</td>
-          <td><button v-on:click="removeItemFromCart(p)">Remove Item</button></td>
+          <td><button @click="removeItemFromCart(p)">Remove Item</button></td>
         </tr>
         <tr>
           <td><b>Total:</b></td>
@@ -34,40 +34,45 @@
         </tr>
       </tbody>
     </table>
-    <p>
-      <button
-        v-show="cart.length"
-        class="button is-primary"
-        @click.prevent="checkOut"
-      >
-        Checkout
-      </button>
-    </p>
-  </div>
-  <!-- <div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <header>
-      {{ cart.length }} in cart
-      <button @click="retrieveCart">Retrieve cart info</button>
-      <button @click="checkOut">Check Out</button>
-      <button @click="emptyCart">Remove All</button>
-    </header>
-    <div>
-      <h1>Your Cart</h1>
-      <div class="cart" v-for="(post, index) in cart" :key="index">
-        {{ post.title }}
-        {{ post.description }}
-        <img :src="post.img" />
-        <div>{{ post.cost }}</div>
-        <button v-on:click="removeItemFromCart(post)">Remove Item</button>
+    <div v-show="cart.length">
+      <div class="d-flex justify-content-center" >
+        <div>
+        <div>
+          <select v-model="options">
+            <option value="Pick Up">Self Pick-Up</option>
+            <option value="Delivery">Delivery</option>
+          </select>
+          <select v-model="timing" v-if="options === 'Pick Up'">
+            <option 
+              v-for="(time,idx) in listTimings" 
+              :value="time" 
+              :key="idx"
+            >{{ time }}</option>
+          </select>
+        </div>
+        <br/>
+        <i v-show="options === 'Delivery'">{{ deliveryMessage }}</i>
+        <br/>
+        <div class="inputFields">
+          <input type="text" v-model="name" placeholder="Name">
+          <input type="number" v-model="hpNumber" placeholder="Phone Number">     
+        </div>
+        <br/>
+        <p>
+          <button
+            class="button is-primary"
+            @click.prevent="checkOut"
+          >
+            Checkout
+          </button>
+        </p>
+        <i>{{ error }}</i>
+        <button @click="generateOrderUrl">Checkout Via Whatsapp</button>
+
+        </div>
       </div>
     </div>
-    <h2>{{ message }}</h2>
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -78,28 +83,77 @@ export default {
     return {
       cart: [],
       message: "",
+      date: 1,
+      counter: `100`,
+      name: '',
+      hpNumber: '',
+      options: 'Pick Up', //set pickup by default
+      error: '',
+      listTimings: [],
+      timing: '1230',
+      stallOpeningHours: 9, //hardcoded to 9am and 10pm for receiving of self-pickup, 
+      stallClosingHours: 24, //but stalls should be able to modify this from backend if wanted
+      hawkerHpNumber: 6590604838,
+      deliveryMessage: 'Delivery will be liased with the vendor through text.',
     };
   },
   methods: {
-    // addItemToCart(product) {
-    //     this.cart.push(product);
-    //     console.log(this.cart);
-
-    // },
+    generateTimings() {
+      const todaysTime = new Date();
+      let _timings = [];
+      for (var i = (todaysTime.getHours() > this.stallOpeningHours) ? todaysTime.getHours() : this.stallOpeningHours; i < this.stallClosingHours; i++) {
+        let time = i*100;
+        for (var j = ((todaysTime.getHours() > this.stallOpeningHours) && (todaysTime.getHours() === i)) ? Math.ceil((todaysTime.getMinutes())/15) : 0; j <= 3; j++) {
+          time += j*15;
+          _timings.push(time);
+          time -= j*15;
+        }
+      }
+      this.listTimings = _timings;
+    },
+    generateCode(length) {
+      var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    },
+    currentDate() { //do i need date?
+      const current = new Date();
+      const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+      return date;
+    },
     emptyCart() {
       this.cart.splice(0, this.cart.length);
       this.saveCart();
     },
     saveCart() {
-      let parsedArray = JSON.stringify(this.cart);
+      let parsedArray = JSON.stringify(this.cart); //saves the array locally after parsing
       localStorage.setItem("cart", parsedArray);
     },
     checkOut() {
       if (this.cart.length === 0) {
         this.message = "Please add an item before checking out";
+      } else  if (!this.name) {
+        this.error = "Please fill in your name before checking out";
+      } else  if (!this.hpNumber) {
+        this.error = "Please fill in your mobile number before checking out";
+      } else  if ((!this.timing) && (this.options === 'pickUp')) {
+        this.error = "Please fill in your pick-up time before checking out";
       } else {
-        let data = this.cart;
-        OrderDataService.update(data)
+        const orderID = this.generateCode(4);
+        let data = {
+          orderNumber: orderID,
+          name: this.name,
+          hpNumber: this.hpNumber,
+          option: this.options,
+          cart: this.cart,
+          time: this.timing,
+        };
+        console.log(data);
+        OrderDataService.update(orderID, data)
           .then(() => {
             this.message = "Checkout successful.";
           })
@@ -120,6 +174,39 @@ export default {
           this.saveCart();
       });
     },
+    encodeOrder() {
+      const orderID = this.generateCode(4);
+      let cartMessage = [];
+      for (var i = 0; i < this.cart.length; i++) {
+        cartMessage.push(
+          this.cart[i].title + ' ' + this.cart[i].quantity
+        );
+      }
+        let data = {
+          orderNumber: orderID,
+          name: this.name,
+          hpNumber: this.hpNumber,
+          option: this.options,
+          cart: cartMessage,
+          time: this.timing,
+          //need to include total too
+        };
+      console.log(data.time);
+      const message = encodeURI(
+        '*Order number: * ' + data.orderNumber + '\n' +
+        data.name + ' ' + data.hpNumber + '\n' +
+        data.option + ' ' + data.timing + '\n' +
+        data.cart + ' ' + '\n'
+        );
+      return message;
+    },
+    generateOrderUrl() {
+    //"https://wa.me/6590604838?text=I'm%20testing%20whatsapp%20checkout."
+      let urlStart = "https://wa.me/";
+      let text = "?text=";
+      let urlEncodedMsg = this.encodeOrder();
+      return window.open(urlStart + this.hawkerHpNumber + text + urlEncodedMsg, "_blank");
+    },
   },
   mounted() {
     if (localStorage.getItem("cart")) {
@@ -129,17 +216,17 @@ export default {
         localStorage.removeItem("cart");
       }
     }
+    this.generateTimings();
   },
   computed: {
-    // ...mapGetters({
-    //     products: 'cartProducts'
-    // }),
     total() {
       return this.cart.reduce((total, p) => {
         return total + p.cost * p.quantity;
       }, 0);
     },
+
   },
+
 };
 </script>
 
