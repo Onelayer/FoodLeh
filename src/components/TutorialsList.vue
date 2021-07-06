@@ -102,10 +102,10 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAllForStore(store.getters.user.loggedIn.uid).on("value", this.onDataChange);
+    TutorialDataService.getAllForStore(store.getters.user.uid).on("value", this.onDataChange);
   },
   beforeDestroy() {
-    TutorialDataService.getAllForStore(store.getters.user.loggedIn.uid).off("value", this.onDataChange);
+    TutorialDataService.getAllForStore(store.getters.user.uid).off("value", this.onDataChange);
   },
 };
 </script>

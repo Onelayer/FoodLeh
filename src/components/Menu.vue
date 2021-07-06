@@ -1,12 +1,6 @@
 <template>
   <div>
     <div class="navspacing">
-      <!-- <div class='search-wrapper'>
-        <div id='labelText'>Send Newsletter to {{ email }} in <span idf='city-span'> {{ city }} </span></div>
-        <input id='email' type="text" v-model='email' placeholder='Sign Up for Email Updates'><button id='emailBtn'>Submit</button>
-            <input type="text" id='zipCode' placeholder='Enter Zip Code' v-model='zip'>
-        </div> -->
-
       <div class="search-wrapper d-flex justify-content-center">
         <label for="search">Search Title:</label>
         <input
@@ -19,7 +13,6 @@
       </div>
       <div class="wrapper d-flex justify-content-center">
         <div class="card" v-for="post in filteredList" :key="post.title">
-          <!-- <button @click="addItemToCart">Add to Cart</button> -->
           <a href="" @click.prevent="addItemToCart(post)" target="blank">
             <img v-bind:src="post.img" alt="" />
             <table class="product-font">
@@ -37,9 +30,6 @@
               </tbody>
             </table>
           </a>
-          <!-- <small id="description">
-            {{ post.description }}
-          </small> -->
         </div>
       </div>
     </div>
@@ -47,7 +37,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 
 export default {
   data() {
@@ -96,7 +86,7 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
+    ObtainStallMenu.getAll().on("value", this.onDataChange);
     if (localStorage.getItem("cart")) {
       try {
         this.cart = JSON.parse(localStorage.getItem("cart"));
@@ -106,7 +96,7 @@ export default {
     }
   },
   beforeDestroy() {
-    TutorialDataService.getAll().off("value", this.onDataChange);
+    ObtainStallMenu.getAll().off("value", this.onDataChange);
   },
   computed: {
     filteredList() {
