@@ -2,7 +2,7 @@ import firebase from "../firebase.js";
 
 const db = firebase.ref("/Menu");
 
-class TutorialDataService {
+class MenuDataFunctions {
   getAll() {
     return db;
   }
@@ -32,4 +32,4 @@ class TutorialDataService {
   }
 }
 
-export default new TutorialDataService();
+export default new MenuDataFunctions();

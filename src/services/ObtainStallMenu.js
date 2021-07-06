@@ -1,22 +1,23 @@
 import firebase from "../firebase.js";
+import store from '../store';
 
-const db = firebase.ref("/Menu");
+const db = firebase.ref(store.getters.user.data.uid + "/Menu");
 
 class MenuDataFunctions {
-  getAll() {
-    return db;
-  }
 
-  getAllForStore(key) {
-    return db.child(key);
+    // "key" represents stall account uid, 
+    // "menuKey" represents menu item id.
+
+  getAllForStore() {
+    return db;
   }
 
   create(tutorial) {
     return db.push(tutorial);
   }
 
-  new(key, value) {
-    return db.child(key).push(value);
+  new(value) {
+    return db.push(value);
   }
 
   update(key, value) {

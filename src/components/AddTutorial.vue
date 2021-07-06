@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 import Upload from "./Upload.vue";
 
 export default {
@@ -99,7 +99,7 @@ export default {
         published: false,
       };
 
-      TutorialDataService.new(this.$root.uid, data)
+      ObtainStallMenu.new(data)
         .then(() => {
           console.log("Created new item successfully!");
           this.submitted = true;
