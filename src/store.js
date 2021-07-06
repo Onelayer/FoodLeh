@@ -39,6 +39,7 @@ export default new Vuex.Store({
             email: user.email,
             uid: user.uid,
           });
+          console.log(user.uid);
         } else {
           commit("SET_USER", null);
         }
