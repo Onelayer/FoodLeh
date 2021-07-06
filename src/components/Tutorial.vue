@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 
 export default {
   name: "tutorial",
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     updatePublished(status) {
-      TutorialDataService.update(this.currentTutorial.key, {
+      ObtainStallMenu.update(this.currentTutorial.key, {
         published: status,
       })
         .then(() => {
@@ -118,7 +118,7 @@ export default {
         url: this.currentTutorial.url,
       };
 
-      TutorialDataService.update(this.currentTutorial.key, data)
+      ObtainStallMenu.update(this.currentTutorial.key, data)
         .then(() => {
           this.message = "The food item was updated successfully!";
         })
@@ -128,7 +128,7 @@ export default {
     },
 
     deleteTutorial() {
-      TutorialDataService.delete(this.currentTutorial.key)
+      ObtainStallMenu.delete(this.currentTutorial.key)
         .then(() => {
           this.$emit("refreshList");
         })

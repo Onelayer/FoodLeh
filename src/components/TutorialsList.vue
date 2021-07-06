@@ -47,9 +47,8 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 import TutorialDetails from "./Tutorial";
-import store from '../store';
 
 export default {
   name: "tutorials-list",
@@ -93,7 +92,7 @@ export default {
     },
 
     removeAllTutorials() {
-      TutorialDataService.deleteAll()
+      ObtainStallMenu.deleteAll()
         .then(() => {
           this.refreshList();
         })
@@ -103,10 +102,10 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAllForStore(store.getters.user.data.uid).on("value", this.onDataChange);
+    ObtainStallMenu.getAllForStore().on("value", this.onDataChange);
   },
   beforeDestroy() {
-    TutorialDataService.getAllForStore(store.getters.user.data.uid).off("value", this.onDataChange);
+    ObtainStallMenu.getAllForStore().off("value", this.onDataChange);
   },
 };
 </script>
