@@ -89,17 +89,17 @@ const routes = [
     ],
   },
   {
-    path: "/ordering", //temporary, next time add in :id for routing
+    path: "/:id", //temporary, next time add in :id for routing
     name: "Stall_1",
     component: StallMenu,
     children: [
       {
-        path: "/ordering/menu",
+        path: "/:id/menu",
         name: "Menu",
         component: Menu,
       },
       {
-        path: "/ordering/cart",
+        path: "/:id/cart",
         name: "Cart",
         component: Cart,
       },

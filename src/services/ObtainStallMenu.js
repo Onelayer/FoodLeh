@@ -1,12 +1,12 @@
 import firebase from "../firebase.js";
 
-const db = firebase.ref("/Order");
+const db = firebase.ref("/Menu");
 
-class TutorialDataService {
+class MenuDataFunctions {
   getAll() {
     return db;
   }
-  
+
   getAllForStore(key) {
     return db.child(key);
   }
@@ -15,11 +15,11 @@ class TutorialDataService {
     return db.push(tutorial);
   }
 
-  update(orderID, value) {
-    return db.child(orderID).update(value);
+  new(key, value) {
+    return db.child(key).push(value);
   }
 
-  change(key, value) {
+  update(key, value) {
     return db.child(key).update(value);
   }
 
@@ -28,8 +28,8 @@ class TutorialDataService {
   }
 
   deleteAll() {
-    return db.remove(); 
+    return db.remove();
   }
 }
 
-export default new TutorialDataService();
+export default new MenuDataFunctions();
