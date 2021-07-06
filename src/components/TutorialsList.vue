@@ -49,6 +49,7 @@
 <script>
 import TutorialDataService from "../services/TutorialDataService";
 import TutorialDetails from "./Tutorial";
+import store from '../store';
 
 export default {
   name: "tutorials-list",
@@ -102,10 +103,10 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAllForStore(this.$root.uid).on("value", this.onDataChange);
+    TutorialDataService.getAllForStore(store.getters.user.data.uid).on("value", this.onDataChange);
   },
   beforeDestroy() {
-    TutorialDataService.getAllForStore(this.$root.uid).off("value", this.onDataChange);
+    TutorialDataService.getAllForStore(store.getters.user.data.uid).off("value", this.onDataChange);
   },
 };
 </script>
