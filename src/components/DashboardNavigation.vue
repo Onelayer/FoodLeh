@@ -16,7 +16,46 @@
           alt="FoodLeh logo"
         />
       </template>
-      <vs-sidebar-item id="Instagram">
+      <router-link to="/dashboard/orderlist">
+        <vs-sidebar-item id="Instagram">
+          <template #logo>
+            <img
+              src="../assets/foodlehlogo.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Order List
+        </vs-sidebar-item>
+      </router-link>
+      <router-link to="/dashboard/addmenu">
+        <vs-sidebar-item id="market">
+          <template #logo>
+            <img
+              src="../assets/foodlehlogo.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Add Menu
+        
+        </vs-sidebar-item>
+      </router-link>
+      <router-link to="/dashboard/menulist">
+        <vs-sidebar-item id="Music">
+        
+          <template #logo>
+            <img
+              src="../assets/foodlehlogo.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Menu List
+        </vs-sidebar-item>
+      </router-link>
+      <router-link to="/dashboard/settings">
+        <vs-sidebar-item id="Settings">
         <template #logo>
           <img
             src="../assets/foodlehlogo.png"
@@ -24,28 +63,9 @@
             alt="FoodLeh logo"
           />
         </template>
-        <router-link to="/dashboard/orderlist">Order List</router-link>
-      </vs-sidebar-item>
-      <vs-sidebar-item id="market">
-        <template #logo>
-          <img
-            src="../assets/foodlehlogo.png"
-            class="brand_logo"
-            alt="FoodLeh logo"
-          />
-        </template>
-        <router-link to="/dashboard/addmenu">Add Menu</router-link>
-      </vs-sidebar-item>
-      <vs-sidebar-item id="Music">
-        <template #logo>
-          <img
-            src="../assets/foodlehlogo.png"
-            class="brand_logo"
-            alt="FoodLeh logo"
-          />
-        </template>
-        <router-link to="/dashboard/menulist">Menu List</router-link>
-      </vs-sidebar-item>
+        Settings
+        </vs-sidebar-item>
+      </router-link>
       <template #footer>
         <vs-row>
           <vs-sidebar-item id="Facebook">

@@ -9,6 +9,7 @@ import OrderList from "../components/OrderList.vue";
 import AddTutorial from "../components/AddTutorial.vue";
 import Tutorial from "../components/Tutorial.vue";
 import TutorialsList from "../components/TutorialsList.vue";
+import Settings from "../components/Settings.vue";
 import StallMenu from "../views/StallMenu.vue";
 import Menu from "../components/Menu.vue";
 import Cart from "../components/Cart.vue";
@@ -85,6 +86,11 @@ const routes = [
         path: "/dashboard/menulist",
         name: "MenuList",
         component: TutorialsList,
+      },
+      {
+        path: "/dashboard/settings",
+        name: "Settings",
+        component: Settings,
       },
     ],
   },
