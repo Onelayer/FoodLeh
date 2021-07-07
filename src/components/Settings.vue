@@ -3,40 +3,44 @@
     <div class="container h-100">
       <div class="d-flex justify-content-center h-100">
         <div class="user_card">
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center form_container">
             <div class="brand_logo_container">
               <img
-                src="../assets/logo.jpg"
+                :src="this.url"
                 class="brand_logo"
-                alt="FoodLeh logo"
+                alt="logo"
               />
             </div>
-          </div>
-          <div class="d-flex justify-content-center form_container">
             <form @submit.prevent="register">
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-user"></i
-                  ></span>
-                </div>
-                    <input v-model="stallName" placeholder="stallname" class="form-control input_pass"/>
-              </div>
-              <div class="input-group mb-2">
-                <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-key"></i
-                  ></span>
-                </div>
-                <input
-                  class="form-control input_pass"
+              <div class="center content-inputs">
+                <vs-input
+                  type="text"
                   value=""
-                  placeholder="phone number"
-                  v-model="hpNumber"
+                  v-model="stallName"
+                  label-placeholder="Stall Name"
                 />
               </div>
+              <br />
+              <div class="center content-inputs">
+                <vs-input
+                  type="text"
+                  name=""
+                  value=""
+                  label-placeholder="Phone number"
+                  v-model="hpNumber"
+                >
+                </vs-input>
+              </div>
+              <div>
+                <br>
+                Upload an image:
+                <input type="file" @change="previewImage" accept="image/*" />
+              </div>
+              <button @click="onUpload">Upload</button>
               <div class="d-flex justify-content-center mt-3 login_container">
-                <button class="btn login_btn" @click.prevent="saveSettings">Set Profile</button> 
+                <button class="btn login_btn" @click.prevent="saveSettings">
+                  Update Profile
+                </button>
               </div>
             </form>
           </div>
@@ -47,53 +51,95 @@
 </template>
 
 <script>
-import ObtainStallSettings from '../services/ObtainStallSettings'
+import ObtainStallSettings from "../services/ObtainStallSettings";
+import Upload from "./Upload.vue";
+import firebase from "firebase";
 
 export default {
-    data() {
-        return {
-            stallName: '',
-            hpNumber: '',
-            submitted: false,
+  components: { Upload },
+  props: {
+    url: {
+      type: String,
+    },
+  },
+  data() {
+    return {
+      stallName: "",
+      hpNumber: "",
+      url: "",
+      submitted: false,
+      imageData: null,
+      picture: null,
+      uploadValue: 0,
+    };
+  },
+  methods: {
+    saveSettings() {
+      let data = {
+        StallName: this.stallName,
+        MobileNumber: this.hpNumber,
+        url: this.url,
+      };
+
+      ObtainStallSettings.update(data)
+        .then(() => {
+          console.log("Settings Updated Successfully");
+          this.submitted = true;
+          alert("Successfully updated your profile");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    onDataChange(snapshot) {
+      // this.stallName = items.val().stallName;
+      // this.hpNumber = items.val().hpNumber;
+      const dataSettingsDB = snapshot.val();
+
+      let stallnamedb = dataSettingsDB.StallName;
+      let mobilenumberdb = dataSettingsDB.MobileNumber;
+      let urldb = dataSettingsDB.url;
+
+      this.stallName = stallnamedb;
+      this.hpNumber = mobilenumberdb;
+      this.url = url;
+    },
+    previewImage(event) {
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = event.target.files[0];
+    },
+
+    onUpload() {
+      this.picture = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url;
+            this.url = url;
+            this.$emit("getUrl", this.url);
+          });
         }
+      );
     },
-    methods: {
-        saveSettings() {
-
-            let data = {
-                StallName: this.stallName,
-                MobileNumber: this.hpNumber,
-            }
-
-            ObtainStallSettings.update(data)
-                .then(() => {
-                console.log("Settings Updated Successfully");
-                this.submitted = true;
-            })
-                .catch((e) => {
-                console.log(e);
-            });
-
-        },
-        onDataChange(snapshot) {
-            // this.stallName = items.val().stallName;
-            // this.hpNumber = items.val().hpNumber;
-            const dataSettingsDB = snapshot.val();
-            
-            let stallnamedb = dataSettingsDB.StallName;
-            let mobilenumberdb = dataSettingsDB.MobileNumber;
-            
-            this.stallName = stallnamedb;
-            this.hpNumber = mobilenumberdb;
-
-        },
-
-    },
-    mounted() {
-        ObtainStallSettings.getAllForStore().on("value", this.onDataChange);
-    },
-}
-
+  },
+  mounted() {
+    ObtainStallSettings.getAllForStore().on("value", this.onDataChange);
+  },
+};
 </script>
 
 <style scoped>
