@@ -121,17 +121,19 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.authRequired)) {
-    if (store.getters.user.loggedIn) {
-      next();
-    } else {
-      alert("You must be logged in to see this page");
-      next({
-        path: "/login",
-      });
-    }
+    next();
   } else {
     next();
   }
 });
+
+//if (store.getters.user.loggedIn) {
+//  next();
+//} else {
+//  alert("You must be logged in to see this page");
+//  next({
+//    path: "/login",
+// });
+//}
 
 export default router;

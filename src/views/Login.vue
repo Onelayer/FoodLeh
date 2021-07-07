@@ -118,6 +118,7 @@ export default {
         .then(() => {
           this.$root.uid = firebase.auth().currentUser.uid;
           alert("Successfully logged in");
+          console.log("hihi");
           this.$router.push("/dashboard/orderlist");
         })
         .catch((error) => {
@@ -141,6 +142,7 @@ export default {
         .then(() => {
           this.$root.uid = firebase.auth().currentUser.uid;
           this.$router.push("/dashboard/orderlist");
+          console.log("hihi");
           alert("Successfully logged in");
         })
         .catch((error) => {
