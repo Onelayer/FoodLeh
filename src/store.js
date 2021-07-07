@@ -11,8 +11,12 @@ export default new Vuex.Store({
     state: {
       user: {
         loggedIn: false,
-        data: null //holds information about logged-in user?
-      }
+        data: {
+          displayName: "",
+          email: "",
+          uid: "",
+        }, //holds information about logged-in user?
+      },
     },
     //provide a way of accessing data stored in state
     getters: { 
