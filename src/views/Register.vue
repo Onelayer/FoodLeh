@@ -14,35 +14,36 @@
           </div>
           <div class="d-flex justify-content-center form_container">
             <form @submit.prevent="register">
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-user"></i
-                  ></span>
-                </div>
-                <input
+              <div class="center content-inputs">
+                <vs-input
                   type="text"
                   name=""
-                  class="form-control input_user"
                   value=""
-                  placeholder="email"
+                  label-placeholder="Email" 
                   v-model="email"
-                />
+                >
+                </vs-input>
               </div>
-              <div class="input-group mb-2">
-                <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-key"></i
-                  ></span>
-                </div>
-                <input
+              <br>
+              <div class="center content-inputs">
+                <vs-input
                   type="password"
-                  name=""
-                  class="form-control input_pass"
-                  value=""
-                  placeholder="password"
                   v-model="password"
-                />
+                  label-placeholder="Password"
+                  :progress="getProgress"
+                  :visiblePassword="hasVisiblePassword"
+                  icon-after
+                  @click-icon="hasVisiblePassword = !hasVisiblePassword"
+                >
+                  <template #icon>
+                    <i v-if="!hasVisiblePassword" class="bx bx-show-alt"></i>
+                    <i v-else class="bx bx-hide"></i>
+                  </template>
+
+                  <template v-if="getProgress >= 100" #message-success>
+                    Secure password
+                  </template>
+                </vs-input>
               </div>
               <div class="d-flex justify-content-center mt-3 login_container">
                 <button type="submit" name="button" class="btn login_btn">
@@ -98,7 +99,45 @@ export default {
     return {
       email: "",
       password: "",
+      hasVisiblePassword: false,
     };
+  },
+  computed: {
+    getProgress() {
+      let progress = 0;
+
+      // at least one number
+
+      if (/\d/.test(this.password)) {
+        progress += 20;
+      }
+
+      // at least one capital letter
+
+      if (/(.*[A-Z].*)/.test(this.password)) {
+        progress += 20;
+      }
+
+      // at menons a lowercase
+
+      if (/(.*[a-z].*)/.test(this.password)) {
+        progress += 20;
+      }
+
+      // more than 5 digits
+
+      if (this.password.length >= 6) {
+        progress += 20;
+      }
+
+      // at least one special character
+
+      if (/[^A-Za-z0-9]/.test(this.password)) {
+        progress += 20;
+      }
+
+      return progress;
+    },
   },
   methods: {
     register() {

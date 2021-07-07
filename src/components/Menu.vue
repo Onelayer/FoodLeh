@@ -16,7 +16,7 @@
           <a href="" @click.prevent="addItemToCart(post)" target="blank">
             <img v-bind:src="post.img" alt="" />
             <table class="product-font">
-              <tbody>
+              <tbody> 
               <tr>
                 <td>{{ post.title }}</td>
 

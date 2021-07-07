@@ -123,6 +123,7 @@ export default {
             this.$store.dispatch("fetchUser", user);
             console.log(user);
           });
+          alert("Successfully logged in");
           this.$router.push("/dashboard/orderlist");
           console.log("hihi");
           // this.$router.push("/dashboard/orderlist");
@@ -148,8 +149,12 @@ export default {
         .signInWithPopup(provider)
         .then(() => {
           this.$root.uid = firebase.auth().currentUser.uid;
+<<<<<<< HEAD
           this.$router.push("/dashboard/orderlist", () => {});
           console.log("hihi");
+=======
+          this.$router.push("/dashboard/orderlist");
+>>>>>>> 7f463c7c8a136183dc44fc70eb615ce19d648511
           alert("Successfully logged in");
         })
         .catch((error) => {
