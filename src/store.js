@@ -12,9 +12,9 @@ export default new Vuex.Store({
       user: {
         loggedIn: false,
         data: {
-          displayName: "",
-          email: "",
-          uid: "",
+          displayName: " ",
+          email: " ",
+          uid: " ",
         }, //holds information about logged-in user?
       },
     },

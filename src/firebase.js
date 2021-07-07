@@ -15,9 +15,9 @@ let config = {
 
 firebase.initializeApp(config);
 
-firebase.auth().onAuthStateChanged(user => {
-  store.dispatch("fetchUser", user);
-  console.log(user);
-});
+// firebase.auth().onAuthStateChanged(user => {
+//   store.dispatch("fetchUser", user);
+//   console.log(user);
+// });
 
 export default firebase.database();

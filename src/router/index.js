@@ -121,7 +121,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.authRequired)) {
-    next();
+    if(!store.getters.user.loggedIn){
+      console.log(!store.getters.user.loggedIn)
+      next({ path: '/login' })
+    } else {
+      next();
+    }
   } else {
     next();
   }

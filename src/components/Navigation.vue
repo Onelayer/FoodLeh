@@ -33,7 +33,7 @@
               <a href="#stalls">Order Now</a>
               <a href="#about">About</a>
               <a href="#contact">Contact</a>
-              <router-link to="/login">Stall Owners</router-link>  
+              <router-link to="/dashboard/orderlist">Stall Owners</router-link>  
             </div>
           </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -60,7 +60,7 @@
                   >Contact</a
                 >
               </li>
-              <router-link to="/login" tag="li"
+              <router-link to="/dashboard/orderlist" tag="li"
                 ><a class="nav-link py-3 px-0 px-lg-3 rounded"
                   >Stall Owners</a
                 ></router-link

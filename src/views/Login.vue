@@ -56,11 +56,13 @@
                   >
                 </div>
               </div>
+              <!-- <router-link to="/dashboard/orderlist"> -->
               <div class="d-flex justify-content-center mt-3 login_container">
                 <button type="submit" name="button" class="btn login_btn">
                   Login
                 </button>
               </div>
+              <!-- </router-link> -->
             </form>
           </div>
 
@@ -115,15 +117,20 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then(async () => {
           this.$root.uid = firebase.auth().currentUser.uid;
-          alert("Successfully logged in");
-          console.log("hihi");
+          await firebase.auth().onAuthStateChanged(user => {
+            this.$store.dispatch("fetchUser", user);
+            console.log(user);
+          });
           this.$router.push("/dashboard/orderlist");
+          console.log("hihi");
+          // this.$router.push("/dashboard/orderlist");
         })
         .catch((error) => {
           alert(error.message);
         });
+      
     },
 
     navigateToHome() {
@@ -141,7 +148,7 @@ export default {
         .signInWithPopup(provider)
         .then(() => {
           this.$root.uid = firebase.auth().currentUser.uid;
-          this.$router.push("/dashboard/orderlist");
+          this.$router.push("/dashboard/orderlist", () => {});
           console.log("hihi");
           alert("Successfully logged in");
         })
