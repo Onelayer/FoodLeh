@@ -99,6 +99,7 @@
 <script>
 import firebase from "firebase";
 import { mapGetters } from "vuex";
+import store from '../store'
 
 export default {
   data() {
@@ -121,7 +122,8 @@ export default {
           this.$root.uid = firebase.auth().currentUser.uid;
           await firebase.auth().onAuthStateChanged(user => {
             this.$store.dispatch("fetchUser", user);
-            console.log(user);
+            console.log(user, 'stored user uid successful');
+            console.log(store.getters.user.data.uid);
           });
           alert("Successfully logged in");
           this.$router.push("/dashboard/orderlist");

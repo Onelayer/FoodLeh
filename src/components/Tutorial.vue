@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     updatePublished(status) {
-      ObtainStallMenu.update(this.currentTutorial.key, {
+      ObtainStallMenu.update(this.$store.getters.user.data.uid, this.currentTutorial.key, {
         published: status,
       })
         .then(() => {
@@ -118,7 +118,7 @@ export default {
         url: this.currentTutorial.url,
       };
 
-      ObtainStallMenu.update(this.currentTutorial.key, data)
+      ObtainStallMenu.update(this.$store.getters.user.data.uid, this.currentTutorial.key, data)
         .then(() => {
           this.message = "The food item was updated successfully!";
         })
@@ -128,7 +128,7 @@ export default {
     },
 
     deleteTutorial() {
-      ObtainStallMenu.delete(this.currentTutorial.key)
+      ObtainStallMenu.delete(this.$store.getters.user.data.uid, this.currentTutorial.key)
         .then(() => {
           this.$emit("refreshList");
         })

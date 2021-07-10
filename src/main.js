@@ -19,9 +19,13 @@ Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false;
 
 
+
 new Vue({
   router,
-  data: {uid: ""},
+  data: { 
+    uid: "",
+    menuData: [],
+  },
   store,
   render: h => h(App)
 }).$mount("#app");

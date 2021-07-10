@@ -99,7 +99,7 @@ export default {
         published: false,
       };
 
-      ObtainStallMenu.new(data)
+      ObtainStallMenu.new(this.$store.getters.user.data.uid, data)
         .then(() => {
           console.log("Created new item successfully!");
           this.submitted = true;

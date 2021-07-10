@@ -54,6 +54,8 @@
 import ObtainStallSettings from "../services/ObtainStallSettings";
 import Upload from "./Upload.vue";
 import firebase from "firebase";
+import store from '../store';
+import { mapGetters } from 'vuex';
 
 export default {
   components: { Upload },
@@ -81,7 +83,7 @@ export default {
         url: this.url,
       };
 
-      ObtainStallSettings.update(data)
+      ObtainStallSettings.set(this.$store.getters.user.data.uid, data)
         .then(() => {
           console.log("Settings Updated Successfully");
           this.submitted = true;
@@ -136,8 +138,22 @@ export default {
       );
     },
   },
+  computed: {
+    getStore() {
+      return this.$store.getters.user.data.uid;
+    },
+    ...mapGetters({
+      user: 'user',
+    })
+  },
   mounted() {
-    ObtainStallSettings.getAllForStore().on("value", this.onDataChange);
+
+    console.log(this.$store.getters.user.data.uid, 'attemping to mount');
+    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).on("value", this.onDataChange);
+    console.log('mounted settings')
+  },
+  beforeDestroy() {
+    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).off("value", this.onDataChange);
   },
 };
 </script>
