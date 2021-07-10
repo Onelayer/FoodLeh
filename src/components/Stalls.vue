@@ -24,7 +24,8 @@
           :key="key"
           @click="passMenuData(obj.menu)"
         >
-          <router-link :to="obj.routerLink" >
+          <!-- <router-link :to="{ path: obj.routerLink, params: obj.menu }" > -->
+          <router-link :to="{ path: obj.routerLink, params: { menu: obj.menu } }" >
           <div
             class="portfolio-item mx-auto"
             data-bs-toggle="modal"
@@ -90,8 +91,8 @@ export default {
 
   methods: {
       passMenuData(data){
-        this.$root.menuData = data;
-        console.log(data,'Menu stored.');
+        this.$store.commit("setStallEntered", data);
+        console.log(this.$store.state.menu.data, 'Menu stored in store.js');
       },
       onDataChange(items) {
       let _stallList = [];

@@ -98,15 +98,18 @@ const routes = [
     path: "/:id", //temporary, next time add in :id for routing
     name: "Stall_1",
     component: StallMenu,
+    props: true,
     children: [
       {
         path: "/:id/menu",
         name: "Menu",
+        props: true,
         component: Menu,
       },
       {
         path: "/:id/cart",
         name: "Cart",
+        props: true,
         component: Cart,
       },
     ],

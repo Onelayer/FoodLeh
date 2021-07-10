@@ -13,11 +13,17 @@ export default new Vuex.Store({
         loggedIn: false,
         data: null, //holds information about logged-in user?
       },
+      menu: {
+        data: null,
+      }
     },
     //provide a way of accessing data stored in state   
     getters: { 
       user(state){
         return state.user
+      },
+      menu(state){
+        return state.menu
       }
     },
     //allows us to make changes to our state
@@ -27,6 +33,9 @@ export default new Vuex.Store({
       },
       SET_USER(state, data) {
         state.user.data = data;
+      },
+      setStallEntered(state, data) {
+        state.menu.data = data;
       }
     },
     //commits the state after mutating.

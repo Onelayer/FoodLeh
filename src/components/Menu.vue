@@ -45,9 +45,15 @@ export default {
       cart: [],
       cardList: [],
       keyword: "",
+      cardListProps: [],
     };
   },
   methods: {
+    retrieveMenu() {
+      this.cardListProps = this.$store.state.menu.data;
+      console.log(this.cardListProps);
+      this.onDataChange(this.cardListProps);
+    },
     addItemToCart(product) {
       //it is called post in the template
       this.cart.push(product);
@@ -66,7 +72,7 @@ export default {
       let parsedArray = JSON.stringify(this.cart);
       localStorage.setItem("cart", parsedArray);
     },
-    displayMenu(items){
+    displayMenu(menu){
       let _cardList = [];
       console.log(items,'Items');
       for (var i = 0; i < items.length; i++) {
@@ -79,8 +85,12 @@ export default {
     onDataChange(items) {
       let _card_list = [];
 
-      Object.entries(items).forEach(key => {
-        let data = items[key];
+      Object.entries(items).forEach(item => {
+        console.log(item, 'item');
+        console.log(items,'items');
+        //over here, item refers to an array of 2 : [key, {menu object}]
+        // hence, we access the data with item[1];
+        let data = item[1];
         console.log(data, 'object accessed');
 
         _card_list.push({
@@ -94,12 +104,14 @@ export default {
       });
 
       this.cardList = _card_list;
+      console.log(this.cardList, 'cardlist');
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      this.onDataChange(this.$root.menuData);
-    })
+    this.retrieveMenu();
+    // this.$nextTick(() => {
+    //   this.onDataChange(this.$root.menuData);
+    // })
     // ObtainStalls.getAllStallMenu(this.$root.menuUid).on("value", this.onDataChange);
     if (localStorage.getItem("cart")) {
       try {
@@ -118,6 +130,7 @@ export default {
         post.title.toLowerCase().includes(this.keyword.toLowerCase())
       );
     },
+
   },
 };
 </script>
