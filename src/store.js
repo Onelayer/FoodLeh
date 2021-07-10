@@ -22,8 +22,8 @@ export default new Vuex.Store({
       user(state){
         return state.user
       },
-      menu(state){
-        return state.menu
+      menuData(state){
+        return state.menu.data;
       }
     },
     //allows us to make changes to our state

@@ -38,6 +38,7 @@
 
 <script>
 import ObtainStalls from "../services/ObtainStalls";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -50,7 +51,10 @@ export default {
   },
   methods: {
     retrieveMenu() {
-      this.cardListProps = this.$store.state.menu.data;
+      this.cardListProps = this.menu;
+      //not the most ideal, need to make it more responsive
+      //and should already render it out by url... not store.js
+      console.log(this.menu, 'mapGetters Menu');
       console.log(this.cardListProps);
       this.onDataChange(this.cardListProps);
     },
@@ -108,7 +112,7 @@ export default {
     },
   },
   mounted() {
-    this.retrieveMenu();
+    setTimeout(() => {this.retrieveMenu()}, 15);
     // this.$nextTick(() => {
     //   this.onDataChange(this.$root.menuData);
     // })
@@ -130,7 +134,9 @@ export default {
         post.title.toLowerCase().includes(this.keyword.toLowerCase())
       );
     },
-
+    ...mapGetters({
+      menu: 'menuData',
+    }),
   },
 };
 </script>
