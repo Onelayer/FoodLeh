@@ -1,7 +1,7 @@
 <template>
   <section class="page-section portfolio" id="portfolio">
     <div class="container">
-      <!-- Portfolio Section Heading-->
+      <!-- Stalls Section Heading -->
       <h2
         class="
           page-section-heading
@@ -11,21 +11,20 @@
       >
         Stalls
       </h2>
-      <!-- Icon Divider-->
+      <!-- Icon Divider -->
       <div class="divider-custom">
         <div class="divider-custom-line"></div>
-        <!-- <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div> -->
       </div>
-      <!-- Portfolio Grid Items-->
+      <!-- Stall Grid Items -->
       <div class="row justify-content-center">
-        <!-- Portfolio Item 1-->
+        <!-- Rendering Stall Items -->
         <div
           class="col-md-6 col-lg-4 mb-5"
-          v-for="(obj, key) in stallsJSON"
+          v-for="(obj, key) in stallList"
           :key="key"
+          @click="passMenuData(obj.menu)"
         >
-          <router-link to="/ordering/menu">
+          <router-link :to="obj.routerLink" >
           <div
             class="portfolio-item mx-auto"
             data-bs-toggle="modal"
@@ -47,7 +46,7 @@
                 <strong>{{ obj.caption }}</strong>
               </div>
             </div>
-            <img class="img-fluid" :src="`${obj.img}`" alt="..." />
+            <img class="img-fluid" :src="obj.img" alt="..." />
             <h6 style="margin: 1rem; color: black">{{ obj.title }}</h6>
           </div>
           </router-link>
@@ -58,26 +57,66 @@
 </template>
 
 <script>
+import ObtainStalls from '../services/ObtainStalls'
+
 export default {
-  data: () => ({
-    stallsJSON: [
-      {
-        img: require("/public/img/stalls/chicken_rice_stall.png"),
-        caption: "Select",
-        title: "Yishun 925 Food Center",
+
+
+  data() {
+    return {
+      stallList: [],
+      // stallsJSON: [
+      //   {
+      //     img: require("/public/img/stalls/chicken_rice_stall.png"),
+      //     caption: "Select",
+      //     title: "Yishun 925 Food Center",
+      //     routerLink: "/stall_1/menu",
+      //   },
+      //   {
+      //     img: require("/public/img/stalls/mookata_stall.png"),
+      //     caption: "Select",
+      //     title: "Clementi West 2 Mookata",
+      //     routerLink: "/stall_1/menu",
+      //   },
+      //   {
+      //     img: require("/public/img/stalls/bishan_hawker_stall.png"),
+      //     caption: "Select",
+      //     title: "Bishan Street 12 Tze Char",
+      //     routerLink: "/stall_1/menu",
+      //   },
+      // ],
+      }
+    },
+
+  methods: {
+      passMenuData(data){
+        this.$root.menuData = data;
+        console.log(data,'Menu stored.');
       },
-      {
-        img: require("/public/img/stalls/mookata_stall.png"),
-        caption: "Select",
-        title: "Clementi West 2 Mookata",
-      },
-      {
-        img: require("/public/img/stalls/bishan_hawker_stall.png"),
-        caption: "Select",
-        title: "Bishan Street 12 Tze Char",
-      },
-    ],
-  }),
+      onDataChange(items) {
+      let _stallList = [];
+
+      items.forEach((item) => {
+        let data = item.val();
+        console.log(data,'Checking stall retrieval');
+        console.log(item.key);
+
+        _stallList.push({
+          key: item.key,
+          title: data.Settings.StallName,
+          img: data.Settings.url, 
+          caption: 'Select',
+          routerLink: '/' + data.Settings.StallName + '/menu',
+          menu: data.Menu,
+        });
+      });
+
+      this.stallList = _stallList;
+    },
+  },
+  mounted() {
+    ObtainStalls.getAll().on("value", this.onDataChange);
+  }
 };
 </script>
 

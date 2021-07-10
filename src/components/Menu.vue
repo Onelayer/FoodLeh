@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import ObtainStallMenu from "../services/ObtainStallMenu";
+import ObtainStalls from "../services/ObtainStalls";
 
 export default {
   data() {
@@ -66,11 +66,22 @@ export default {
       let parsedArray = JSON.stringify(this.cart);
       localStorage.setItem("cart", parsedArray);
     },
+    displayMenu(items){
+      let _cardList = [];
+      console.log(items,'Items');
+      for (var i = 0; i < items.length; i++) {
+        _cardList.push(items[i]);
+      }
+
+      this.cardList = _cardList;
+      console.log(this.cardList, 'cardList');
+    },
     onDataChange(items) {
       let _card_list = [];
 
-      items.forEach((item) => {
-        let data = item.val();
+      Object.entries(items).forEach(key => {
+        let data = items[key];
+        console.log(data, 'object accessed');
 
         _card_list.push({
           title: data.title,
@@ -86,7 +97,10 @@ export default {
     },
   },
   mounted() {
-    ObtainStallMenu.getAll().on("value", this.onDataChange);
+    this.$nextTick(() => {
+      this.onDataChange(this.$root.menuData);
+    })
+    // ObtainStalls.getAllStallMenu(this.$root.menuUid).on("value", this.onDataChange);
     if (localStorage.getItem("cart")) {
       try {
         this.cart = JSON.parse(localStorage.getItem("cart"));
@@ -96,7 +110,7 @@ export default {
     }
   },
   beforeDestroy() {
-    ObtainStallMenu.getAll().off("value", this.onDataChange);
+    ObtainStalls.getAll().off("value", this.onDataChange);
   },
   computed: {
     filteredList() {

@@ -92,7 +92,7 @@ export default {
     },
 
     removeAllTutorials() {
-      ObtainStallMenu.deleteAll()
+      ObtainStallMenu.deleteAll(this.$store.getters.user.data.uid)
         .then(() => {
           this.refreshList();
         })
@@ -102,10 +102,10 @@ export default {
     },
   },
   mounted() {
-    ObtainStallMenu.getAllForStore().on("value", this.onDataChange);
+    ObtainStallMenu.getAllForStore(this.$store.getters.user.data.uid).on("value", this.onDataChange);
   },
   beforeDestroy() {
-    ObtainStallMenu.getAllForStore().off("value", this.onDataChange);
+    ObtainStallMenu.getAllForStore(this.$store.getters.user.data.uid).off("value", this.onDataChange);
   },
 };
 </script>

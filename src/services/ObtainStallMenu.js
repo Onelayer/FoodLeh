@@ -1,32 +1,34 @@
 import firebase from "../firebase.js";
 import store from '../store';
 
-const db = firebase.ref(((store.getters.user.data !== null) ? store.getters.user.data.uid : '') + "/Menu");
+// const db = firebase.ref(((store.getters.user.data !== null) ? store.getters.user.data.uid : '') + "/Menu");
+const db = firebase.ref();
+
 
 class MenuDataFunctions {
 
-  getAllForStore() {
-    return db;
+  getAllForStore(uid) {
+    return db.child(uid).child('Menu');
   }
 
-  create(tutorial) {
-    return db.push(tutorial);
+  create(uid, tutorial) {
+    return db.child(uid).child('Menu').push(tutorial);
   }
 
-  new(value) {
-    return db.push(value);
+  new(uid, value) {
+    return db.child(uid).child('Menu').push(value);
   }
 
-  update(key, value) {
-    return db.child(key).update(value);
+  update(uid, key, value) {
+    return db.child(uid).child('Menu').child(key).update(value);
   }
 
-  delete(key) {
-    return db.child(key).remove();
+  delete(uid, key) {
+    return db.child(uid).child('Menu').child(key).remove();
   }
 
-  deleteAll() {
-    return db.remove();
+  deleteAll(uid) {
+    return db.child(uid).child('Menu').remove();
   }
 }
 
