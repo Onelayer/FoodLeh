@@ -33,7 +33,7 @@
               </div>
               <div>
                 <br>
-                Upload an image:
+                Change store image:
                 <input type="file" @change="previewImage" accept="image/*" />
               </div>
               <button @click="onUpload">Upload</button>
@@ -181,7 +181,7 @@ html {
 .user_card {
   height: 550px;
   width: 400px;
-  margin-top: 80px;
+  margin-top: 10px;
   margin-bottom: auto;
   background: white;
   position: relative;

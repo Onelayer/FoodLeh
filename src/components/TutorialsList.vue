@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import ObtainStallMenu from "../services/ObtainStallMenu";
+import ObtainStallMenu from "../services/ObtainOrder";
 import TutorialDetails from "./Tutorial";
 
 export default {

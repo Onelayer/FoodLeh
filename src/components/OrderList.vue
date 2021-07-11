@@ -1,4 +1,50 @@
 <template>
+  <div class="center" style="margin-left: 50px">
+    <vs-table>
+      <template #thead>
+        <vs-tr>
+          <vs-th> Name </vs-th>
+          <vs-th> Email </vs-th>
+          <vs-th> Id </vs-th>
+        </vs-tr>
+      </template>
+      <template #tbody>
+        <vs-tr :key="i" v-for="(tr, i) in users">
+          <vs-td>
+            {{ tr.name }}
+          </vs-td>
+          <vs-td>
+            {{ tr.email }}
+          </vs-td>
+          <vs-td>
+            {{ tr.id }}
+          </vs-td>
+
+          <template #expand>
+            <div class="con-content">
+              <div>
+                <vs-avatar>
+                  <img :src="`/avatars/avatar-${i + 1}.png`" alt="" />
+                </vs-avatar>
+                <p>
+                  {{ tr.name }}
+                </p>
+              </div>
+              <div>
+                <vs-button flat icon>
+                  <i class="bx bx-lock-open-alt"></i>
+                </vs-button>
+                <vs-button flat icon> Send Email </vs-button>
+                <vs-button border danger> Remove User </vs-button>
+              </div>
+            </div>
+          </template>
+        </vs-tr>
+      </template>
+    </vs-table>
+  </div>
+</template>
+<!-- <template>
   <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
       <div class="user_card">
@@ -44,12 +90,12 @@
       </div>
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
-import TutorialDataService from "../services/OrderDataService";
+import TutorialDataService from "../services/ObtainOrder";
 import TutorialDetails from "./Order";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "tutorials-list",
@@ -59,6 +105,16 @@ export default {
       tutorials: [],
       currentTutorial: null,
       currentIndex: -1,
+      editActive: false,
+      edit: null,
+      editProp: "",
+      search: "",
+      allCheck: false,
+      page: 1,
+      max: 3,
+      active: 0,
+      selected: [],
+      users: [],
     };
   },
   methods: {
@@ -108,8 +164,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user"
-    })
+      user: "user",
+    }),
   },
 };
 </script>
