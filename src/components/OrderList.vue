@@ -1,43 +1,56 @@
 <template>
-  <div class="center" style="margin-left: 50px">
+  <div style="margin-left: 50px">
     <vs-table>
       <template #thead>
         <vs-tr>
           <vs-th> Name </vs-th>
-          <vs-th> Email </vs-th>
-          <vs-th> Id </vs-th>
+          <vs-th> Phone Number </vs-th>
+          <vs-th> Order Number </vs-th>
+          <vs-th> Option </vs-th>
+          <vs-th> Time </vs-th>
         </vs-tr>
       </template>
       <template #tbody>
-        <vs-tr :key="i" v-for="(tr, i) in users">
+        <vs-tr :key="i" v-for="(tr, i) in tutorials">
           <vs-td>
             {{ tr.name }}
           </vs-td>
           <vs-td>
-            {{ tr.email }}
+            {{ tr.hpNumber }}
           </vs-td>
           <vs-td>
-            {{ tr.id }}
+            {{ tr.orderNumber }}
+          </vs-td>
+          <vs-td>
+            {{ tr.option }}
+          </vs-td>
+          <vs-td>
+            {{ tr.time }}
           </vs-td>
 
           <template #expand>
-            <div class="con-content">
-              <div>
-                <vs-avatar>
-                  <img :src="`/avatars/avatar-${i + 1}.png`" alt="" />
-                </vs-avatar>
-                <p>
-                  {{ tr.name }}
-                </p>
-              </div>
-              <div>
-                <vs-button flat icon>
-                  <i class="bx bx-lock-open-alt"></i>
-                </vs-button>
-                <vs-button flat icon> Send Email </vs-button>
-                <vs-button border danger> Remove User </vs-button>
-              </div>
-            </div>
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Order </vs-th>
+                  <vs-th> Description </vs-th>
+                  <vs-th> Cost </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <vs-tr :key="i" v-for="(rr, i) in tr.orders">
+                  <vs-td>
+                    {{ rr.title }}
+                  </vs-td>
+                  <vs-td>
+                    {{ rr.description }}
+                  </vs-td>
+                  <vs-td>
+                    {{ rr.cost }}
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
           </template>
         </vs-tr>
       </template>
@@ -103,6 +116,7 @@ export default {
   data() {
     return {
       tutorials: [],
+      orders: [],
       currentTutorial: null,
       currentIndex: -1,
       editActive: false,
@@ -114,7 +128,6 @@ export default {
       max: 3,
       active: 0,
       selected: [],
-      users: [],
     };
   },
   methods: {
@@ -124,12 +137,26 @@ export default {
       items.forEach((item) => {
         let key = item.key;
         let data = item.val();
+
+        let _orders = [];
+        let orderss = data.cart;
+        orderss.forEach((order) => {
+          let data2 = order;
+          _orders.push({
+            title: data2.title,
+            description: data2.description,
+            cost: data2.cost,
+          });
+        });
+
         _tutorials.push({
           key: key,
-          title: data.title,
-          description: data.description,
-          cost: data.cost,
-          published: data.published,
+          name: data.name,
+          hpNumber: data.hpNumber,
+          orderNumber: data.orderNumber,
+          option: data.option,
+          time: data.time,
+          orders: _orders,
         });
       });
 
@@ -157,10 +184,16 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).on(
+      "value",
+      this.onDataChange
+    );
   },
   beforeDestroy() {
-    TutorialDataService.getAll().off("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).off(
+      "value",
+      this.onDataChange
+    );
   },
   computed: {
     ...mapGetters({
