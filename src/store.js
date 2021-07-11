@@ -15,7 +15,10 @@ export default new Vuex.Store({
       },
       menu: {
         data: null,
-      }
+      },
+      hawker: {
+        uid: null,
+      },
     },
     //provide a way of accessing data stored in state   
     getters: { 
@@ -24,7 +27,10 @@ export default new Vuex.Store({
       },
       menuData(state){
         return state.menu.data;
-      }
+      },
+      uid(state){
+        return state.hawker.uid;
+      },
     },
     //allows us to make changes to our state
     mutations: { 
@@ -36,7 +42,10 @@ export default new Vuex.Store({
       },
       setStallEntered(state, data) {
         state.menu.data = data;
-      }
+      },
+      setUid(state, uid){
+        state.hawker.uid = uid;
+      },
     },
     //commits the state after mutating.
     actions: {

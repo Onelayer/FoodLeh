@@ -1,7 +1,7 @@
 import firebase from "../firebase.js";
 import store from '../store';
 
-const db = firebase.ref(((store.getters.user.data !== null) ? store.getters.user.data.uid : '') + "/Order");
+const db = firebase.ref(((store.state.hawker.uid !== null) ? store.state.hawker.uid : '') + "/Order");
 
 class TutorialDataService {
   getAll() {
