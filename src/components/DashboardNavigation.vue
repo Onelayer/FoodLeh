@@ -18,9 +18,9 @@
       </template>
       <router-link to="/dashboard/orderlist">
         <vs-sidebar-item id="Instagram">
-          <template #logo>
+          <template #icon>
             <img
-              src="../assets/foodlehlogo.png"
+              src="../assets/file-list-2-line.png"
               class="brand_logo"
               alt="FoodLeh logo"
             />
@@ -30,23 +30,21 @@
       </router-link>
       <router-link to="/dashboard/addmenu">
         <vs-sidebar-item id="market">
-          <template #logo>
+          <template #icon>
             <img
-              src="../assets/foodlehlogo.png"
+              src="../assets/add-box-line.png"
               class="brand_logo"
               alt="FoodLeh logo"
             />
           </template>
           Add Menu
-        
         </vs-sidebar-item>
       </router-link>
       <router-link to="/dashboard/menulist">
         <vs-sidebar-item id="Music">
-        
-          <template #logo>
+          <template #icon>
             <img
-              src="../assets/foodlehlogo.png"
+              src="../assets/baseline_list_white_24dp.png"
               class="brand_logo"
               alt="FoodLeh logo"
             />
@@ -56,19 +54,26 @@
       </router-link>
       <router-link to="/dashboard/settings">
         <vs-sidebar-item id="Settings">
-        <template #logo>
-          <img
-            src="../assets/foodlehlogo.png"
-            class="brand_logo"
-            alt="FoodLeh logo"
-          />
-        </template>
-        Settings
+          <template #icon>
+            <img
+              src="../assets/baseline_settings_white_24dp.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Settings
         </vs-sidebar-item>
       </router-link>
       <template #footer>
         <vs-row>
           <vs-sidebar-item id="Facebook">
+            <template #icon>
+              <img
+                src="../assets/baseline_logout_white_24dp.png"
+                class="brand_logo"
+                alt="FoodLeh logo"
+              />
+            </template>
             <vs-button
               type="submit"
               @click="logout()"
@@ -105,7 +110,7 @@
 
 <script>
 import firebase from "firebase";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
@@ -128,8 +133,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user"
-    })
+      user: "user",
+    }),
   },
 };
 </script>

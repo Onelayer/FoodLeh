@@ -40,14 +40,14 @@ const routes = [
     path: "/login/forgot-password",
     name: "forgotPassword",
     component: ForgotPassword,
-    beforeEnter(to, from, next) {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        next({ name: "Dashboard" });
-      } else {
-        next();
-      }
-    },
+    //beforeEnter(to, from, next) {
+    //  const user = firebase.auth().currentUser;
+    //  if (user) {
+    //    next({ name: "Dashboard" });
+    //  } else {
+    //    next();
+    //  }
+    //},
   },
   {
     path: "/dashboard",

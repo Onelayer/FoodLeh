@@ -59,11 +59,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: { Upload },
-  props: {
-    url: {
-      type: String,
-    },
-  },
   data() {
     return {
       stallName: "",
@@ -104,7 +99,7 @@ export default {
 
       this.stallName = stallnamedb;
       this.hpNumber = mobilenumberdb;
-      this.url = url;
+      this.url = urldb;
     },
     previewImage(event) {
       this.uploadValue = 0;
