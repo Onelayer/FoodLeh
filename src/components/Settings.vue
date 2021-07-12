@@ -5,11 +5,7 @@
         <div class="user_card">
           <div class="d-flex justify-content-center form_container">
             <div class="brand_logo_container">
-              <img
-                :src="this.url"
-                class="brand_logo"
-                alt="logo"
-              />
+              <img :src="this.url" class="brand_logo" alt="logo" />
             </div>
             <form @submit.prevent="register">
               <div class="center content-inputs">
@@ -32,11 +28,18 @@
                 </vs-input>
               </div>
               <div>
-                <br>
-                Change store image:
+                <br />
+                Change store profile picture:
                 <input type="file" @change="previewImage" accept="image/*" />
               </div>
-              <button @click="onUpload">Upload</button>
+              <vs-button
+                warn
+                gradient
+                :active="active == 3"
+                @click="onUpload"
+              >
+              Upload
+              </vs-button>
               <div class="d-flex justify-content-center mt-3 login_container">
                 <button class="btn login_btn" @click.prevent="saveSettings">
                   Update Profile
@@ -54,8 +57,8 @@
 import ObtainStallSettings from "../services/ObtainStallSettings";
 import Upload from "./Upload.vue";
 import firebase from "firebase";
-import store from '../store';
-import { mapGetters } from 'vuex';
+import store from "../store";
+import { mapGetters } from "vuex";
 
 export default {
   components: { Upload },
@@ -68,6 +71,7 @@ export default {
       imageData: null,
       picture: null,
       uploadValue: 0,
+      active: 0,
     };
   },
   methods: {
@@ -138,17 +142,22 @@ export default {
       return this.$store.getters.user.data.uid;
     },
     ...mapGetters({
-      user: 'user',
-    })
+      user: "user",
+    }),
   },
   mounted() {
-
-    console.log(this.$store.getters.user.data.uid, 'attemping to mount');
-    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).on("value", this.onDataChange);
-    console.log('mounted settings')
+    console.log(this.$store.getters.user.data.uid, "attemping to mount");
+    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).on(
+      "value",
+      this.onDataChange
+    );
+    console.log("mounted settings");
   },
   beforeDestroy() {
-    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).off("value", this.onDataChange);
+    ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).off(
+      "value",
+      this.onDataChange
+    );
   },
 };
 </script>

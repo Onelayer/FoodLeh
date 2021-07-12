@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left: 50px">
+  <div style="margin-left: 50px;">
     <vs-table>
       <template #thead>
         <vs-tr>
@@ -38,7 +38,7 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(rr, i) in tr.orders">
+                <vs-tr :key="j" v-for="(rr, j) in tr.orders">
                   <vs-td>
                     {{ rr.title }}
                   </vs-td>
