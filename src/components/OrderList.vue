@@ -1,4 +1,63 @@
 <template>
+  <div style="margin-left: 50px">
+    <vs-table>
+      <template #thead>
+        <vs-tr>
+          <vs-th> Name </vs-th>
+          <vs-th> Phone Number </vs-th>
+          <vs-th> Order Number </vs-th>
+          <vs-th> Option </vs-th>
+          <vs-th> Time </vs-th>
+        </vs-tr>
+      </template>
+      <template #tbody>
+        <vs-tr :key="i" v-for="(tr, i) in tutorials">
+          <vs-td>
+            {{ tr.name }}
+          </vs-td>
+          <vs-td>
+            {{ tr.hpNumber }}
+          </vs-td>
+          <vs-td>
+            {{ tr.orderNumber }}
+          </vs-td>
+          <vs-td>
+            {{ tr.option }}
+          </vs-td>
+          <vs-td>
+            {{ tr.time }}
+          </vs-td>
+
+          <template #expand>
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Order </vs-th>
+                  <vs-th> Description </vs-th>
+                  <vs-th> Cost </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <vs-tr :key="i" v-for="(rr, i) in tr.orders">
+                  <vs-td>
+                    {{ rr.title }}
+                  </vs-td>
+                  <vs-td>
+                    {{ rr.description }}
+                  </vs-td>
+                  <vs-td>
+                    {{ rr.cost }}
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </template>
+        </vs-tr>
+      </template>
+    </vs-table>
+  </div>
+</template>
+<!-- <template>
   <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
       <div class="user_card">
@@ -44,21 +103,31 @@
       </div>
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
-import TutorialDataService from "../services/OrderDataService";
-import TutorialDetails from "./Order";
-import { mapGetters } from 'vuex';
+import TutorialDataService from "../services/ObtainOrder";
+//import TutorialDetails from "./Order";
+import { mapGetters } from "vuex";
 
 export default {
   name: "tutorials-list",
-  components: { TutorialDetails },
+//  components: { TutorialDetails },
   data() {
     return {
       tutorials: [],
+      orders: [],
       currentTutorial: null,
       currentIndex: -1,
+      editActive: false,
+      edit: null,
+      editProp: "",
+      search: "",
+      allCheck: false,
+      page: 1,
+      max: 3,
+      active: 0,
+      selected: [],
     };
   },
   methods: {
@@ -68,12 +137,26 @@ export default {
       items.forEach((item) => {
         let key = item.key;
         let data = item.val();
+
+        let _orders = [];
+        let orderss = data.cart;
+        orderss.forEach((order) => {
+          let data2 = order;
+          _orders.push({
+            title: data2.title,
+            description: data2.description,
+            cost: data2.cost,
+          });
+        });
+
         _tutorials.push({
           key: key,
-          title: data.title,
-          description: data.description,
-          cost: data.cost,
-          published: data.published,
+          name: data.name,
+          hpNumber: data.hpNumber,
+          orderNumber: data.orderNumber,
+          option: data.option,
+          time: data.time,
+          orders: _orders,
         });
       });
 
@@ -101,15 +184,21 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).on(
+      "value",
+      this.onDataChange
+    );
   },
   beforeDestroy() {
-    TutorialDataService.getAll().off("value", this.onDataChange);
+    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).off(
+      "value",
+      this.onDataChange
+    );
   },
   computed: {
     ...mapGetters({
-      user: "user"
-    })
+      user: "user",
+    }),
   },
 };
 </script>

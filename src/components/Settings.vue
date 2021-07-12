@@ -33,7 +33,7 @@
               </div>
               <div>
                 <br>
-                Upload an image:
+                Change store image:
                 <input type="file" @change="previewImage" accept="image/*" />
               </div>
               <button @click="onUpload">Upload</button>
@@ -59,11 +59,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: { Upload },
-  props: {
-    url: {
-      type: String,
-    },
-  },
   data() {
     return {
       stallName: "",
@@ -104,7 +99,7 @@ export default {
 
       this.stallName = stallnamedb;
       this.hpNumber = mobilenumberdb;
-      this.url = url;
+      this.url = urldb;
     },
     previewImage(event) {
       this.uploadValue = 0;
@@ -186,7 +181,7 @@ html {
 .user_card {
   height: 550px;
   width: 400px;
-  margin-top: 80px;
+  margin-top: 10px;
   margin-bottom: auto;
   background: white;
   position: relative;

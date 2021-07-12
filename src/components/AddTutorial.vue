@@ -46,10 +46,10 @@
                   :myUrl="tutorial.url"
                   @getUrl="tutorial.url = $event"
                 ></upload>
-                <div>
+                <!--<div>
                   <h5>Image Url:</h5>
                   {{ tutorial.url }}
-                </div>
+                </div> -->
                 <br />
                 <button @click="saveTutorial" class="btn btn-success">
                   Submit
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import ObtainStallMenu from "../services/ObtainStallMenu";
+import ObtainStallMenu from "../services/ObtainOrder";
 import Upload from "./Upload.vue";
 
 export default {

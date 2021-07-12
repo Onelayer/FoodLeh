@@ -153,7 +153,7 @@ export default {
           time: this.timing,
         };
         console.log(data);
-        OrderDataService.update(orderID, data)
+        OrderDataService.update(this.$store.state.hawker.uid, orderID, data)
           .then(() => {
             this.message = "Checkout successful.";
           })

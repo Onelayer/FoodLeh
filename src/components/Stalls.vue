@@ -22,7 +22,7 @@
           class="col-md-6 col-lg-4 mb-5"
           v-for="(obj, key) in stallList"
           :key="key"
-          @click="passMenuData(obj.menu)"
+          @click="passMenuData(obj.menu, obj.key)"
         >
           <!-- <router-link :to="{ path: obj.routerLink, params: obj.menu }" > -->
           <router-link :to="{ path: obj.routerLink, params: { menu: obj.menu } }" >
@@ -90,8 +90,10 @@ export default {
     },
 
   methods: {
-      passMenuData(data){
+      passMenuData(data, uid){
         this.$store.commit("setStallEntered", data);
+        this.$store.commit("setUid", uid);
+        console.log(this.$store.state.hawker.uid, "uid");
         console.log(this.$store.state.menu.data, 'Menu stored in store.js');
       },
       onDataChange(items) {

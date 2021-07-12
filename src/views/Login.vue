@@ -99,7 +99,7 @@
 <script>
 import firebase from "firebase";
 import { mapGetters } from "vuex";
-import store from '../store'
+import store from "../store";
 
 export default {
   data() {
@@ -110,8 +110,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user"
-    })
+      user: "user",
+    }),
   },
   methods: {
     login() {
@@ -120,9 +120,9 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(async () => {
           this.$root.uid = firebase.auth().currentUser.uid;
-          await firebase.auth().onAuthStateChanged(user => {
+          await firebase.auth().onAuthStateChanged((user) => {
             this.$store.dispatch("fetchUser", user);
-            console.log(user, 'stored user uid successful');
+            console.log(user, "stored user uid successful");
             console.log(store.getters.user.data.uid);
           });
           alert("Successfully logged in");
@@ -133,7 +133,6 @@ export default {
         .catch((error) => {
           alert(error.message);
         });
-      
     },
 
     navigateToHome() {
@@ -151,7 +150,7 @@ export default {
         .signInWithPopup(provider)
         .then(async () => {
           this.$root.uid = firebase.auth().currentUser.uid;
-          await firebase.auth().onAuthStateChanged(user => {
+          await firebase.auth().onAuthStateChanged((user) => {
             this.$store.dispatch("fetchUser", user);
             console.log(user);
           });
