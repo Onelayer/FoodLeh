@@ -383,12 +383,12 @@ select:disabled {
   display: none;
 }
 
-button,
+/* button,
 [type=button],
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
-}
+} */
 button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
@@ -11067,7 +11067,7 @@ html {
   font-size: 1.5rem;
 }
 
-.portfolio-modal .btn-close {
+/* .portfolio-modal .btn-close {
   color: #1abc9c;
   font-size: 2rem;
   padding: 1rem;
@@ -11081,7 +11081,7 @@ html {
     font-size: 3rem;
     line-height: 2.5rem;
   }
-}
+} */
 
 .footer {
   padding-top: 5rem;

@@ -7,8 +7,10 @@ import 'vuesax/dist/vuesax.css';
 import VueSimpleAlert from 'vue-simple-alert';
 import firebase from './firebase';
 import store from "./store";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
-
+Vue.use(VueSweetalert2);
 
 Vue.use(Vuesax, {
   // options here
@@ -24,7 +26,6 @@ new Vue({
   router,
   data: { 
     uid: "",
-    menuData: [],
   },
   store,
   render: h => h(App)
