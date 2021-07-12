@@ -107,12 +107,12 @@
 
 <script>
 import TutorialDataService from "../services/ObtainOrder";
-import TutorialDetails from "./Order";
+//import TutorialDetails from "./Order";
 import { mapGetters } from "vuex";
 
 export default {
   name: "tutorials-list",
-  components: { TutorialDetails },
+//  components: { TutorialDetails },
   data() {
     return {
       tutorials: [],
