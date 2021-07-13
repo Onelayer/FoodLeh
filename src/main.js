@@ -10,10 +10,8 @@ import store from "./store";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-<<<<<<< HEAD
-=======
+
 Vue.use(VueSweetalert2);
->>>>>>> ee0ad71946a0f1943a4ff81e994734e5eb276ca0
 
 Vue.use(Vuesax, {
   // options here

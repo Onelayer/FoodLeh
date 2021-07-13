@@ -1,17 +1,68 @@
 <template>
-  <div style="margin-left: 50px;">
-    <vs-table>
+  <div class="center" style="margin-left: 50px">
+    <vs-table v-model="selected">
+      <template #header>
+        <vs-input v-model="search" border placeholder="Search" />
+      </template>
       <template #thead>
         <vs-tr>
-          <vs-th> Name </vs-th>
-          <vs-th> Phone Number </vs-th>
-          <vs-th> Order Number </vs-th>
-          <vs-th> Option </vs-th>
-          <vs-th> Time </vs-th>
+          <vs-th>
+            <vs-checkbox
+              :indeterminate="selected.length == tutorials.length"
+              v-model="allCheck"
+              @change="selected = $vs.checkAll(selected, tutorials)"
+            />
+          </vs-th>
+          <vs-th
+            sort
+            @click="tutorials = $vs.sortData($event, tutorials, 'name')"
+          >
+            Name
+          </vs-th>
+          <vs-th
+            sort
+            @click="tutorials = $vs.sortData($event, tutorials, 'hpNumber')"
+          >
+            Phone Number
+          </vs-th>
+          <vs-th
+            sort
+            @click="tutorials = $vs.sortData($event, tutorials, 'orderNumber')"
+          >
+            Order Number
+          </vs-th>
+          <vs-th
+            sort
+            @click="tutorials = $vs.sortData($event, tutorials, 'option')"
+          >
+            Option
+          </vs-th>
+          <vs-th
+            sort
+            @click="tutorials = $vs.sortData($event, tutorials, 'time')"
+          >
+            Time
+          </vs-th>
+          <vs-th></vs-th>
         </vs-tr>
       </template>
       <template #tbody>
-        <vs-tr :key="i" v-for="(tr, i) in tutorials">
+        <!--<vs-tr :key="i" v-for="(tr, i) in tutorials">-->
+        <vs-tr
+          :key="i"
+          v-for="(tr, i) in $vs.getPage(
+            $vs.getSearch(tutorials, search),
+            page,
+            max
+          )"
+          :data="tr"
+          :is-selected="!!selected.includes(tr)"
+          not-click-selected
+          open-expand-only-td
+        >
+          <vs-td checkbox>
+            <vs-checkbox :val="tr" v-model="selected" />
+          </vs-td>
           <vs-td>
             {{ tr.name }}
           </vs-td>
@@ -27,32 +78,43 @@
           <vs-td>
             {{ tr.time }}
           </vs-td>
+          <vs-td>
+            <vs-button danger @click="deleteTutorial(tr.key)"> x </vs-button>
+          </vs-td>
 
           <template #expand>
-            <vs-table>
-              <template #thead>
-                <vs-tr>
-                  <vs-th> Order </vs-th>
-                  <vs-th> Description </vs-th>
-                  <vs-th> Cost </vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr :key="j" v-for="(rr, j) in tr.orders">
-                  <vs-td>
-                    {{ rr.title }}
-                  </vs-td>
-                  <vs-td>
-                    {{ rr.description }}
-                  </vs-td>
-                  <vs-td>
-                    {{ rr.cost }}
-                  </vs-td>
-                </vs-tr>
-              </template>
-            </vs-table>
+            <div class="con-content">
+              <vs-table>
+                <template #thead>
+                  <vs-tr>
+                    <vs-th> Order </vs-th>
+                    <vs-th> Description </vs-th>
+                    <vs-th> Cost </vs-th>
+                  </vs-tr>
+                </template>
+                <template #tbody>
+                  <vs-tr :key="j" v-for="(rr, j) in tr.orders">
+                    <vs-td>
+                      {{ rr.title }}
+                    </vs-td>
+                    <vs-td>
+                      {{ rr.description }}
+                    </vs-td>
+                    <vs-td>
+                      {{ rr.cost }}
+                    </vs-td>
+                  </vs-tr>
+                </template>
+              </vs-table>
+            </div>
           </template>
         </vs-tr>
+      </template>
+      <template #footer>
+        <vs-pagination
+          v-model="page"
+          :length="$vs.getLength($vs.getSearch(tutorials, search), max)"
+        />
       </template>
     </vs-table>
   </div>
@@ -112,20 +174,19 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "tutorials-list",
-//  components: { TutorialDetails },
+  //  components: { TutorialDetails },
   data() {
     return {
       tutorials: [],
-      orders: [],
       currentTutorial: null,
       currentIndex: -1,
       editActive: false,
       edit: null,
-      editProp: "",
+      editProp: {},
       search: "",
       allCheck: false,
       page: 1,
-      max: 3,
+      max: 5,
       active: 0,
       selected: [],
     };
@@ -160,6 +221,10 @@ export default {
         });
       });
 
+      _tutorials.sort(function (a, b) {
+        return new Date(a.time) - new Date(b.time);
+      });
+
       this.tutorials = _tutorials;
     },
 
@@ -177,6 +242,15 @@ export default {
       TutorialDataService.deleteAll()
         .then(() => {
           this.refreshList();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    deleteTutorial(key) {
+      TutorialDataService.delete(this.$store.getters.user.data.uid, key)
+        .then(() => {
+          this.$emit("refreshList");
         })
         .catch((e) => {
           console.log(e);
