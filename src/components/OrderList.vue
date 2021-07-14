@@ -45,7 +45,7 @@
           </vs-th>
           <vs-th>
             <vs-button danger @click="removeAllTutorials">
-              x All
+              X All
             </vs-button>
           </vs-th>
         </vs-tr>
