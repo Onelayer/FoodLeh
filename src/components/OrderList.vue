@@ -6,13 +6,6 @@
       </template>
       <template #thead>
         <vs-tr>
-          <vs-th>
-            <vs-checkbox
-              :indeterminate="selected.length == tutorials.length"
-              v-model="allCheck"
-              @change="selected = $vs.checkAll(selected, tutorials)"
-            />
-          </vs-th>
           <vs-th
             sort
             @click="tutorials = $vs.sortData($event, tutorials, 'name')"
@@ -43,7 +36,18 @@
           >
             Time
           </vs-th>
-          <vs-th></vs-th>
+          <vs-th>
+            <vs-checkbox
+              :indeterminate="selected.length == tutorials.length"
+              v-model="allCheck"
+              @change="selected = $vs.checkAll(selected, tutorials)"
+            />
+          </vs-th>
+          <vs-th>
+            <vs-button danger @click="removeAllTutorials">
+              x All
+            </vs-button>
+          </vs-th>
         </vs-tr>
       </template>
       <template #tbody>
@@ -60,9 +64,6 @@
           not-click-selected
           open-expand-only-td
         >
-          <vs-td checkbox>
-            <vs-checkbox :val="tr" v-model="selected" />
-          </vs-td>
           <vs-td>
             {{ tr.name }}
           </vs-td>
@@ -77,6 +78,9 @@
           </vs-td>
           <vs-td>
             {{ tr.time }}
+          </vs-td>
+          <vs-td checkbox>
+            <vs-checkbox :val="tr" v-model="selected" />
           </vs-td>
           <vs-td>
             <vs-button danger @click="deleteTutorial(tr.key)"> x </vs-button>
@@ -239,7 +243,7 @@ export default {
     },
 
     removeAllTutorials() {
-      TutorialDataService.deleteAll()
+      TutorialDataService.deleteAll(this.$store.getters.user.data.uid)
         .then(() => {
           this.refreshList();
         })
