@@ -17,6 +17,7 @@ import Home from "../views/Home.vue";
 import firebase from "firebase";
 import store from "../store";
 import ForgotPassword from "../components/ForgotPassword.vue";
+import Feedback from "../components/Feedback.vue";
 
 Vue.use(VueRouter);
 
@@ -91,6 +92,11 @@ const routes = [
         path: "/dashboard/settings",
         name: "Settings",
         component: Settings,
+      },
+      {
+        path: "/dashboard/feedback",
+        name: "Feedback",
+        component: Feedback,
       },
     ],
   },

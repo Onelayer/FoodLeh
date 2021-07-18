@@ -52,6 +52,18 @@
           Menu List
         </vs-sidebar-item>
       </router-link>
+            <router-link to="/dashboard/feedback">
+        <vs-sidebar-item id="Instagram">
+          <template #icon>
+            <img
+              src="../assets/baseline_feedback_white_24dp.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Feedback
+        </vs-sidebar-item>
+      </router-link>
       <router-link to="/dashboard/settings">
         <vs-sidebar-item id="Settings">
           <template #icon>
