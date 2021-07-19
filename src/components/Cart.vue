@@ -251,7 +251,7 @@ export default {
       const message = encodeURI(
         '*Order number: * ' + data.orderNumber + '\n' +
         data.name + ' ' + data.hpNumber + '\n' +
-        data.option + ' ' + data.timing + '\n' +
+        data.option + ' ' + data.time + '\n' +
         data.cart + ' ' + '\n'
         );
       return message;

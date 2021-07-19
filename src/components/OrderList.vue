@@ -44,9 +44,7 @@
             />
           </vs-th>
           <vs-th>
-            <vs-button danger @click="removeAllTutorials">
-              X All
-            </vs-button>
+            <vs-button danger @click="removeAllTutorials"> X All </vs-button>
           </vs-th>
         </vs-tr>
       </template>
@@ -93,6 +91,7 @@
                   <vs-tr>
                     <vs-th> Order </vs-th>
                     <vs-th> Description </vs-th>
+                    <vs-th> Comment </vs-th>
                     <vs-th> Cost </vs-th>
                   </vs-tr>
                 </template>
@@ -103,6 +102,9 @@
                     </vs-td>
                     <vs-td>
                       {{ rr.description }}
+                    </vs-td>
+                    <vs-td>
+                      {{ rr.comment }}
                     </vs-td>
                     <vs-td>
                       {{ rr.cost }}
@@ -211,6 +213,7 @@ export default {
             title: data2.title,
             description: data2.description,
             cost: data2.cost,
+            comment: data2.comment,
           });
         });
 
