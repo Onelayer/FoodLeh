@@ -1,22 +1,6 @@
 <template>
   <div>
     <div class="navspacing">
-      <!-- <Modal
-      v-show="isModalVisible"
-      @close="closeModal"
-    >
-      <template v-slot:title>
-        This is a new modal header.
-      </template>
-
-      <template v-slot:body>
-        This is a new modal body.
-      </template>
-
-      <template v-slot:footer>
-        This is a new modal footer.
-      </template>
-    </Modal> -->
     </div>
     <div class="navspacing">
       <div class="search-wrapper d-flex justify-content-center">
@@ -64,7 +48,9 @@ export default {
       cart: [],
       cardList: [],
       keyword: "",
-      cardListProps: [],
+      resultPlaceholder: false,
+      textPlaceholder: '',
+      cartDict: [],
     };
   },
   methods: {
@@ -72,14 +58,13 @@ export default {
       this.cardListProps = this.menu;
       //not the most ideal, need to make it more responsive
       //and should already render it out by url... not store.js
-      console.log(this.menu, "mapGetters Menu");
-      console.log(this.cardListProps);
       this.onDataChange(this.cardListProps);
     },
-    async addItemToCart(product) {
-      console.log(product.description);
+
+    addItemToCart(product) {
+      console.log(product);
       //it is called post in the template
-      const { value: text } = await this.$swal
+      const { value: text } = this.$swal
         .fire({
           title: "Adding " + product.title + " to cart",
           // imageUrl: product.img,
@@ -94,12 +79,19 @@ export default {
           confirmButtonColor: '#1abc9c'
         })
         .then((result) => {
+          console.log(result);
           if (result.isConfirmed) {
-            if (text) product.description = text;
-            else product.description = '';
-            console.log(product.description);
-
-            this.cart.push(product);
+            let newProduct = {
+              title: product.title,
+              description: product.description,
+              cost: product.cost,
+              quantity: 1,
+              comment: '',
+            }
+            if (result.value) newProduct.comment = result.value;
+            else newProduct.comment = '';
+            console.log(newProduct, 'New Product');
+            this.scanCart(newProduct)
             this.saveCart();
             this.$swal.fire({
               toast: true,
@@ -110,33 +102,40 @@ export default {
               icon: 'success',
               title: 'Item added to cart',
             })
-            //create toast to say it has been added to cart
-          } else if (result.isDismissed) {
+
           }
         });
-
-      // eventBus.$emit('addItemToCart', product);
     },
-    // Old add item to cart
-    // addItemToCart(product) {
-    //   //it is called post in the template
-    //   this.cart.push(product);
-    //   this.$fire({
-    //     title: "Success!",
-    //     text: "Item has been added to cart!",
-    //     type: "success",
-    //     timer: 3000
-    //   }).then(function(r) {
-    //     console.log(r.value);
-    //   });
-    //   this.saveCart();
-    //   // eventBus.$emit('addItemToCart', product);
-    // },
+    scanCart(product){
+      console.log('scanning cart');
+
+      var i = 0;
+      let isInCart = false;
+
+      do {
+        if(this.cart.length && ((this.cart[i].title === product.title) && (this.cart[i].comment === product.comment))) {
+          this.cart[i].quantity += 1;
+          console.log('Item quantity increased');
+          isInCart = true;
+        } 
+        i++;
+      } while((i < this.cart.length) && !isInCart);
+
+      if (!isInCart) {
+        this.cart.push(product);
+      }
+
+
+    },
     saveCart() {
       let parsedArray = JSON.stringify(this.cart);
-      localStorage.setItem("cart", parsedArray);
+      let cartuid = this.hawkeruid + "cart";
+      console.log(cartuid);
+      localStorage.setItem(cartuid, parsedArray);
+      console.log(localStorage.getItem(this.hawkeruid + "cart", "Local Storage: uid + cart"));
     },
     onDataChange(items) {
+      console.log('onDataChange() is running');
       let _card_list = [];
 
       Object.entries(items).forEach((item) => {
@@ -145,7 +144,6 @@ export default {
         //over here, item refers to an array of 2 : [key, {menu object}]
         //hence, we access the data with item[1];
         let data = item[1];
-        console.log(data, "object accessed");
 
         _card_list.push({
           title: data.title,
@@ -158,7 +156,6 @@ export default {
       });
 
       this.cardList = _card_list;
-      console.log(this.cardList, "cardlist");
     },
   },
   mounted() {
@@ -169,16 +166,19 @@ export default {
     //   this.onDataChange(this.$root.menuData);
     // })
     // ObtainStalls.getAllStallMenu(this.$root.menuUid).on("value", this.onDataChange);
-    if (localStorage.getItem("cart")) {
-      try {
-        this.cart = JSON.parse(localStorage.getItem("cart"));
-      } catch (e) {
-        localStorage.removeItem("cart");
+    setTimeout(() => {
+      console.log(this.hawkeruid, "Menu: On mount, hawker uid is this"); 
+      if (localStorage.getItem(this.hawkeruid + "cart")) {
+        try {
+          this.cart = JSON.parse(localStorage.getItem(this.hawkeruid + "cart"));
+        } catch (e) {
+          localStorage.removeItem(this.hawkeruid + "cart");
+        }
       }
-    }
+    }, 15);
   },
   beforeDestroy() {
-    ObtainStalls.getAll().off("value", this.onDataChange);
+    // ObtainStalls.getAll().off("value", this.onDataChange);
   },
   computed: {
     filteredList() {
@@ -188,6 +188,7 @@ export default {
     },
     ...mapGetters({
       menu: "menuData",
+      hawkeruid: "uid",
     }),
   },
 };
