@@ -16,6 +16,18 @@
           alt="FoodLeh logo"
         />
       </template>
+      <router-link to="/dashboard/homepage">
+        <vs-sidebar-item id="homepage">
+          <template #icon>
+            <img
+              src="../assets/baseline_home_white_24dp.png"
+              class="brand_logo"
+              alt="FoodLeh logo"
+            />
+          </template>
+          Home Page
+        </vs-sidebar-item>
+      </router-link>
       <router-link to="/dashboard/orderlist">
         <vs-sidebar-item id="Instagram">
           <template #icon>
@@ -29,7 +41,7 @@
         </vs-sidebar-item>
       </router-link>
       <router-link to="/dashboard/addmenu">
-        <vs-sidebar-item id="market">
+        <vs-sidebar-item id="Add Menu">
           <template #icon>
             <img
               src="../assets/add-box-line.png"
@@ -52,8 +64,8 @@
           Menu List
         </vs-sidebar-item>
       </router-link>
-            <router-link to="/dashboard/feedback">
-        <vs-sidebar-item id="Instagram">
+      <router-link to="/dashboard/feedback">
+        <vs-sidebar-item id="Feedback">
           <template #icon>
             <img
               src="../assets/baseline_feedback_white_24dp.png"
