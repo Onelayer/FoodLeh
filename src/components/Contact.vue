@@ -18,6 +18,33 @@
           <!-- <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div> -->
         </div>
+
+        <div class="dropdown navbar-toggler">
+          <button
+            class="
+              navbar-toggler
+              text-uppercase
+              font-weight-bold
+              bg-primary
+              text-white
+              rounded
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            Choose a store
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="dropdown-content">
+            Menu
+            <div></div>
+            Cart
+          </div>
+        </div>
         <!-- Contact Section Form-->
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">
