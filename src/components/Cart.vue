@@ -1,6 +1,6 @@
 <template>
   <div class="cart navspacing">
-    <h1 class="title">Your Cart</h1>
+    <h1 class="title">Cart</h1>
     <p v-show="!cart.length">
       <i>Your cart is empty!</i>
       <router-link to="/ordering/menu">Go shopping</router-link>
@@ -8,32 +8,40 @@
     <p>
       {{ message }}
     </p>
-    <table class="table is-striped" v-show="cart.length">
-      <thead>
-        <tr>
-          <td>Name</td>
-          <td>Price</td>
-          <td>Quantity</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(p, index) in cart" :key="index">
-          <td>{{ p.title }}</td>
-          <td>${{ p.cost }}</td>
-          <td>{{ p.quantity }}</td>
-          <td><button @click="removeItemFromCart(p)">Remove Item</button></td>
-        </tr>
-        <tr>
-          <td><b>Total:</b></td>
-          <td></td>
-          <td>
-            <b>${{ total }}</b>
-          </td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+    <vs-table v-show="cart.length">
+      <template #thead>
+        <vs-tr>
+          <vs-td class="table-labels">Name</vs-td>
+          <vs-td class="table-labels">Description</vs-td>
+          <vs-td></vs-td>
+          <vs-td class="table-labels">Quantity</vs-td>
+          <vs-td></vs-td>
+          <vs-td class="table-labels">Price</vs-td>
+          <vs-td></vs-td>
+        </vs-tr>
+      </template>
+      <template #tbody>
+        <vs-tr v-for="(p, index) in cart" :key="index">
+          <vs-td class="table-items">{{ p.title }}</vs-td>
+          <vs-td class="table-items">{{ p.comment }}</vs-td>
+          <vs-td><vs-button @click="addItemToCart(p)" dark><strong>+</strong></vs-button></vs-td>
+          <vs-td class="table-items">{{ p.quantity }}</vs-td>
+          <vs-td><vs-button @click="removeItemFromCart(p)" dark><strong>-</strong></vs-button></vs-td>
+          <vs-td class="table-items">${{ subtotal(p) }}</vs-td>
+        </vs-tr>
+        <vs-tr>
+          <vs-td><b class="table-labels">Total:</b></vs-td>
+          <vs-td></vs-td>
+          <vs-td></vs-td>
+          <vs-td></vs-td>
+          <vs-td></vs-td>
+          <vs-td>
+            <b class="table-labels">${{ total }}</b>
+          </vs-td>
+          <vs-td></vs-td>
+        </vs-tr>
+      </template>
+    </vs-table>
     <div v-show="cart.length">
       <div class="d-flex justify-content-center" >
         <div>
@@ -59,15 +67,15 @@
         </div>
         <br/>
         <p>
-          <button
+          <!-- <button
             class="button is-primary"
             @click.prevent="checkOut"
           >
             Checkout
-          </button>
+          </button> -->
         </p>
         <i>{{ error }}</i>
-        <button @click="generateOrderUrl">Checkout Via Whatsapp</button>
+        <vs-button @click="generateOrderUrl" color="rgb(23,208,85)" class="table-items">Checkout Via Whatsapp</vs-button>
 
         </div>
       </div>
@@ -77,6 +85,7 @@
 
 <script>
 import OrderDataService from "../services/OrderDataService";
+import { mapGetters } from "vuex";
 
 export default {
   data: () => {
@@ -95,9 +104,48 @@ export default {
       stallClosingHours: 24, //but stalls should be able to modify this from backend if wanted
       hawkerHpNumber: 6590604838,
       deliveryMessage: 'Delivery will be liased with the vendor through text.',
+      cartDict: [],
     };
   },
   methods: {
+    scanCart(){
+      var dict = {};
+      let _cartDict = [];
+      for (var i = 0; i < this.cart.length; i++){
+        // dict[this.cart[i].title] = {};
+        if ((dict[this.cart[i].title]) && (dict[this.cart[i].title].description === this.cart[i].description)) {
+            dict[this.cart[i].title].quantity += 1;
+        } else {
+          let data = {
+            quantity: 1,
+            description: this.cart[i].description,
+            cost: this.cart[i].cost,
+          }
+          dict[this.cart[i].title] = data;
+        }
+      }
+      console.log(dict);
+
+      Object.entries(dict).forEach((item) => {
+        console.log(item, "item");
+        console.log(dict, "dict");
+        //over here, item refers to an array of 2 : [key, {menu object}]
+        //hence, we access the data with item[1];
+        let data = item[1];
+
+        _cartDict.push({
+          title: item[0],
+          cost: data.cost*data.quantity,
+          description: data.description,
+          quantity: data.quantity,
+        });
+      });
+
+      this.cartDict = _cartDict;
+      console.log(this.cartDict);
+
+    },
+    
     generateTimings() {
       const todaysTime = new Date();
       let _timings = [];
@@ -131,7 +179,7 @@ export default {
     },
     saveCart() {
       let parsedArray = JSON.stringify(this.cart); //saves the array locally after parsing
-      localStorage.setItem("cart", parsedArray);
+      localStorage.setItem(this.hawkeruid + "cart", parsedArray);
     },
     checkOut() {
       if (this.cart.length === 0) {
@@ -166,11 +214,19 @@ export default {
     retrieveCart() {
       console.log(this.cart);
     },
+    addItemToCart(product){
+      const index = this.cart.indexOf(product);
+      this.cart[index].quantity += 1;
+    },
     removeItemFromCart(product) {
       this.$confirm("Are you sure you want to remove this item?")
         .then(() => {
           const index = this.cart.indexOf(product);
-          this.cart.splice(index, 1); //2nd param is the number of elements to remove
+          if (product.quantity === 1) {
+            this.cart.splice(index, 1); //2nd param is the number of elements to remove
+          } else {
+            this.cart[index].quantity -= 1;
+          }
           this.saveCart();
       });
     },
@@ -205,17 +261,25 @@ export default {
       let urlStart = "https://wa.me/";
       let text = "?text=";
       let urlEncodedMsg = this.encodeOrder();
+      this.checkOut();
       return window.open(urlStart + this.hawkerHpNumber + text + urlEncodedMsg, "_blank");
+    },
+    subtotal(product) {
+      return product.cost * product.quantity;
     },
   },
   mounted() {
-    if (localStorage.getItem("cart")) {
-      try {
-        this.cart = JSON.parse(localStorage.getItem("cart"));
-      } catch (e) {
-        localStorage.removeItem("cart");
+    setTimeout(() => {
+      console.log(this.hawkeruid, "Cart: On mount, hawker uid is this"); 
+      if (localStorage.getItem(this.hawkeruid + "cart")) {
+        try {
+          this.cart = JSON.parse(localStorage.getItem(this.hawkeruid + "cart"));
+        } catch (e) {
+          localStorage.removeItem(this.hawkeruid + "cart");
+        }
       }
-    }
+      // this.scanCart();
+    }, 15);
     this.generateTimings();
   },
   computed: {
@@ -224,13 +288,23 @@ export default {
         return total + p.cost * p.quantity;
       }, 0);
     },
-
+    ...mapGetters({
+      hawkeruid: "uid",
+    }),
   },
 
 };
 </script>
 
 <style scoped>
+.table-labels {
+  font-size: 1.1rem;
+}
+
+.table-items {
+  font-size: 0.9rem;
+}
+
 .products {
   display: grid;
   grid-template-columns: 1fr 1fr;
