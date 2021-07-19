@@ -43,8 +43,8 @@
             Menu
             <div></div>
             Cart
-          </div>
-        </div>
+          </div> 
+        </div> 
         <!-- Contact Section Form-->
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">

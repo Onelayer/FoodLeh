@@ -47,7 +47,7 @@
                 <strong>{{ obj.caption }}</strong>
               </div>
             </div>
-            <img class="img-fluid" :src="obj.img" alt="..." />
+            <img class="img-fluid" :src="obj.img" alt="..."/>
             <h6 style="margin: 1rem; color: black">{{ obj.title }}</h6>
           </div>
           </router-link>
