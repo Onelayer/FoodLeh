@@ -66,26 +66,6 @@ export default {
   data() {
     return {
       stallList: [],
-      // stallsJSON: [
-      //   {
-      //     img: require("/public/img/stalls/chicken_rice_stall.png"),
-      //     caption: "Select",
-      //     title: "Yishun 925 Food Center",
-      //     routerLink: "/stall_1/menu",
-      //   },
-      //   {
-      //     img: require("/public/img/stalls/mookata_stall.png"),
-      //     caption: "Select",
-      //     title: "Clementi West 2 Mookata",
-      //     routerLink: "/stall_1/menu",
-      //   },
-      //   {
-      //     img: require("/public/img/stalls/bishan_hawker_stall.png"),
-      //     caption: "Select",
-      //     title: "Bishan Street 12 Tze Char",
-      //     routerLink: "/stall_1/menu",
-      //   },
-      // ],
       }
     },
 
