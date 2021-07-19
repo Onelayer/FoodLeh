@@ -262,7 +262,7 @@ export default {
       let text = "?text=";
       let urlEncodedMsg = this.encodeOrder();
       this.checkOut();
-      return window.open(urlStart + this.hawkerHpNumber + text + urlEncodedMsg, "_blank");
+      return window.open(urlStart + this.$store.state.hawkerhp.hpnumber + text + urlEncodedMsg, "_blank");
     },
     subtotal(product) {
       return product.cost * product.quantity;

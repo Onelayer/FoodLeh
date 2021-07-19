@@ -19,6 +19,9 @@ export default new Vuex.Store({
       hawker: {
         uid: null,
       },
+      hawkerhp: {
+        hpnumber: null,
+      }
     },
     //provide a way of accessing data stored in state   
     getters: { 
@@ -31,6 +34,9 @@ export default new Vuex.Store({
       uid(state){
         return state.hawker.uid;
       },
+      hawkerhp(state) {
+        return state.hawkerhp.hpnumber;
+      }
     },
     //allows us to make changes to our state
     mutations: { 
@@ -46,6 +52,9 @@ export default new Vuex.Store({
       setUid(state, uid){
         state.hawker.uid = uid;
       },
+      setHpNumber(state, hpnumber) {
+        state.hawkerhp.hpnumber = hpnumber;
+      }
     },
     //commits the state after mutating.
     actions: {
