@@ -52,6 +52,7 @@ export default {
     onDataChange(items) {
       let _tutorials = [];
       let _totalRevenue = 0;
+      let menuItems = {};
 
       items.forEach((item) => {
         let key = item.key;
