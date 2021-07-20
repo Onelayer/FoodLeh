@@ -30,6 +30,15 @@ class MenuDataFunctions {
   deleteAll(uid) {
     return db.child(uid).child('Order').remove();
   }
+
+  currentDate() {
+    //do i need date?
+    const current = new Date();
+    const date = `${current.getFullYear()}/${
+      current.getMonth() + 1
+    }/${current.getDate()}`;
+    return date;
+  }
 }
 
 export default new MenuDataFunctions();
