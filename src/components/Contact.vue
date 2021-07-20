@@ -98,7 +98,7 @@
 
 <script>
 import ObtainStalls from '../services/ObtainStalls'
-import OrderDataService from '../services/OrderDataService'
+import FeedbackService from '../services/FeedbackService'
 
 export default {
   data() {
@@ -122,7 +122,7 @@ export default {
       }
       if (this.storeSelected !== 'default'){
         console.log(this.storeSelected, 'Store UID')
-        OrderDataService.createFeedback(this.storeSelected, data)
+        FeedbackService.createFeedback(this.storeSelected, data)
           .then(() => {
             this.error = ''
             this.name = '';
