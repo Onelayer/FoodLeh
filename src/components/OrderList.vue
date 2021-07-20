@@ -49,7 +49,7 @@
             </vs-th>
             <vs-th>
               <vs-checkbox
-                :indeterminate="selected.length == tutorials.length"
+                :indeterminate="selected1.length == tutorials.length"
                 v-model="allCheck"
                 @change="selected = $vs.checkAll(selected, tutorials)"
               />
@@ -69,8 +69,8 @@
               max
             )"
             :data="tr"
-            :is-selected="!!selected.includes(tr)"
-            not-click-selected
+            :is-selected="!!selected1.includes(tr)"
+            not-click-selected1
             open-expand-only-td
           >
             <vs-td>
@@ -92,7 +92,7 @@
               {{ tr.date }}
             </vs-td>
             <vs-td checkbox>
-              <vs-checkbox :val="tr" v-model="selected" />
+              <vs-checkbox :val="tr" v-model="selected1" />
             </vs-td>
             <vs-td>
               <vs-button danger @click="deleteTutorial(tr.key)"> x </vs-button>
@@ -176,7 +176,7 @@
             </vs-th>
             <vs-th>
               <vs-checkbox
-                :indeterminate="selected.length == diff.length"
+                :indeterminate="selected2.length == diff.length"
                 v-model="allCheck"
                 @change="selected = $vs.checkAll(selected, diff)"
               />
@@ -196,8 +196,8 @@
               max
             )"
             :data="dr"
-            :is-selected="!!selected.includes(dr)"
-            not-click-selected
+            :is-selected="!!selected2.includes(dr)"
+            not-click-selected2
             open-expand-only-td
           >
             <vs-td>
@@ -296,7 +296,8 @@ export default {
       page: 1,
       max: 5,
       active: 0,
-      selected: [],
+      selected1: [],
+      selected2: [],
     };
   },
   methods: {

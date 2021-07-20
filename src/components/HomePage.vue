@@ -1,8 +1,11 @@
 <template>
-  <div class="center" style="margin-left: 50px">
+  <div class="center" style="margin: 50px;">
     <vs-card>
       <template #title>
         <h3>Total Customers</h3>
+      </template>
+      <template #img>
+        <img src="..\assets\customers.png" alt="" />
       </template>
       <template #text>
         <p>
@@ -14,13 +17,16 @@
       <template #title>
         <h3>Total Revenue</h3>
       </template>
+            <template #img>
+        <img src="..\assets\revenue.png" alt="" />
+      </template>
       <template #text>
         <p>
           {{ totalRevenue }}
         </p>
       </template>
     </vs-card>
-        <vs-card>
+    <vs-card>
       <template #title>
         <h3>Today's Customers</h3>
       </template>
@@ -30,7 +36,7 @@
         </p>
       </template>
     </vs-card>
-        <vs-card>
+    <vs-card>
       <template #title>
         <h3>Today's Revenue</h3>
       </template>
