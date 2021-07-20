@@ -1,181 +1,277 @@
 <template>
-  <div class="center" style="margin-left: 50px">
-    <vs-table v-model="selected">
-      <template #header>
-        <vs-input v-model="search" border placeholder="Search" />
-      </template>
-      <template #thead>
-        <vs-tr>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'name')"
+  <div>
+    <div class="center" style="margin-left: 50px">
+      <br>
+      <H3>Today's Orders</H3>
+      <vs-table v-model="selected">
+        <template #header>
+          <vs-input v-model="search1" border placeholder="Search" />
+        </template>
+        <template #thead>
+          <vs-tr>
+            <vs-th
+              sort
+              @click="tutorials = $vs.sortData($event, tutorials, 'name')"
+            >
+              Name
+            </vs-th>
+            <vs-th
+              sort
+              @click="tutorials = $vs.sortData($event, tutorials, 'hpNumber')"
+            >
+              Phone Number
+            </vs-th>
+            <vs-th
+              sort
+              @click="
+                tutorials = $vs.sortData($event, tutorials, 'orderNumber')
+              "
+            >
+              Order Number
+            </vs-th>
+            <vs-th
+              sort
+              @click="tutorials = $vs.sortData($event, tutorials, 'option')"
+            >
+              Option
+            </vs-th>
+            <vs-th
+              sort
+              @click="tutorials = $vs.sortData($event, tutorials, 'time')"
+            >
+              Time
+            </vs-th>
+            <vs-th
+              sort
+              @click="tutorials = $vs.sortData($event, tutorials, 'date')"
+            >
+              Date
+            </vs-th>
+            <vs-th>
+              <vs-checkbox
+                :indeterminate="selected.length == tutorials.length"
+                v-model="allCheck"
+                @change="selected = $vs.checkAll(selected, tutorials)"
+              />
+            </vs-th>
+            <vs-th>
+              <vs-button danger @click="removeAllTutorials"> X All </vs-button>
+            </vs-th>
+          </vs-tr>
+        </template>
+        <template #tbody>
+          <!--<vs-tr :key="i" v-for="(tr, i) in tutorials">-->
+          <vs-tr
+            :key="i"
+            v-for="(tr, i) in $vs.getPage(
+              $vs.getSearch(tutorials, search1),
+              page,
+              max
+            )"
+            :data="tr"
+            :is-selected="!!selected.includes(tr)"
+            not-click-selected
+            open-expand-only-td
           >
-            Name
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'hpNumber')"
-          >
-            Phone Number
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'orderNumber')"
-          >
-            Order Number
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'option')"
-          >
-            Option
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'time')"
-          >
-            Time
-          </vs-th>
-          <vs-th>
-            <vs-checkbox
-              :indeterminate="selected.length == tutorials.length"
-              v-model="allCheck"
-              @change="selected = $vs.checkAll(selected, tutorials)"
-            />
-          </vs-th>
-          <vs-th>
-            <vs-button danger @click="removeAllTutorials"> X All </vs-button>
-          </vs-th>
-        </vs-tr>
-      </template>
-      <template #tbody>
-        <!--<vs-tr :key="i" v-for="(tr, i) in tutorials">-->
-        <vs-tr
-          :key="i"
-          v-for="(tr, i) in $vs.getPage(
-            $vs.getSearch(tutorials, search),
-            page,
-            max
-          )"
-          :data="tr"
-          :is-selected="!!selected.includes(tr)"
-          not-click-selected
-          open-expand-only-td
-        >
-          <vs-td>
-            {{ tr.name }}
-          </vs-td>
-          <vs-td>
-            {{ tr.hpNumber }}
-          </vs-td>
-          <vs-td>
-            {{ tr.orderNumber }}
-          </vs-td>
-          <vs-td>
-            {{ tr.option }}
-          </vs-td>
-          <vs-td>
-            {{ tr.time }}
-          </vs-td>
-          <vs-td checkbox>
-            <vs-checkbox :val="tr" v-model="selected" />
-          </vs-td>
-          <vs-td>
-            <vs-button danger @click="deleteTutorial(tr.key)"> x </vs-button>
-          </vs-td>
+            <vs-td>
+              {{ tr.name }}
+            </vs-td>
+            <vs-td>
+              {{ tr.hpNumber }}
+            </vs-td>
+            <vs-td>
+              {{ tr.orderNumber }}
+            </vs-td>
+            <vs-td>
+              {{ tr.option }}
+            </vs-td>
+            <vs-td>
+              {{ tr.time }}
+            </vs-td>
+            <vs-td>
+              {{ tr.date }}
+            </vs-td>
+            <vs-td checkbox>
+              <vs-checkbox :val="tr" v-model="selected" />
+            </vs-td>
+            <vs-td>
+              <vs-button danger @click="deleteTutorial(tr.key)"> x </vs-button>
+            </vs-td>
 
-          <template #expand>
-            <div class="con-content">
-              <vs-table>
-                <template #thead>
-                  <vs-tr>
-                    <vs-th> Order </vs-th>
-                    <vs-th> Description </vs-th>
-                    <vs-th> Comment </vs-th>
-                    <vs-th> Cost </vs-th>
-                    <vs-th> Quantity </vs-th>
-                  </vs-tr>
-                </template>
-                <template #tbody>
-                  <vs-tr :key="j" v-for="(rr, j) in tr.orders">
-                    <vs-td>
-                      {{ rr.title }}
-                    </vs-td>
-                    <vs-td>
-                      {{ rr.description }}
-                    </vs-td>
-                    <vs-td>
-                      {{ rr.comment }}
-                    </vs-td>
-                    <vs-td>
-                      {{ rr.cost * rr.quantity }}
-                    </vs-td>
-                    <vs-td>
-                      {{ rr.quantity }}
-                    </vs-td>
-                  </vs-tr>
-                </template>
-              </vs-table>
-            </div>
-          </template>
-        </vs-tr>
-      </template>
-      <template #footer>
-        <vs-pagination
-          v-model="page"
-          :length="$vs.getLength($vs.getSearch(tutorials, search), max)"
-        />
-      </template>
-    </vs-table>
-  </div>
-</template>
-<!-- <template>
-  <div class="container h-100">
-    <div class="d-flex justify-content-center h-100">
-      <div class="user_card">
-        <div class="d-flex justify-content-center">
-          <div class="coms">
-            <div class="list row">
-              <div class="col-md-6">
-                <h1>Order</h1>
-                <ul class="list-group">
-                  <li
-                    class="list-group-item"
-                    :class="{ active: index == currentIndex }"
-                    v-for="(tutorial, index) in tutorials"
-                    :key="index"
-                    @click="setActiveTutorial(tutorial, index)"
-                  >
-                    {{ tutorial.title }}
-                  </li>
-                </ul>
+            <template #expand>
+              <div class="con-content">
+                <vs-table>
+                  <template #thead>
+                    <vs-tr>
+                      <vs-th> Order </vs-th>
+                      <vs-th> Description </vs-th>
+                      <vs-th> Comment </vs-th>
+                      <vs-th> Cost </vs-th>
+                      <vs-th> Quantity </vs-th>
+                    </vs-tr>
+                  </template>
+                  <template #tbody>
+                    <vs-tr :key="j" v-for="(rr, j) in tr.orders">
+                      <vs-td>
+                        {{ rr.title }}
+                      </vs-td>
+                      <vs-td>
+                        {{ rr.description }}
+                      </vs-td>
+                      <vs-td>
+                        {{ rr.comment }}
+                      </vs-td>
+                      <vs-td>
+                        {{ rr.cost * rr.quantity }}
+                      </vs-td>
+                      <vs-td>
+                        {{ rr.quantity }}
+                      </vs-td>
+                    </vs-tr>
+                  </template>
+                </vs-table>
+              </div>
+            </template>
+          </vs-tr>
+        </template>
+        <template #footer>
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(tutorials, search1), max)"
+          />
+        </template>
+      </vs-table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="center" style="margin-left: 50px">
+      <H3>Past Orders</H3>
+      <vs-table v-model="selected">
+        <template #header>
+          <vs-input v-model="search2" border placeholder="Search" />
+        </template>
+        <template #thead>
+          <vs-tr>
+            <vs-th sort @click="diff = $vs.sortData($event, diff, 'name')">
+              Name
+            </vs-th>
+            <vs-th sort @click="diff = $vs.sortData($event, diff, 'hpNumber')">
+              Phone Number
+            </vs-th>
+            <vs-th
+              sort
+              @click="diff = $vs.sortData($event, diff, 'orderNumber')"
+            >
+              Order Number
+            </vs-th>
+            <vs-th sort @click="diff = $vs.sortData($event, diff, 'option')">
+              Option
+            </vs-th>
+            <vs-th sort @click="diff = $vs.sortData($event, diff, 'time')">
+              Time
+            </vs-th>
+            <vs-th sort @click="diff = $vs.sortData($event, diff, 'date')">
+              Date
+            </vs-th>
+            <vs-th>
+              <vs-checkbox
+                :indeterminate="selected.length == diff.length"
+                v-model="allCheck"
+                @change="selected = $vs.checkAll(selected, diff)"
+              />
+            </vs-th>
+            <vs-th>
+              <vs-button danger @click="removeAllTutorials"> X All </vs-button>
+            </vs-th>
+          </vs-tr>
+        </template>
+        <template #tbody>
+          <!--<vs-tr :key="i" v-for="(tr, i) in tutorials">-->
+          <vs-tr
+            :key="i"
+            v-for="(dr, i) in $vs.getPage(
+              $vs.getSearch(diff, search2),
+              page,
+              max
+            )"
+            :data="dr"
+            :is-selected="!!selected.includes(dr)"
+            not-click-selected
+            open-expand-only-td
+          >
+            <vs-td>
+              {{ dr.name }}
+            </vs-td>
+            <vs-td>
+              {{ dr.hpNumber }}
+            </vs-td>
+            <vs-td>
+              {{ dr.orderNumber }}
+            </vs-td>
+            <vs-td>
+              {{ dr.option }}
+            </vs-td>
+            <vs-td>
+              {{ dr.time }}
+            </vs-td>
+            <vs-td>
+              {{ dr.date }}
+            </vs-td>
+            <vs-td checkbox>
+              <vs-checkbox :val="dr" v-model="selected" />
+            </vs-td>
+            <vs-td>
+              <vs-button danger @click="deleteTutorial(dr.key)"> x </vs-button>
+            </vs-td>
 
-                <button
-                  class="m-3 btn btn-sm btn-danger"
-                  @click="removeAllTutorials"
-                >
-                  Remove All
-                </button>
+            <template #expand>
+              <div class="con-content">
+                <vs-table>
+                  <template #thead>
+                    <vs-tr>
+                      <vs-th> Order </vs-th>
+                      <vs-th> Description </vs-th>
+                      <vs-th> Comment </vs-th>
+                      <vs-th> Cost </vs-th>
+                      <vs-th> Quantity </vs-th>
+                    </vs-tr>
+                  </template>
+                  <template #tbody>
+                    <vs-tr :key="j" v-for="(dd, j) in dr.orders">
+                      <vs-td>
+                        {{ dd.title }}
+                      </vs-td>
+                      <vs-td>
+                        {{ dd.description }}
+                      </vs-td>
+                      <vs-td>
+                        {{ dd.comment }}
+                      </vs-td>
+                      <vs-td>
+                        {{ dd.cost * dd.quantity }}
+                      </vs-td>
+                      <vs-td>
+                        {{ dd.quantity }}
+                      </vs-td>
+                    </vs-tr>
+                  </template>
+                </vs-table>
               </div>
-              <div class="col-md-6">
-                <div v-if="currentTutorial">
-                  <tutorial-details
-                    :tutorial="currentTutorial"
-                    @refreshList="refreshList"
-                  />
-                </div>
-                <div v-else>
-                  <br />
-                  <p>Please click on a food order...</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </template>
+          </vs-tr>
+        </template>
+        <template #footer>
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(diff, search2), max)"
+          />
+        </template>
+      </vs-table>
     </div>
   </div>
-</template> -->
+</template>
+
 
 <script>
 import TutorialDataService from "../services/ObtainOrder";
@@ -188,12 +284,14 @@ export default {
   data() {
     return {
       tutorials: [],
+      diff: [],
       currentTutorial: null,
       currentIndex: -1,
       editActive: false,
       edit: null,
       editProp: {},
-      search: "",
+      search1: "",
+      search2: "",
       allCheck: false,
       page: 1,
       max: 5,
@@ -204,40 +302,76 @@ export default {
   methods: {
     onDataChange(items) {
       let _tutorials = [];
+      let _diff = [];
 
       items.forEach((item) => {
         let key = item.key;
         let data = item.val();
 
         let _orders = [];
+        let _diffOrders = [];
         let orderss = data.cart;
-        orderss.forEach((order) => {
-          let data2 = order;
-          _orders.push({
-            title: data2.title,
-            description: data2.description,
-            cost: data2.cost,
-            comment: data2.comment,
-            quantity: data2.quantity,
+        if (data.date === this.currentDate()) {
+          orderss.forEach((order) => {
+            let data2 = order;
+            _orders.push({
+              title: data2.title,
+              description: data2.description,
+              cost: data2.cost,
+              comment: data2.comment,
+              quantity: data2.quantity,
+            });
           });
-        });
 
-        _tutorials.push({
-          key: key,
-          name: data.name,
-          hpNumber: data.hpNumber,
-          orderNumber: data.orderNumber,
-          option: data.option,
-          time: data.time,
-          orders: _orders,
-        });
+          _tutorials.push({
+            key: key,
+            name: data.name,
+            hpNumber: data.hpNumber,
+            orderNumber: data.orderNumber,
+            option: data.option,
+            time: data.time,
+            date: data.date,
+            orders: _orders,
+          });
+        } else {
+          orderss.forEach((order) => {
+            let data2 = order;
+            _diffOrders.push({
+              title: data2.title,
+              description: data2.description,
+              cost: data2.cost,
+              comment: data2.comment,
+              quantity: data2.quantity,
+            });
+          });
+
+          _diff.push({
+            key: key,
+            name: data.name,
+            hpNumber: data.hpNumber,
+            orderNumber: data.orderNumber,
+            option: data.option,
+            time: data.time,
+            date: data.date,
+            orders: _diffOrders,
+          });
+        }
       });
 
       _tutorials.sort(function (a, b) {
         return new Date(a.time) - new Date(b.time);
       });
 
+      _diff.sort(function (a, b) {
+        return new Date(a.time) - new Date(b.time);
+      });
+
+      _diff.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+
       this.tutorials = _tutorials;
+      this.diff = _diff;
     },
 
     refreshList() {
@@ -267,6 +401,14 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    currentDate() {
+      //do i need date?
+      const current = new Date();
+      const date = `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()}`;
+      return date;
     },
   },
   mounted() {

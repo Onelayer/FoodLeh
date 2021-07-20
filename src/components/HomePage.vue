@@ -2,7 +2,7 @@
   <div class="center" style="margin-left: 50px">
     <vs-card>
       <template #title>
-        <h3>Number of Customers</h3>
+        <h3>Total Customers</h3>
       </template>
       <template #text>
         <p>
@@ -20,6 +20,26 @@
         </p>
       </template>
     </vs-card>
+        <vs-card>
+      <template #title>
+        <h3>Today's Customers</h3>
+      </template>
+      <template #text>
+        <p>
+          {{ todayOrders }}
+        </p>
+      </template>
+    </vs-card>
+        <vs-card>
+      <template #title>
+        <h3>Today's Revenue</h3>
+      </template>
+      <template #text>
+        <p>
+          {{ todayRevenue }}
+        </p>
+      </template>
+    </vs-card>
   </div>
 </template>
 
@@ -33,6 +53,7 @@ export default {
   data() {
     return {
       tutorials: [],
+      diff: [],
       currentTutorial: null,
       currentIndex: -1,
       editActive: false,
@@ -46,12 +67,59 @@ export default {
       selected: [],
       totalRevenue: 0,
       totalOrders: 0,
+      todayRevenue: 0,
+      todayOrders: 0,
     };
   },
   methods: {
+    // onDataChange(items) {
+    //   let _tutorials = [];
+    //   let _totalRevenue = 0;
+    //   let menuItems = {};
+
+    //   items.forEach((item) => {
+    //     let key = item.key;
+    //     let data = item.val();
+
+    //     let _orders = [];
+    //     let orderss = data.cart;
+    //     orderss.forEach((order) => {
+    //       let data2 = order;
+    //       _totalRevenue += parseInt(data2.cost * data2.quantity);
+    //       _orders.push({
+    //         title: data2.title,
+    //         description: data2.description,
+    //         cost: data2.cost,
+    //         comment: data2.comment,
+    //         quantity: data2.quantity,
+    //       });
+    //     });
+
+    //     _tutorials.push({
+    //       key: key,
+    //       name: data.name,
+    //       hpNumber: data.hpNumber,
+    //       orderNumber: data.orderNumber,
+    //       option: data.option,
+    //       time: data.time,
+    //       orders: _orders,
+    //     });
+    //   });
+
+    //   _tutorials.sort(function (a, b) {
+    //     return new Date(a.time) - new Date(b.time);
+    //   });
+
+    //   this.tutorials = _tutorials;
+    //   this.totalOrders = _tutorials.length;
+    //   this.totalRevenue = _totalRevenue;
+    // },
+
     onDataChange(items) {
       let _tutorials = [];
+      let _diff = [];
       let _totalRevenue = 0;
+      let _todayRevenue = 0;
       let menuItems = {};
 
       items.forEach((item) => {
@@ -59,37 +127,76 @@ export default {
         let data = item.val();
 
         let _orders = [];
+        let _diffOrders = [];
         let orderss = data.cart;
-        orderss.forEach((order) => {
-          let data2 = order;
-          _totalRevenue += parseInt(data2.cost * data2.quantity);
-          _orders.push({
-            title: data2.title,
-            description: data2.description,
-            cost: data2.cost,
-            comment: data2.comment,
-            quantity: data2.quantity,
+        if (data.date === this.currentDate()) {
+          orderss.forEach((order) => {
+            let data2 = order;
+            _totalRevenue += parseInt(data2.cost * data2.quantity);
+            _todayRevenue += parseInt(data2.cost * data2.quantity);
+            _orders.push({
+              title: data2.title,
+              description: data2.description,
+              cost: data2.cost,
+              comment: data2.comment,
+              quantity: data2.quantity,
+            });
           });
-        });
 
-        _tutorials.push({
-          key: key,
-          name: data.name,
-          hpNumber: data.hpNumber,
-          orderNumber: data.orderNumber,
-          option: data.option,
-          time: data.time,
-          orders: _orders,
-        });
+          _tutorials.push({
+            key: key,
+            name: data.name,
+            hpNumber: data.hpNumber,
+            orderNumber: data.orderNumber,
+            option: data.option,
+            time: data.time,
+            date: data.date,
+            orders: _orders,
+          });
+        } else {
+          orderss.forEach((order) => {
+            let data2 = order;
+            _totalRevenue += parseInt(data2.cost * data2.quantity);
+            _diffOrders.push({
+              title: data2.title,
+              description: data2.description,
+              cost: data2.cost,
+              comment: data2.comment,
+              quantity: data2.quantity,
+            });
+          });
+
+          _diff.push({
+            key: key,
+            name: data.name,
+            hpNumber: data.hpNumber,
+            orderNumber: data.orderNumber,
+            option: data.option,
+            time: data.time,
+            date: data.date,
+            orders: _diffOrders,
+          });
+        }
       });
 
       _tutorials.sort(function (a, b) {
         return new Date(a.time) - new Date(b.time);
       });
 
+      _diff.sort(function (a, b) {
+        return new Date(a.time) - new Date(b.time);
+      });
+
+      _diff.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+
       this.tutorials = _tutorials;
+      this.diff = _diff;
       this.totalOrders = _tutorials.length;
       this.totalRevenue = _totalRevenue;
+      this.todayOrders = _diff.length;
+      this.todayRevenue = _todayRevenue;
     },
 
     refreshList() {
@@ -100,6 +207,15 @@ export default {
     setActiveTutorial(tutorial, index) {
       this.currentTutorial = tutorial;
       this.currentIndex = index;
+    },
+
+    currentDate() {
+      //do i need date?
+      const current = new Date();
+      const date = `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()}`;
+      return date;
     },
 
     removeAllTutorials() {
