@@ -199,6 +199,7 @@ export default {
           option: this.options,
           cart: this.cart,
           time: this.timing,
+          date: this.currentDate(),
         };
         console.log(data);
         OrderDataService.update(this.$store.state.hawker.uid, orderID, data)
@@ -262,7 +263,7 @@ export default {
       let text = "?text=";
       let urlEncodedMsg = this.encodeOrder();
       this.checkOut();
-      return window.open(urlStart + this.$store.state.hawkerhp.hpnumber + text + urlEncodedMsg, "_blank");
+      return window.open(urlStart + '65' + this.$store.state.hawkerhp.hpnumber + text + urlEncodedMsg, "_blank");
     },
     subtotal(product) {
       return product.cost * product.quantity;
