@@ -32,6 +32,7 @@ class TutorialDataService {
   deleteAll() {
     return db.remove(); 
   }
+
 }
 
 export default new TutorialDataService();
