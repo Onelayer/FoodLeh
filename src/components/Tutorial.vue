@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import ObtainStallMenu from "../services/ObtainOrder";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 
 export default {
   name: "tutorial",

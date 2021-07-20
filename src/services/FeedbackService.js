@@ -10,7 +10,7 @@ class FeedbackService {
   }
   
   getAllForFeedback(uid) {
-    return db.child(uid);
+    return db.child(uid).child('Feedback');
   }
 
   createFeedback(uid, data) {

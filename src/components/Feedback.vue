@@ -20,21 +20,9 @@
           </vs-th>
           <vs-th
             sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'orderNumber')"
+            @click="tutorials = $vs.sortData($event, tutorials, 'email')"
           >
-            Order Number
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'option')"
-          >
-            Option
-          </vs-th>
-          <vs-th
-            sort
-            @click="tutorials = $vs.sortData($event, tutorials, 'time')"
-          >
-            Time
+            Email
           </vs-th>
           <vs-th>
             <vs-checkbox
@@ -71,13 +59,7 @@
             {{ tr.hpNumber }}
           </vs-td>
           <vs-td>
-            {{ tr.orderNumber }}
-          </vs-td>
-          <vs-td>
-            {{ tr.option }}
-          </vs-td>
-          <vs-td>
-            {{ tr.time }}
+            {{ tr.email }}
           </vs-td>
           <vs-td checkbox>
             <vs-checkbox :val="tr" v-model="selected" />
@@ -91,23 +73,13 @@
               <vs-table>
                 <template #thead>
                   <vs-tr>
-                    <vs-th> Order </vs-th>
-                    <vs-th> Description </vs-th>
-                    <vs-th> Cost </vs-th>
+                    <vs-th> Feedback </vs-th>
                   </vs-tr>
                 </template>
                 <template #tbody>
-                  <vs-tr :key="j" v-for="(rr, j) in tr.orders">
                     <vs-td>
-                      {{ rr.title }}
+                      {{ tr.message }}
                     </vs-td>
-                    <vs-td>
-                      {{ rr.description }}
-                    </vs-td>
-                    <vs-td>
-                      {{ rr.cost }}
-                    </vs-td>
-                  </vs-tr>
                 </template>
               </vs-table>
             </div>
@@ -125,7 +97,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/ObtainOrder";
+import TutorialDataService from "../services/FeedbackService";
 import { mapGetters } from "vuex";
 
 export default {
@@ -155,30 +127,13 @@ export default {
         let key = item.key;
         let data = item.val();
 
-        let _orders = [];
-        let orderss = data.cart;
-        orderss.forEach((order) => {
-          let data2 = order;
-          _orders.push({
-            title: data2.title,
-            description: data2.description,
-            cost: data2.cost,
-          });
-        });
-
         _tutorials.push({
           key: key,
           name: data.name,
-          hpNumber: data.hpNumber,
-          orderNumber: data.orderNumber,
-          option: data.option,
-          time: data.time,
-          orders: _orders,
+          hpNumber: data.phone,
+          email: data.email,
+          message: data.message,
         });
-      });
-
-      _tutorials.sort(function (a, b) {
-        return new Date(a.time) - new Date(b.time);
       });
 
       this.tutorials = _tutorials;
@@ -214,13 +169,13 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).on(
+    TutorialDataService.getAllForFeedback(this.$store.getters.user.data.uid).on(
       "value",
       this.onDataChange
     );
   },
   beforeDestroy() {
-    TutorialDataService.getAllForStore(this.$store.getters.user.data.uid).off(
+    TutorialDataService.getAllForFeedback(this.$store.getters.user.data.uid).off(
       "value",
       this.onDataChange
     );

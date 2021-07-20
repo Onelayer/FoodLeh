@@ -1,5 +1,5 @@
 <template>
-  <div class="center" style="margin: 50px;">
+  <div class="container-homepage">
     <vs-card>
       <template #title>
         <h3>Total Customers</h3>
@@ -17,7 +17,7 @@
       <template #title>
         <h3>Total Revenue</h3>
       </template>
-            <template #img>
+      <template #img>
         <img src="..\assets\revenue.png" alt="" />
       </template>
       <template #text>
@@ -30,6 +30,9 @@
       <template #title>
         <h3>Today's Customers</h3>
       </template>
+      <template #img>
+        <img src="..\assets\customers2.png" alt="" />
+      </template>
       <template #text>
         <p>
           {{ todayOrders }}
@@ -39,6 +42,9 @@
     <vs-card>
       <template #title>
         <h3>Today's Revenue</h3>
+      </template>
+      <template #img>
+        <img src="..\assets\revenue2.png" alt="" />
       </template>
       <template #text>
         <p>
@@ -262,3 +268,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container-homepage {
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  margin-top: 20px;
+}
+</style>
