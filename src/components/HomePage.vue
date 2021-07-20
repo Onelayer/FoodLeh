@@ -2,7 +2,7 @@
   <div class="center" style="margin-left: 50px">
     <vs-card>
       <template #title>
-        <h3>Number of customers</h3>
+        <h3>Number of Customers</h3>
       </template>
       <template #text>
         <p>
@@ -12,7 +12,7 @@
     </vs-card>
     <vs-card>
       <template #title>
-        <h3>Total revenue</h3>
+        <h3>Total Revenue</h3>
       </template>
       <template #text>
         <p>
@@ -61,11 +61,13 @@ export default {
         let orderss = data.cart;
         orderss.forEach((order) => {
           let data2 = order;
-          _totalRevenue += parseInt(data2.cost);
+          _totalRevenue += parseInt(data2.cost * data2.quantity);
           _orders.push({
             title: data2.title,
             description: data2.description,
             cost: data2.cost,
+            comment: data2.comment,
+            quantity: data2.quantity,
           });
         });
 

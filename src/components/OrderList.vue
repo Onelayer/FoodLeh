@@ -93,6 +93,7 @@
                     <vs-th> Description </vs-th>
                     <vs-th> Comment </vs-th>
                     <vs-th> Cost </vs-th>
+                    <vs-th> Quantity </vs-th>
                   </vs-tr>
                 </template>
                 <template #tbody>
@@ -107,7 +108,10 @@
                       {{ rr.comment }}
                     </vs-td>
                     <vs-td>
-                      {{ rr.cost }}
+                      {{ rr.cost * rr.quantity }}
+                    </vs-td>
+                    <vs-td>
+                      {{ rr.quantity }}
                     </vs-td>
                   </vs-tr>
                 </template>
@@ -214,6 +218,7 @@ export default {
             description: data2.description,
             cost: data2.cost,
             comment: data2.comment,
+            quantity: data2.quantity,
           });
         });
 
