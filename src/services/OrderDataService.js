@@ -33,9 +33,6 @@ class TutorialDataService {
     return db.remove(); 
   }
 
-  createFeedback(uid, data) {
-    return db.child(uid).child("Feedback").push(data);
-  }
 }
 
 export default new TutorialDataService();
