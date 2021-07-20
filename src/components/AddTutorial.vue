@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import ObtainStallMenu from "../services/ObtainOrder";
+import ObtainStallMenu from "../services/ObtainStallMenu";
 import Upload from "./Upload.vue";
 
 export default {
