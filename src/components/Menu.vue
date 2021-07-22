@@ -130,9 +130,15 @@ export default {
     saveCart() {
       let parsedArray = JSON.stringify(this.cart);
       let cartuid = this.hawkeruid + "cart";
-      console.log(cartuid);
       localStorage.setItem(cartuid, parsedArray);
-      console.log(localStorage.getItem(this.hawkeruid + "cart", "Local Storage: uid + cart"));
+      
+      //For navbar's badge to detect changes in the items in cart
+      window.dispatchEvent(new CustomEvent('added-item-to-cart',  {
+        detail: {
+          storage: localStorage.getItem(cartuid)
+        }
+      }));
+      console.log(localStorage.getItem(cartuid), 'Item passed to nav stalls')
     },
     onDataChange(items) {
       console.log('onDataChange() is running');

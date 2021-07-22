@@ -16,6 +16,10 @@ class FeedbackService {
   createFeedback(uid, data) {
     return db.child(uid).child("Feedback").push(data);
   }
+
+  delete(uid, key) {
+    return db.child(uid).child('Feedback').child(key).remove();
+  }
 }
 
 export default new FeedbackService();
