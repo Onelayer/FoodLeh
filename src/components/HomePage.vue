@@ -1,57 +1,79 @@
 <template>
   <div class="container-homepage">
-    <vs-card>
-      <template #title>
-        <h3>Total Customers</h3>
-      </template>
-      <template #img>
-        <img src="..\assets\customers.png" alt="" />
-      </template>
-      <template #text>
-        <p>
-          {{ totalOrders }}
-        </p>
-      </template>
-    </vs-card>
-    <vs-card>
-      <template #title>
-        <h3>Total Revenue</h3>
-      </template>
-      <template #img>
-        <img src="..\assets\revenue.png" alt="" />
-      </template>
-      <template #text>
-        <p>
-          {{ totalRevenue }}
-        </p>
-      </template>
-    </vs-card>
-    <vs-card>
-      <template #title>
-        <h3>Today's Customers</h3>
-      </template>
-      <template #img>
-        <img src="..\assets\customers2.png" alt="" />
-      </template>
-      <template #text>
-        <p>
-          {{ todayOrders }}
-        </p>
-      </template>
-    </vs-card>
-    <vs-card>
-      <template #title>
-        <h3>Today's Revenue</h3>
-      </template>
-      <template #img>
-        <img src="..\assets\revenue2.png" alt="" />
-      </template>
-      <template #text>
-        <p>
-          {{ todayRevenue }}
-        </p>
-      </template>
-    </vs-card>
+    <!-- <div class="card" style="width: auto; flex-direction: row; pointer-events: none;"> -->
+      <div class="homepage-card">
+        <vs-card>
+          <template #title>
+            <h3>Total Customers</h3>
+          </template>
+          <template #img>
+            <!-- <img src="..\assets\customers.png" alt="" /> -->
+            <div class="home-card-img">
+              <img src="https://image.flaticon.com/icons/png/512/633/633781.png" alt=""/>
+            </div>
+          </template>
+          <template #text>
+            <p>
+              {{ totalOrders }}
+            </p>
+          </template>
+        </vs-card>
+      </div>
+      <div class="homepage-card">
+        <vs-card>
+          <template #title>
+            <h3>Total Revenue</h3>
+          </template>
+          <template #img>
+            <!-- <img src="..\assets\revenue.png" alt="" /> -->
+            <div class="home-card-img">
+              <img src="https://image.flaticon.com/icons/png/512/1773/1773345.png" alt=""/>
+            </div>
+          </template>
+          <template #text>
+            <p>
+              {{ totalRevenue }}
+            </p>
+          </template>
+        </vs-card>
+      </div>
+      <div class="homepage-card">
+        <vs-card>
+          <template #title>
+            <h3>Today's Customers</h3>
+          </template>
+          <template #img>
+            <!-- <img src="..\assets\customers2.png" alt="" /> -->
+            <div class="home-card-img">
+              <img src="https://image.flaticon.com/icons/png/512/747/747376.png" alt=""/>
+            </div>
+          </template>
+          <template #text>
+            <p>
+              {{ todayOrders }}
+            </p>
+          </template>
+        </vs-card>
+      </div>
+      <div class="homepage-card">
+        <vs-card>
+          <template #title>
+            <h3>Today's Revenue</h3>
+          </template>
+          <template #img>
+            <!-- <img src="..\assets\revenue2.png" alt="" /> -->
+            <div class="home-card-img">
+              <img src="https://image.flaticon.com/icons/png/512/3358/3358688.png" alt=""/>
+            </div>
+          </template>
+          <template #text>
+            <p>
+              {{ todayRevenue }}
+            </p>
+          </template>
+        </vs-card>
+      </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -275,5 +297,15 @@ export default {
   flex-direction: row;
   margin-left: 50px;
   margin-top: 20px;
+}
+
+.homepage-card {
+  margin: 2rem;
+  display: flex;
+}
+
+.home-card-img {
+  width: 8rem;
+  height: 8rem;
 }
 </style>

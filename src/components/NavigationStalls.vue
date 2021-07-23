@@ -32,7 +32,7 @@
             <div class="dropdown-content">
               <router-link to="menu">Menu</router-link>  
               <!-- <router-link to="Cart">Cart</router-link>   -->
-              <router-link to="Cart">Cart <span class="badge badge-secondary">4</span></router-link>  
+              <router-link to="Cart">Cart <span class="badge badge-secondary">{{ cartBadge }}</span></router-link>  
 
             </div>
           </div>
