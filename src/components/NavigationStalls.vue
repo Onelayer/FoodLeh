@@ -31,27 +31,14 @@
           </button>
             <div class="dropdown-content">
               <router-link to="menu">Menu</router-link>  
-              <router-link to="Cart">Cart</router-link>  
+              <!-- <router-link to="Cart">Cart</router-link>   -->
+              <router-link to="Cart">Cart <span class="badge badge-secondary">4</span></router-link>  
+
             </div>
           </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item mx-0 mx-lg-1">
-                <!-- <div class="dropdown">
-                                <button class="dropbtn"><a href="">Stall Owners</a></button> -->
-                <!-- <div class="dropdown-content">
-                                        <router-link to="/login">Login</router-link> |
-                                        <router-link to="/register">Register</router-link> |
-                                        <router-link to="/dashboard">Dashboard</router-link> |
-                                        <router-link to="/addorder">AddOrder</router-link>
-                                        <button @click="logout">Logout</button>
-                                    </div> -->
-
-                <!-- <div class="dropdown-content" v-for="link in links" :key="link.id">
-                                        <router-link :key="link.id" :to="`${link.page}`">{{ link.text }}</router-link>
-                                    </div> -->
-                <!-- </div>
-                            <router-view/> -->
               </li>
               <router-link to="menu" tag="li"
                 ><a class="nav-link py-3 px-0 px-lg-3 rounded"
@@ -59,12 +46,8 @@
                 ></router-link
               >
 
-              <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" @click="navigateToLogin">Stall Owners</a></li> -->
               <router-link to="cart" tag="li"
-                ><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                  >Cart</a
-                ></router-link
-              >
+                ><a class="nav-link py-3 px-0 px-lg-3 rounded">Cart <span class="badge badge-secondary">{{ cartBadge }}</span></a></router-link>
             </ul>
           </div>
         </div>
@@ -74,5 +57,58 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+
+export default {
+
+  data() {
+    return {
+      cart: [],
+      // cartBadge: 0,
+    }
+  },
+  methods: {
+    calculateCartBadge() {
+      let sum_items = 0;
+      console.log(this.cart, 'The cart when computing the badge');
+      for (var i = 0; i < this.cart.length; i++){
+        sum_items += this.cart[i].quantity;
+        console.log(sum_items);
+      }
+      console.log(sum_items);
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log(this.hawkeruid, "Cart: On mount, hawker uid is this"); 
+      if (localStorage.getItem(this.hawkeruid + "cart")) {
+        try {
+          this.cart = JSON.parse(localStorage.getItem(this.hawkeruid + "cart"));
+        } catch (e) {
+          localStorage.removeItem(this.hawkeruid + "cart");
+        }
+      }
+      // this.scanCart();
+    }, 15);
+    window.addEventListener('added-item-to-cart', (event) => {
+      this.cart = this.cart = JSON.parse(event.detail.storage);
+      console.log(this.cart, 'cart received');
+      this.calculateCartBadge;
+    })
+  },
+  computed: {
+    cartBadge() {
+      let sum_items = 0;
+      console.log(this.cart, 'The cart when computing the badge');
+      for (var i = 0; i < this.cart.length; i++){
+        sum_items += this.cart[i].quantity;
+        console.log(sum_items);
+      }
+      return sum_items;
+    },
+    ...mapGetters({
+      hawkeruid: "uid",
+    }),
+  },
+};
 </script>
