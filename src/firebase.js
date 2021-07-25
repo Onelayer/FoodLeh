@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/database";
 import store from './store';
+require('dotenv').config();
 
 let config = {
   apiKey: "AIzaSyD9Y1A5dwPx1BFBveee1NoRuCzQRTJFpGw",
