@@ -1,36 +1,41 @@
 <template>
   <div>
     <div class="navspacing">
-    </div>
-    <div class="navspacing">
+      <div class="d-flex justify-content-center">
+        <div class="card border-light mb-3 mt-3" style="min-width: 70%; max-width:90%;">
+          <div class="card-header">{{ stallTitle }}</div>
+          <div class="card-body">
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">{{ stallDescription }}</p>
+            <p><img src="https://image.flaticon.com/icons/png/512/684/684809.png" style="max-width: 18px" class="mr-3">{{ location }}</p>
+          </div>
+        </div>
+      </div>
       <div class="search-wrapper d-flex justify-content-center">
-        <label for="search">Search Title:</label>
+        <label for="search" class="mr-3">Search:</label>
         <input
           type="text"
           autocomplete="off"
           v-model="keyword"
-          placeholder="Search Title..."
+          placeholder="Search Food Item..."
           name="search"
         />
       </div>
       <div class="wrapper d-flex justify-content-center">
-        <div class="card" v-for="post in filteredList" :key="post.title">
-          <a href="" @click.prevent="addItemToCart(post)" target="blank">
-            <img v-bind:src="post.img" alt="" />
-            <table class="product-font">
-              <tbody>
-                <tr>
-                  <td>{{ post.title }}</td>
-                </tr>
-                <tr>
-                  <td>{{ post.description }}</td>
-                </tr>
-                <tr>
-                  <td class="product-price">${{ post.cost }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </a>
+        <div class="card mb-3 ml-3 mr-3" style="max-width: 560px;" v-for="post in filteredList" :key="post.title">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img v-bind:src="post.img" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.description }} </p>
+                <p class="card-text"><small class="text-muted">${{ post.cost }}</small></p>
+                <button type="button" class="btn btn-success" @click.prevent="addItemToCart(post)">Add to Cart</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,7 +43,7 @@
 </template>
 
 <script>
-import ObtainStalls from "../services/ObtainStalls";
+import ObtainStallSettings from "../services/ObtainStallSettings";
 import { mapGetters } from "vuex";
 
 export default {
@@ -51,6 +56,9 @@ export default {
       resultPlaceholder: false,
       textPlaceholder: '',
       cartDict: [],
+      stallTitle: 'Stall Title',
+      stallDescription: 'Stall Description',
+      location: 'Location'
     };
   },
   methods: {
@@ -163,16 +171,20 @@ export default {
 
       this.cardList = _card_list;
     },
+    onDataChangeSettings(settings) {
+      
+      const dataSettingsDB = settings.val();
+
+
+      this.stallTitle = dataSettingsDB.StallName;
+      this.stallDescription = dataSettingsDB.StallDescription;
+      this.location = dataSettingsDB.Address;
+    }
   },
   mounted() {
     setTimeout(() => {
       this.retrieveMenu();
-    }, 15);
-    // this.$nextTick(() => {
-    //   this.onDataChange(this.$root.menuData);
-    // })
-    // ObtainStalls.getAllStallMenu(this.$root.menuUid).on("value", this.onDataChange);
-    setTimeout(() => {
+      ObtainStallSettings.getAllForStore(this.hawkeruid).on("value",this.onDataChangeSettings);
       console.log(this.hawkeruid, "Menu: On mount, hawker uid is this"); 
       if (localStorage.getItem(this.hawkeruid + "cart")) {
         try {
@@ -181,7 +193,8 @@ export default {
           localStorage.removeItem(this.hawkeruid + "cart");
         }
       }
-    }, 15);
+    }, 5);
+
   },
   beforeDestroy() {
     // ObtainStalls.getAll().off("value", this.onDataChange);

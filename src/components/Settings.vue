@@ -8,7 +8,7 @@
               <img :src="this.url" class="brand_logo" alt="logo" />
             </div>
             <form @submit.prevent="register">
-              <div class="center content-inputs">
+              <div class="center content-inputs mb-3">
                 <vs-input
                   type="text"
                   value=""
@@ -16,14 +16,33 @@
                   label-placeholder="Stall Name"
                 />
               </div>
-              <br />
-              <div class="center content-inputs">
+              <div class="center content-inputs mb-3">
                 <vs-input
                   type="text"
                   name=""
                   value=""
-                  label-placeholder="Phone number"
+                  label-placeholder="Phone Number"
                   v-model="hpNumber"
+                >
+                </vs-input>
+              </div>
+              <div class="center content-inputs mb-3">
+                <vs-input
+                  type="text"
+                  name=""
+                  value=""
+                  label-placeholder="Stall Description"
+                  v-model="stallDescription"
+                >
+                </vs-input>
+              </div>
+              <div class="center content-inputs mb-3">
+                <vs-input
+                  type="text"
+                  name=""
+                  value=""
+                  label-placeholder="Address"
+                  v-model="address"
                 >
                 </vs-input>
               </div>
@@ -66,6 +85,8 @@ export default {
     return {
       stallName: "",
       hpNumber: "",
+      stallDescription: "",
+      address: "",
       url: "",
       submitted: false,
       imageData: null,
@@ -79,6 +100,8 @@ export default {
       let data = {
         StallName: this.stallName,
         MobileNumber: this.hpNumber,
+        StallDescription: this.stallDescription,
+        Address: this.address,
         url: this.url,
       };
 
@@ -99,11 +122,15 @@ export default {
 
       let stallnamedb = dataSettingsDB.StallName;
       let mobilenumberdb = dataSettingsDB.MobileNumber;
+      let stalldescriptiondb = dataSettingsDB.StallDescription;
       let urldb = dataSettingsDB.url;
+      let addressdb = dataSettingsDB.Address;
 
       this.stallName = stallnamedb;
       this.hpNumber = mobilenumberdb;
       this.url = urldb;
+      this.stallDescription = stalldescriptiondb;
+      this.address = addressdb;
     },
     previewImage(event) {
       this.uploadValue = 0;
