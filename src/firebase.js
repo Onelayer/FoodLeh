@@ -1,7 +1,10 @@
 import firebase from "firebase/app";
 import "firebase/database";
 import store from './store';
+
 require('dotenv').config();
+
+console.log(process.env);
 
 let config_firebase = {
   apiKey: process.env.VUE_APP_API_KEY,
