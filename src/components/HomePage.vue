@@ -227,7 +227,7 @@ export default {
 
       this.tutorials = _tutorials;
       this.diff = _diff;
-      this.totalOrders = _diff.length;
+      this.totalOrders = _diff.length + _tutorials.length;
       this.totalRevenue = _totalRevenue;
       this.todayOrders = _tutorials.length;
       this.todayRevenue = _todayRevenue;
