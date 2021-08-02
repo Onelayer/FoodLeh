@@ -7,31 +7,41 @@
             <H1>Add Food to Menu</H1>
             <div class="submit-form">
               <div v-if="!submitted">
-                <div class="form-group">
-                  <input
-                    type="text"
+                <div>
+                  Title:
+                  <textarea
                     class="form-control"
-                    id="title"
-                    required
+                    v-on:keyup="liveCountDown"
                     v-model="tutorial.title"
-                    name="title"
                     placeholder="Title"
-                  />
+                  ></textarea>
+                  <p>
+                    Total Remaining:
+                    <span
+                      v-bind:class="{ 'text-danger': tutorial.generateErr }"
+                      >{{ tutorial.totalRemainCount }}</span
+                    >
+                  </p>
                 </div>
-
-                <div class="form-group">
-                  <input
-                    type="text"
+                <div>
+                  Description:
+                  <textarea
                     class="form-control"
-                    id="description"
-                    required
+                    v-on:keyup="liveCountDown2"
                     v-model="tutorial.description"
-                    name="description"
                     placeholder="Description"
-                  />
+                  ></textarea>
+                  <p>
+                    Total Remaining:
+                    <span
+                      v-bind:class="{ 'text-danger': tutorial.generateErr2 }"
+                      >{{ tutorial.totalRemainCount2 }}</span
+                    >
+                  </p>
                 </div>
 
                 <div class="form-group">
+                  Cost:
                   <input
                     type="number"
                     class="form-control"
@@ -42,6 +52,7 @@
                     placeholder="Cost"
                   />
                 </div>
+
                 <upload
                   :myUrl="tutorial.url"
                   @getUrl="tutorial.url = $event"
@@ -85,6 +96,12 @@ export default {
         cost: "",
         url: "",
         published: false,
+        limitmaxCount: 100,
+        totalRemainCount: 100,
+        generateErr: false,
+        limitmaxCount2: 200,
+        totalRemainCount2: 200,
+        generateErr2: false,
       },
       submitted: false,
     };
@@ -122,6 +139,16 @@ export default {
     getUrl() {
       this.url = "fornow";
     },
+    liveCountDown: function () {
+      this.tutorial.totalRemainCount =
+        this.tutorial.limitmaxCount - this.tutorial.title.length;
+      this.tutorial.generateErr = this.tutorial.totalRemainCount < 0;
+    },
+    liveCountDown2: function () {
+      this.tutorial.totalRemainCount2 =
+        this.tutorial.limitmaxCount2 - this.tutorial.description.length;
+      this.generateErr2 = this.totalRemainCount2 < 0;
+    },
   },
 };
 </script>
@@ -153,7 +180,7 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 750px;
+  height: 800px;
   width: 500px;
   margin-top: 10px;
   background: white;

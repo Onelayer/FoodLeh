@@ -193,7 +193,7 @@
             v-for="(dr, i) in $vs.getPage(
               $vs.getSearch(diff, search2),
               page,
-              max
+              max2
             )"
             :data="dr"
             :is-selected="!!selected2.includes(dr)"
@@ -264,7 +264,7 @@
         <template #footer>
           <vs-pagination
             v-model="page"
-            :length="$vs.getLength($vs.getSearch(diff, search2), max)"
+            :length="$vs.getLength($vs.getSearch(diff, search2), max2)"
           />
         </template>
       </vs-table>
@@ -295,6 +295,7 @@ export default {
       allCheck: false,
       page: 1,
       max: 5,
+      max2: 3,
       active: 0,
       selected1: [],
       selected2: [],

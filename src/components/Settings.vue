@@ -16,6 +16,7 @@
                   label-placeholder="Stall Name"
                 />
               </div>
+              <br>
               <div class="center content-inputs mb-3">
                 <vs-input
                   type="text"
@@ -26,38 +27,42 @@
                 >
                 </vs-input>
               </div>
-              <div class="center content-inputs mb-3">
-                <vs-input
-                  type="text"
-                  name=""
-                  value=""
-                  label-placeholder="Stall Description"
-                  v-model="stallDescription"
-                >
-                </vs-input>
-              </div>
-              <div class="center content-inputs mb-3">
-                <vs-input
-                  type="text"
-                  name=""
-                  value=""
-                  label-placeholder="Address"
+              <div>
+                Address:
+                <textarea
+                  class="form-control"
+                  v-on:keyup="liveCountDown2"
                   v-model="address"
-                >
-                </vs-input>
+                  placeholder="address"
+                ></textarea>
+                <p>
+                  Total Remaining:
+                  <span v-bind:class="{ 'text-danger': generateErr2 }">{{
+                    totalRemainCount2
+                  }}</span>
+                </p>
               </div>
               <div>
-                <br />
+                Stall Description:
+                <textarea
+                  class="form-control"
+                  v-on:keyup="liveCountDown"
+                  v-model="stallDescription"
+                  placeholder="Stall Description"
+                ></textarea>
+                <p>
+                  Total Remaining:
+                  <span v-bind:class="{ 'text-danger': generateErr }">{{
+                    totalRemainCount
+                  }}</span>
+                </p>
+              </div>
+              <div>
                 Change store profile picture:
                 <input type="file" @change="previewImage" accept="image/*" />
               </div>
-              <vs-button
-                warn
-                gradient
-                :active="active == 3"
-                @click="onUpload"
-              >
-              Upload
+              <vs-button warn gradient :active="active == 3" @click="onUpload">
+                Upload
               </vs-button>
               <div class="d-flex justify-content-center mt-3 login_container">
                 <button class="btn login_btn" @click.prevent="saveSettings">
@@ -93,6 +98,12 @@ export default {
       picture: null,
       uploadValue: 0,
       active: 0,
+      limitmaxCount: 200,
+      totalRemainCount: 200,
+      limitmaxCount2: 100,
+      totalRemainCount2: 100,
+      generateErr: false,
+      generateErr2: false,
     };
   },
   methods: {
@@ -136,6 +147,15 @@ export default {
       this.uploadValue = 0;
       this.picture = null;
       this.imageData = event.target.files[0];
+    },
+
+    liveCountDown: function () {
+      this.totalRemainCount = this.limitmaxCount - this.stallDescription.length;
+      this.generateErr = this.totalRemainCount < 0;
+    },
+    liveCountDown2: function () {
+      this.totalRemainCount2 = this.limitmaxCount2 - this.address.length;
+      this.generateErr2 = this.totalRemainCount2 < 0;
     },
 
     onUpload() {
@@ -215,7 +235,7 @@ html {
   background: #60a3bc !important;
 }
 .user_card {
-  height: 550px;
+  height: 850px;
   width: 400px;
   margin-top: 10px;
   margin-bottom: auto;
