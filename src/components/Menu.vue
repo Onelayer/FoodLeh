@@ -21,7 +21,7 @@
           name="search"
         />
       </div>
-      <div class="wrapper d-flex justify-content-center">
+      <div class="wrapper d-flex justify-content-center" >
         <div class="card mb-3 ml-3 mr-3" style="max-width: 560px;" v-for="post in filteredList" :key="post.title">
           <div class="row g-0">
             <div class="col-md-4">

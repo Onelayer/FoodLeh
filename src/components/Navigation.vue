@@ -7,7 +7,17 @@
         id="mainNav"
       >
         <div class="container">
-          <a class="navbar-brand" href="#page-top">FoodLeh</a>
+        <a href="#page-top" class="navbar-brand">
+          <img
+            style="width:10em;"
+            class="masthead-avatar"
+            src="img/foodlehlogotextonly2.png"
+            alt="FoodLeh Logo"
+          />
+        </a>
+          <!-- <a class="navbar-brand"  >
+
+          </a> -->
           <div class="dropdown              
               navbar-toggler">
           <button
