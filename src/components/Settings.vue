@@ -16,7 +16,7 @@
                   label-placeholder="Stall Name"
                 />
               </div>
-              <br>
+              <br />
               <div class="center content-inputs mb-3">
                 <vs-input
                   type="text"
@@ -104,7 +104,15 @@ export default {
       totalRemainCount2: 100,
       generateErr: false,
       generateErr2: false,
+      timer: "",
+      timer2: "",
     };
+  },
+  created () {
+    this.liveCountDown();
+    this.timer = setInterval(this.liveCountDown, 5);
+    this.liveCountDown2();
+    this.timer2 = setInterval(this.liveCountDown2, 5);
   },
   methods: {
     saveSettings() {
@@ -142,6 +150,8 @@ export default {
       this.url = urldb;
       this.stallDescription = stalldescriptiondb;
       this.address = addressdb;
+      liveCountDown();
+      liveCountDown2();
     },
     previewImage(event) {
       this.uploadValue = 0;
@@ -149,11 +159,11 @@ export default {
       this.imageData = event.target.files[0];
     },
 
-    liveCountDown: function () {
+    liveCountDown() {
       this.totalRemainCount = this.limitmaxCount - this.stallDescription.length;
       this.generateErr = this.totalRemainCount < 0;
     },
-    liveCountDown2: function () {
+    liveCountDown2() {
       this.totalRemainCount2 = this.limitmaxCount2 - this.address.length;
       this.generateErr2 = this.totalRemainCount2 < 0;
     },
@@ -199,12 +209,16 @@ export default {
       this.onDataChange
     );
     console.log("mounted settings");
+    liveCountDown();
+    liveCountDown2();
   },
   beforeDestroy() {
     ObtainStallSettings.getAllForStore(this.$store.getters.user.data.uid).off(
       "value",
       this.onDataChange
     );
+    liveCountDown();
+    liveCountDown2();
   },
 };
 </script>
