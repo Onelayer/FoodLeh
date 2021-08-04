@@ -7,7 +7,14 @@
         id="mainNav"
       >
         <div class="container">
-          <router-link to="/" class="navbar-brand">FoodLeh</router-link>
+          <a href="/" class="navbar-brand">
+            <img
+              style="width:10em;"
+              class="masthead-avatar"
+              src="img/foodlehlogotextonly2.png"
+              alt="FoodLeh"
+            />
+          </a>
           <div class="dropdown              
               navbar-toggler">
           <button

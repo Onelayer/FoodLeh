@@ -1,56 +1,73 @@
 <template>
   <div class="cart navspacing">
-    <h1 class="title">Cart</h1>
-    <p v-show="!cart.length">
-      <i>Your cart is empty!</i>
-      <router-link to="/ordering/menu">Go shopping</router-link>
-    </p>
-    <p>
-      {{ message }}
-    </p>
-    <vs-table v-show="cart.length">
-      <template #thead>
-        <vs-tr>
-          <vs-td class="table-labels">Name</vs-td>
-          <vs-td class="table-labels">Description</vs-td>
-          <vs-td></vs-td>
-          <vs-td class="table-labels">Quantity</vs-td>
-          <vs-td></vs-td>
-          <vs-td class="table-labels">Price</vs-td>
-          <vs-td></vs-td>
-        </vs-tr>
-      </template>
-      <template #tbody>
-        <vs-tr v-for="(p, index) in cart" :key="index">
-          <vs-td class="table-items">{{ p.title }}</vs-td>
-          <vs-td class="table-items">{{ p.comment }}</vs-td>
-          <vs-td><vs-button @click="addItemToCart(p)" dark><strong>+</strong></vs-button></vs-td>
-          <vs-td class="table-items">{{ p.quantity }}</vs-td>
-          <vs-td><vs-button @click="removeItemFromCart(p)" dark><strong>-</strong></vs-button></vs-td>
-          <vs-td class="table-items">${{ subtotal(p) }}</vs-td>
-        </vs-tr>
-        <vs-tr>
-          <vs-td><b class="table-labels">Total:</b></vs-td>
-          <vs-td></vs-td>
-          <vs-td></vs-td>
-          <vs-td></vs-td>
-          <vs-td></vs-td>
-          <vs-td>
-            <b class="table-labels">${{ total }}</b>
-          </vs-td>
-          <vs-td></vs-td>
-        </vs-tr>
-      </template>
-    </vs-table>
+    <div class="d-flex justify-content-center mb-3">
+    <div class="card" style="min-width: 65%; max-width:90%;">
+    <div class="card-body">
+      <h5 class="card-title">
+        <div class="d-flex justify-content-left">
+          <h1 class="title">Cart</h1>
+        </div>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">          
+        <p v-show="!cart.length">
+            <i>Your cart is empty!</i>
+            <i>
+              <a @click="$router.go(-1)" class="ml-3"><u>Go shopping</u></a>
+            </i>
+        </p>
+        <p>
+          {{ message }}
+        </p>
+      </h6>
+      <p class="card-text">
+        <table class="table" v-show="cart.length">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col" style="min-width:120px" >Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody v-for="(p, index) in cart" :key="index">
+            <tr>
+              <td scope="row" style="margin:auto;">{{ p.title }}</td>
+              <td style="min-width:120px; line-height: 30px;"><button type="button" class="btn btn-light mr-1" @click="addItemToCart(p)">+</button>{{ p.quantity }}<button type="button" class="btn btn-light ml-1" @click="removeItemFromCart(p)">-</button></td>
+              <td>${{ subtotal(p) }}</td>
+              <td></td>
+            </tr>
+            <tr v-show="p.comment">
+              <td>
+                <img src="https://image.flaticon.com/icons/png/512/4692/4692155.png" style="max-width:15px; margin-right:1%;">
+                <i>Description: </i> <p>- {{ p.comment }}</p>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <th scope="row">Total Price</th>
+            <th></th>
+            <th>${{ total }}</th>
+            <th></th>
+          </tbody>
+        </table>
+      </p>
+    </div>
+    </div>
+  </div>
     <div v-show="cart.length">
+      <form @submit.prevent="generateOrderUrl()">
       <div class="d-flex justify-content-center" >
         <div>
-        <div>
-          <select v-model="options">
+        <div class="mb-2">
+          <select v-model="options" class="form-select mb-2" aria-label="Default select example" required>
             <option value="Pick Up">Self Pick-Up</option>
             <option value="Delivery">Delivery</option>
           </select>
-          <select v-model="timing" v-if="options === 'Pick Up'">
+          <select v-model="timing" v-if="options === 'Pick Up'" class="form-select" aria-label="Default select example" required>
+            <option value="default">Please choose a timing</option>
             <option 
               v-for="(time,idx) in listTimings" 
               :value="time" 
@@ -58,13 +75,19 @@
             >{{ time }}</option>
           </select>
         </div>
-        <br/>
         <i v-show="options === 'Delivery'">{{ deliveryMessage }}</i>
-        <br/>
-        <div class="inputFields">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+          <input type="text" v-model="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
+          <input type="text" v-model="hpNumber" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+        </div>
+        <!-- <div class="inputFields">
           <input type="text" v-model="name" placeholder="Name">
           <input type="number" v-model="hpNumber" placeholder="Phone Number">     
-        </div>
+        </div> -->
         <br/>
         <p>
           <!-- <button
@@ -75,10 +98,12 @@
           </button> -->
         </p>
         <i>{{ error }}</i>
-        <vs-button @click="generateOrderUrl" color="rgb(23,208,85)" class="table-items">Checkout Via Whatsapp</vs-button>
-
+        <div class="d-flex justify-content-center">
+          <vs-button type="submit" color="rgb(23,208,85)" >Checkout Via Whatsapp<img src="https://image.flaticon.com/icons/png/512/2504/2504957.png" style="max-width:20px; margin-left: 5px;"></vs-button>
+        </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </template>
@@ -99,7 +124,7 @@ export default {
       options: 'Pick Up', //set pickup by default
       error: '',
       listTimings: [],
-      timing: '1230',
+      timing: 'default',
       stallOpeningHours: 9, //hardcoded to 9am and 10pm for receiving of self-pickup, 
       stallClosingHours: 24, //but stalls should be able to modify this from backend if wanted
       hawkerHpNumber: 6590604838,
@@ -108,6 +133,9 @@ export default {
     };
   },
   methods: {
+    dosomething() {
+
+    },
     scanCart(){
       var dict = {};
       let _cartDict = [];
@@ -177,10 +205,6 @@ export default {
       this.cart.splice(0, this.cart.length);
       this.saveCart();
     },
-    saveCart() {
-      let parsedArray = JSON.stringify(this.cart); //saves the array locally after parsing
-      localStorage.setItem(this.hawkeruid + "cart", parsedArray);
-    },
     checkOut() {
       if (this.cart.length === 0) {
         this.message = "Please add an item before checking out";
@@ -218,7 +242,9 @@ export default {
     addItemToCart(product){
       const index = this.cart.indexOf(product);
       this.cart[index].quantity += 1;
+      this.saveCart();
     },
+
     removeItemFromCart(product) {
       this.$confirm("Are you sure you want to remove this item?")
         .then(() => {
@@ -230,6 +256,27 @@ export default {
           }
           this.saveCart();
       });
+      this.saveCart();
+    },
+    updateCartBadge() {
+      window.dispatchEvent(new CustomEvent('added-item-to-cart',  {
+        detail: {
+          storage: localStorage.getItem(cartuid)
+        }
+      }));
+    },
+    saveCart() {
+      let parsedArray = JSON.stringify(this.cart);
+      let cartuid = this.hawkeruid + "cart";
+      localStorage.setItem(cartuid, parsedArray);
+      
+      //For navbar's badge to detect changes in the items in cart
+      window.dispatchEvent(new CustomEvent('added-item-to-cart',  {
+        detail: {
+          storage: localStorage.getItem(cartuid)
+        }
+      }));
+      console.log(localStorage.getItem(cartuid), 'Item passed to nav stalls')
     },
     encodeOrder() {
       const orderID = this.generateCode(4);
