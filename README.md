@@ -1,5 +1,7 @@
 # FoodLeh?
 
+![Poster_Splashdown_draft_1](https://user-images.githubusercontent.com/70256674/128408894-ab9a1af6-425a-4c00-b6f7-ea8575bb249f.png)
+
 ## Motivation
 
 With the current COVID-19 situation, Singapore had entered 2 phases over a span of a year whereby dining in is not allowed. This has given rise to more online orders and as such local businesses such as hawker centers and food vendors have had to rely on online food platforms (eg. FoodPanda and Grab) to achieve any reasonable level of sales. Through personal experiences and interviews of the hawkers, we realised they have lost much of their revenue to these local giants as they take up to 30-40% of the price of food items to list their items on their platforms. On top of this, we have come to understand the rise of cloud kitchens in Singapore as well, whereby they only own a central kitchen that dispatches food items at a collection point or by delivery only. One example of such is the cloud kitchen facility of Orchard Food Market where there are 18 individual kitchen spaces, where they do not own a storefront and are operating together. While cloud or ghost kitchens are not new in Singapore, the opening of more facilities has been accelerated by the COVID-19 pandemic as more people get used to ordering food delivery. 
