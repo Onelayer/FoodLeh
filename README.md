@@ -1,6 +1,6 @@
 # FoodLeh?
 
-![Poster_Splashdown_draft_1](https://user-images.githubusercontent.com/70256674/128408894-ab9a1af6-425a-4c00-b6f7-ea8575bb249f.png)
+![Poster_Splashdown_draft_2](https://user-images.githubusercontent.com/70256674/128627803-74b2d4dd-aad1-423d-9c01-62a9c028d2b5.png)
 
 ## Motivation
 
