@@ -4,8 +4,8 @@
       <div class="d-flex justify-content-center h-100">
         <div class="user_card">
           <div class="d-flex justify-content-center form_container">
-            <div class="brand_logo_container">
-              <img :src="this.url" class="brand_logo" alt="logo" />
+            <div class="brand_logo_container" style="display: flex; flex-direction:column; width:80%; margin-top:6%">
+              <img :src="this.url" class="rounded" alt="logo" />
             </div>
             <form @submit.prevent="register">
               <div class="center content-inputs mb-3">

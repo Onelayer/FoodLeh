@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import logo from '../../public/img/foodleh_text_only2.png'
+import logo from '../../public/img/foodleh_text_only.png'
 
 export default {
   data() {
