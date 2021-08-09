@@ -9,9 +9,9 @@
         <div class="container">
           <a href="/" class="navbar-brand">
             <img
-              style="width:10em;"
+              style="margin-left:6%; width:40%;"
               class="masthead-avatar"
-              src="img/foodlehlogotextonly2.png"
+              :src="logo"
               alt="FoodLeh"
             />
           </a>
@@ -65,13 +65,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import logo from '../../public/img/foodleh_text_only2.png'
 
 export default {
 
   data() {
     return {
       cart: [],
-      // cartBadge: 0,
+      logo: logo,
     }
   },
   methods: {

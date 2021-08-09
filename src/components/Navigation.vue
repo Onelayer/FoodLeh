@@ -9,9 +9,8 @@
         <div class="container">
         <a href="#page-top" class="navbar-brand">
           <img
-            style="width:10em;"
-            class="masthead-avatar"
-            src="img/foodlehlogotextonly2.png"
+            style="margin-left:6%; width:40%;"
+            :src="logo"
             alt="FoodLeh Logo"
           />
         </a>
@@ -85,8 +84,13 @@
 </template>
 
 <script>
+import logo from '../../public/img/foodleh_text_only2.png'
 
 export default {
-
+  data() {
+    return {
+      logo: logo,
+    }
+  },
 };
 </script>
