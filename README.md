@@ -29,6 +29,11 @@ As a F&B Owner, I want to be able to view my orders in real-time and be able to 
 ## Tech Stack
 VueJS, Firebase, HTML, Javascript and CSS
 
+## Video
+
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/sjW3fCfo3BI/0.jpg)](https://www.youtube.com/watch?v=sjW3fCfo3BI)
+
 
 ### For full documentation, refer to this:
 https://docs.google.com/document/d/1ktKGL8d5uLZJa90bn04miXIhSgSzCFdlOL_gBxyQp5w/edit?usp=sharing
