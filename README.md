@@ -32,7 +32,7 @@ VueJS, Firebase, HTML, Javascript and CSS
 ## Video
 
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/sjW3fCfo3BI/0.jpg)](https://www.youtube.com/watch?v=sjW3fCfo3BI)
+[![IMAGE ALT TEXT HERE](https://imgur.com/a/W78oYuF)](https://www.youtube.com/watch?v=sjW3fCfo3BI)
 
 
 ### For full documentation, refer to this:
